@@ -2,8 +2,7 @@
 
 solution_20250511(A, B, C, D) :-
     Vs = [A, B, C, D],
-    Vs ins 1..9,
-    all_distinct(Vs),
+    common_constraints(Vs),
 
     % 1. Exactly one of the digits is 1
     occurrenceof(Vs, 1, 1),
