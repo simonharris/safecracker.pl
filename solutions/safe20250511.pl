@@ -1,5 +1,6 @@
 :- use_module('../safe_cracker').
 
+
 solution_20250511(A, B, C, D) :-
     Vs = [A, B, C, D],
     common_constraints(Vs),
