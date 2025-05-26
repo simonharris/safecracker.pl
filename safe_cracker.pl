@@ -1,7 +1,9 @@
 :- module(safe_cracker, [
     common_constraints/1,
     divides_by/2,
+    is_odd/1,
     is_prime/2,
+    is_square/2,
     occurrenceof/3,
     xor/2
 ]).
@@ -20,6 +22,14 @@ xor(X, Y) :-
 
 is_prime(N, 1) :- N in {2, 3, 5, 7}.
 is_prime(N, 0) :- N in {1, 4, 6, 8, 9}.
+
+
+is_square(N, 1) :- N in {1, 4, 9}.
+is_square(N, 0) :- N in {2, 3, 5, 6, 7, 8}.
+
+
+is_odd(N) :-
+    N mod 2 #= 1.
 
 
 divides_by(X, Y) :-
