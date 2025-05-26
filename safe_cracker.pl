@@ -3,7 +3,7 @@
     divides_by/2,
     is_odd/1,
     is_prime/2,
-    is_square/2,
+    is_square/1,
     occurrenceof/3,
     xor/2
 ]).
@@ -24,8 +24,8 @@ is_prime(N, 1) :- N in {2, 3, 5, 7}.
 is_prime(N, 0) :- N in {1, 4, 6, 8, 9}.
 
 
-is_square(N, 1) :- N in {1, 4, 9}.
-is_square(N, 0) :- N in {2, 3, 5, 6, 7, 8}.
+is_square(N) :-
+    N #= _^2.
 
 
 is_odd(N) :-

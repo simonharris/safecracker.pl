@@ -1,0 +1,10 @@
+ swipl -f test_divide.pl -g run_tests -t halt
+
+ Here's what each part does:
+swipl: This is the command to run SWI-Prolog.
+-f test_divide.pl: This loads the file test_divide.pl.
+-g run_tests: This runs the run_tests/0 predicate after loading the file.
+-t halt: This tells SWI-Prolog to exit after running the tests.
+Make sure you're in the tests directory or provide the full path to test_divide.pl if it's located elsewhere.
+If you want to load your main module and then run the tests, you might need to adjust the command slightly. But this should give you a good starting point!
+
