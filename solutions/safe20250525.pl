@@ -12,8 +12,8 @@ solution_20250525(A, B, C, D) :-
     (A + B) #= C,
 
     % 3. Exactly one digit is square
-    maplist(is_square, Vs, Threes),
-    sum(Threes, #=, 1),
+    % include(is_square, Vs, Squares),
+    % length(Squares, 1),
 
     % 4. The fourth is 2 more than the first
     D #= A + 2,

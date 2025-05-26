@@ -8,8 +8,11 @@ test(is_odd) :-
 
 
 test(is_square) :-
+    assertion(is_square(1)),
     assertion(\+ is_square(7)),
-    assertion(is_square(4)).
+    assertion(is_square(4)),
+    assertion(\+is_square(13)),
+    assertion(is_square(16)).
 
 
 
