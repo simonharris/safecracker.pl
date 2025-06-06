@@ -5,13 +5,13 @@
 :- consult('../solutions/safe20250525').
 
 
-test(solution_20250412) :-
+test(solution_20250413) :-
     once(solution_20250413(A, B, C, D)),
     assertion((A = 3, B = 4, C = 1, D = 6)).
 
 test(solution_20250504) :-
-    once(solution_20250504(A, B, C, D)),
-    assertion((A = 5, B = 8, C = 2, D = 4)).
+     once(solution_20250504(A, B, C, D)),
+     assertion((A = 5, B = 8, C = 2, D = 4)).
 
 test(solution_20250511) :-
     once(solution_20250511(A, B, C, D)),

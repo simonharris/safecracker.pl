@@ -2,7 +2,8 @@
     common_constraints/1,
     divides_by/2,
     is_odd/1,
-    is_prime/1,
+    % is_prime/1,
+    is_prime/2,
     is_square/1,
     occurrenceof/3,
     xor/2
@@ -19,21 +20,35 @@ common_constraints(Vs) :-
 xor(X, Y) :-
     X #/\ #\Y #\/ #\X #/\ Y.
 
+% Recursive is_prime/1 implementation....
 
-check_divisors(N, D) :-
-    D > floor(sqrt(N)).
-check_divisors(N, D) :-
-    D =< floor(sqrt(N)),
-    \+ divides_by(N, D),
-    check_divisors(N, D+1).
+% check_divisors(N, D) :-
+%     D > floor(sqrt(N)).
+% check_divisors(N, D) :-
+%     D =< floor(sqrt(N)),
+%     \+ divides_by(N, D),
+%     check_divisors(N, D+1).
 
 
-is_prime(1) :- !, false.
-is_prime(2) :- !.
-is_prime(N) :-
-    N > 2,
-    check_divisors(N, 2).
+% is_prime(1) :- !, false.
+% is_prime(2) :- !.
+% is_prime(N) :-
+%     N > 2,
+%     check_divisors(N, 2).
+% is_prime(N, 1) :- is_prime(N).
+% is_prime(N, 0) :- \+ is_prime(N).
 
+
+% ...which won't work with CLP(FD) without a fair bit of work:
+% https://stackoverflow.com/questions/39591888/clpfd-constraint-is-a-prime-number
+
+% ...so we'll stick with this until it comes back to bite us
+is_prime(N, 1) :- N in {2, 3, 5, 7}.
+is_prime(N, 0) :- N in {1, 4, 6, 8, 9}.
+
+% This looks cleaner but leads to 0 solutions. Intriguingly the two-line
+% version leaves choice points for the 1 cases, whereas this does not
+% is_prime(N, P) :- (member(N, [2, 3, 5, 7]) -> P = 1 ; P = 0).
 
 is_square(N) :-
     N #= _^2.

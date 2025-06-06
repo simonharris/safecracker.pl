@@ -14,11 +14,11 @@ test(is_square) :-
     assertion(\+is_square(13)),
     assertion(is_square(16)).
 
-test(is_prime) :-
-    assertion(is_prime(17)),
-    assertion(\+ is_prime(6)),
-    assertion(is_prime(2)),
-    assertion(\+ is_prime(1)).
+% test(is_prime) :-
+%     assertion(is_prime(17)),
+%     assertion(\+ is_prime(6)),
+%     assertion(is_prime(2)),
+%     assertion(\+ is_prime(1)).
 
 
 

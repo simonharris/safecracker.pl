@@ -22,3 +22,15 @@ solution_20250504(A, B, C, D) :-
     abs(A - C) #= 3,
 
     label(Vs).
+
+
+% count_primes([], 0).
+% count_primes([H|T], Count) :-
+%     count_primes(T, CountT),
+%     (   is_prime(H)
+%     ->  Count #= CountT + 1
+%     ;   Count #= CountT
+%     ).
+
+% exactly_two_primes(List) :-
+%     count_primes(List, 2).
