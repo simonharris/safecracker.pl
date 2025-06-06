@@ -2,7 +2,7 @@
     common_constraints/1,
     divides_by/2,
     is_odd/1,
-    is_prime/2,
+    is_prime/1,
     is_square/1,
     occurrenceof/3,
     xor/2
@@ -20,8 +20,19 @@ xor(X, Y) :-
     X #/\ #\Y #\/ #\X #/\ Y.
 
 
-is_prime(N, 1) :- N in {2, 3, 5, 7}.
-is_prime(N, 0) :- N in {1, 4, 6, 8, 9}.
+check_divisors(N, D) :-
+    D > floor(sqrt(N)).
+check_divisors(N, D) :-
+    D =< floor(sqrt(N)),
+    \+ divides_by(N, D),
+    check_divisors(N, D+1).
+
+
+is_prime(1) :- !, false.
+is_prime(2) :- !.
+is_prime(N) :-
+    N > 2,
+    check_divisors(N, 2).
 
 
 is_square(N) :-
@@ -36,7 +47,7 @@ divides_by(X, Y) :-
     X mod Y =:= 0.
 
 
-occurrenceof([], _, 0). %empty list, count of anything is 0. Base case.
+occurrenceof([], _, 0). % empty list, count of anything is 0. Base case.
 
 % The first item in the list is the same as what you want to count so
 % add 1 to the recursive count.
@@ -50,3 +61,7 @@ occurrenceof([H|T], H2, Count) :-
     occurrenceof(T, H2, Count).
 
 
+solution_count(Predicate, Count) :-
+    Goal =.. [Predicate, A, B, C, D],
+    findall([A, B, C, D], Goal, Solutions),
+    length(Solutions, Count).
