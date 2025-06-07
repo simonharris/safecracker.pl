@@ -1,6 +1,13 @@
 :- use_module(library(clpfd)).
 
 
+% Anka cannot find her law graduation ceremony. "Gosh, I hope I'm not late!
+% It's not in the manor hall or the cathedral, music graduation is in one of
+% those. I'm sure history graduation is in either the courtyard or the manor
+% hall but history is outside if and only if maths is in the garden." Where
+% is each ceremony taking place?
+
+
 % facts -----------------------------------------------------------------------
 
 
