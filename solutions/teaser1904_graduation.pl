@@ -14,7 +14,7 @@ venue_id(courtyard, 8).
 % rules -----------------------------------------------------------------------
 
 
-solution(MathsVenue, HistoryVenue, LawVenue, MusicVenue) :-
+solution_1904(MathsVenue, HistoryVenue, LawVenue, MusicVenue) :-
     Venues = [MathsVenue, HistoryVenue, LawVenue, MusicVenue],
     Venues ins 1 \/ 2 \/ 4 \/ 8,
     all_distinct(Venues),
@@ -29,5 +29,8 @@ solution(MathsVenue, HistoryVenue, LawVenue, MusicVenue) :-
 
     label(Venues).
 
+
+% Published solution:
+% Law - garden; History - manorhall; Music - cathedral; Maths - courtyard
 
 % findall([MathsVenue, HistoryVenue, LawVenue, MusicVenue], solution(MathsVenue, HistoryVenue, LawVenue, MusicVenue), Solutions), length(Solutions, Count).
