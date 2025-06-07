@@ -36,4 +36,5 @@ solution1905(Jackie1, Jackie2, Ethel1, Ethel2, Len1, Len2) :-
     label(Rolls).
 
 
-% findall([A, B, C, D, E, F], solution1905(A, B, C, D, E, F), Solutions), length(Solutions, Count).
+% Published solution:
+% Jackie1 = 3, Jackie2 = 5, Ethel1 = 6, Ethel2 = 2, Len1 = 1, Len2 = 4
