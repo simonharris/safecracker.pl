@@ -2,6 +2,7 @@
     common_constraints/1,
     divides_by/2,
     is_odd/1,
+    is_even/1,
     % is_prime/1,
     is_prime/2,
     is_square/1,
@@ -58,6 +59,10 @@ is_square(N) :-
 
 is_odd(N) :-
     N mod 2 #= 1.
+
+
+is_even(N) :-
+    N mod 2 #= 0.
 
 
 divides_by(X, Y) :-
