@@ -14,7 +14,8 @@
 
 common_constraints(Vs) :-
     Vs ins 1..9,
-    all_distinct(Vs).
+    all_distinct(Vs),
+    labeling([], Vs).
 
 
 xor(X, Y) :-
@@ -49,6 +50,7 @@ is_prime(N, 0) :- N in {1, 4, 6, 8, 9}.
 % This looks cleaner but leads to 0 solutions. Intriguingly the two-line
 % version leaves choice points for the 1 cases, whereas this does not
 % is_prime(N, P) :- (member(N, [2, 3, 5, 7]) -> P = 1 ; P = 0).
+
 
 is_square(N) :-
     N #= _^2.

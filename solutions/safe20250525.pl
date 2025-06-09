@@ -12,8 +12,7 @@ solution_20250525(A, B, C, D) :-
     (A + B) #= C,
 
     % 3. Exactly one digit is square
-    % include(is_square, Vs, Squares),
-    % length(Squares, 1),
+    include(is_square, Vs, [_]),
 
     % 4. The fourth is 2 more than the first
     D #= A + 2,
@@ -22,6 +21,3 @@ solution_20250525(A, B, C, D) :-
     abs(A - C) #= 1,
 
     label(Vs).
-
-
-% findall([A, B, C, D], solution_20250525(A, B, C, D), Solutions), length(Solutions, Count).
