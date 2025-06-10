@@ -15,10 +15,10 @@ solution1910(Two, Four, Six, Eight) :-
     Eight = EightN-EightC,
 
     Names = [fay, jay, may, ray],
-    Colors = [blue, grey, red, white],
+    Colours = [blue, grey, red, white],
 
     permutation(Names, [TwoN, FourN, SixN, EightN]),
-    permutation(Colors, [TwoC, FourC, SixC, EightC]),
+    permutation(Colours, [TwoC, FourC, SixC, EightC]),
 
     % Fay lives next to May...
     next_to(fay, may, Street),
