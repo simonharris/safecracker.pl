@@ -1,6 +1,7 @@
 :- begin_tests(brain_teaser_solutions).
 :- consult('../solutions/teaser1904_graduation').
 :- consult('../solutions/teaser1905_dice').
+:- consult('../solutions/teaser1907_karaoke').
 :- consult('../solutions/teaser1910_houses').
 
 % These are largely pointless, but think of it as checking the solutions page
@@ -12,6 +13,10 @@ test(solution_1904_graduation) :-
 test(solution_1905_graduation) :-
     once(solution1905(Jackie1, Jackie2, Ethel1, Ethel2, Len1, Len2)),
     assertion((Jackie1 = 3, Jackie2 = 5, Ethel1 = 6, Ethel2 = 2, Len1 = 1, Len2 = 4)).
+
+test(solution_1907_karaoke) :-
+    once(solution1907(First, Second, Third, Fourth)),
+    assertion((First = liam-queen, Second = jess-madonna, Third = lisa-oasis, Fourth = sue-abba)).
 
 test(solution_1910_houses) :-
     once(solution1910(Two, Four, Six, Eight)),
