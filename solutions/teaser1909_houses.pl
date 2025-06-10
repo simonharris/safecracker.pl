@@ -6,7 +6,7 @@
 % said Fay. Where does each person live?
 
 
-solution1910(Two, Four, Six, Eight) :-
+solution1909(Two, Four, Six, Eight) :-
     Street = [Two, Four, Six, Eight],
 
     Two = TwoN-TwoC,

@@ -2,7 +2,7 @@
 :- consult('../solutions/teaser1904_graduation').
 :- consult('../solutions/teaser1905_dice').
 :- consult('../solutions/teaser1907_karaoke').
-:- consult('../solutions/teaser1910_houses').
+:- consult('../solutions/teaser1909_houses').
 
 % These are largely pointless, but think of it as checking the solutions page
 
@@ -18,6 +18,6 @@ test(solution_1907_karaoke) :-
     once(solution1907(First, Second, Third, Fourth)),
     assertion((First = liam-queen, Second = jess-madonna, Third = lisa-oasis, Fourth = sue-abba)).
 
-test(solution_1910_houses) :-
-    once(solution1910(Two, Four, Six, Eight)),
+test(solution_1909_houses) :-
+    once(solution1909(Two, Four, Six, Eight)),
     assertion((Two = jay-grey, Four = ray-blue, Six = fay-white, Eight = may-red)).
