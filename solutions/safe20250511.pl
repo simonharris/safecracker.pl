@@ -25,5 +25,3 @@ solution_20250511(A, B, C, D) :-
 
 
 divides_by_3(N, B) :- (N mod 3 #= 0) #<==> B.
-
-% findall([A, B, C, D], solution_20250511(A, B, C, D), Solutions), length(Solutions, Count).

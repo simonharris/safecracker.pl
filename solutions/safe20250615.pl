@@ -21,6 +21,4 @@ solution_20250615(A, B, C, D) :-
     % 5. The first and fourth differ by 1
     abs(A - D) #= 1,
 
-
-
     label(Vs).
