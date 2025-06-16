@@ -25,6 +25,10 @@ test(solution_20250525) :-
     assertion((A = 5, B = 1, C = 6, D = 7)).
 
 test(solution_20250601) :-
+    once(solution_20250601(A, B, C, D)),
+    assertion((A = 6, B = 4, C = 5, D = 2)).
+
+test(solution_20250615) :-
     once(solution_20250615(A, B, C, D)),
     assertion((A = 7, B = 8, C = 4, D = 6)).
 
