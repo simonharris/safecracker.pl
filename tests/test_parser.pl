@@ -3,7 +3,37 @@
 :- begin_tests(parser).
 
 test(clue_01) :-
-    assertion(phrase(clue, ['the', 'second', 'digit', 'is', 'less', 'than', '7'])),
-    assertion(\+ phrase(clue, ['not', 'a', 'valid', 'clue'])).
+    Sentence = [the, second, digit, is, less, than, '7'],
+    parse_clue(Sentence, Clue),
+    assertion(Clue = clue(second, less_than, 7)).
+
+test(digit) :-
+    assertion(phrase(digit(_), ['the', 'first'])),
+    assertion(phrase(digit(_), ['the', 'second', 'digit'])),
+    assertion(\+ phrase(digit(_), [])),
+    assertion(\+ phrase(digit(_), ['9'])),
+    assertion(\+ phrase(digit(_), ['the'])).
+
+test(ord) :-
+    assertion(phrase(ord(_), ['first'])),
+    assertion(phrase(ord(_), ['fourth'])),
+    assertion(\+ phrase(ord(_), [])),
+    assertion(\+ phrase(ord(_), ['9'])),
+    assertion(\+ phrase(ord(_), ['telescope'])).
+
+test(operator) :-
+    assertion(phrase(operator(_), ['greater', 'than'])),
+    assertion(phrase(operator(_), ['equal', 'to'])),
+    assertion(\+ phrase(operator(_), [])),
+    assertion(\+ phrase(operator(_), ['9'])),
+    assertion(\+ phrase(operator(_), ['telescope'])).
+
+test(safe_digit) :-
+    assertion(phrase(safe_digit(_), ['1'])),
+    assertion(phrase(safe_digit(_), ['9'])),
+    assertion(\+ phrase(safe_digit(_), [])),
+    assertion(\+ phrase(safe_digit(_), ['123', '456'])),
+    assertion(\+ phrase(safe_digit(_), ['99'])),
+    assertion(\+ phrase(safe_digit(_), ['Hello', 'World'])).
 
 :- end_tests(parser).
