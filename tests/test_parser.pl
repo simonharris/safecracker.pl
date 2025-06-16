@@ -1,3 +1,4 @@
+:- use_module(library(clpfd)).
 :- ensure_loaded('../parser/grammar.pl').
 
 :- begin_tests(parser).
@@ -35,5 +36,13 @@ test(safe_digit) :-
     assertion(\+ phrase(safe_digit(_), ['123', '456'])),
     assertion(\+ phrase(safe_digit(_), ['99'])),
     assertion(\+ phrase(safe_digit(_), ['Hello', 'World'])).
+
+test(some_clue) :-
+    Vars = [A, B, C, D],
+    assertion(clue_constraint(clue(first, less_than, 7), Vars, (A #< 7))),
+    assertion(clue_constraint(clue(second, less_than, 7), Vars, (B #< 7))),
+    assertion(clue_constraint(clue(third, greater_than, 2), Vars, (C #> 2))),
+    assertion(clue_constraint(clue(fourth, equal_to, 4), Vars, (D #= 4))).
+
 
 :- end_tests(parser).
