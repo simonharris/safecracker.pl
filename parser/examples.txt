@@ -1,30 +1,57 @@
-The fourth is 3 more than the first
-Either the second or the third is odd, but not both
-The fourth digit is less than 7
-The second is greater than the first
-The fourth is greater than the sum of the second and fourth
+
+
 The third digit is less than 5
+The fourth digit is less than 7
+The first digit is greater than 5
+
+The first is greater than the second
+The first is greater than the fourth
+The second is greater than the first
+The fourth is less than the second
+
+The fourth digit is odd
+The fourth digit is prime
+
+The first and third differ by 1
+The third and fourth differ by 2
+The first and fourth differ by 1
+The first and third differ by 3
+The first and third differ by 1
+
+The fourth is 3 more than the first
+The fourth is 2 more than the first
+The third is 2 less than the fourth
+
+
+
 The second is twice the fourth
+
+Exactly one digit is square
+Only one digit is odd
+
+===================================
+
+
+
+Either the second or the third is odd, but not both
+
+The fourth is greater than the sum of the second and fourth
+
 Exactly two digits are prime
 The second exceeds the first by more than 2
-The first and third differ by 3
+
 Exactly one of the digits is 1
 The first and third total 13
-The third and fourth differ by 2
-The first is greater than the fourth
+
 Exactly two digits are divisible by 3
-The fourth digit is odd
+
 The first and second total the third
-Exactly one digit is square
-The fourth is 2 more than the first
-The first and third differ by 1
+
+
 The sum of the second and third is a square
 Exactly three digits are even
-The first and third differ by 1
-The first is greater than the second
-The fourth digit is prime
-The first digit is greater than 5
-The third is 2 less than the fourth
-The fourth is less than the second
-Only one digit is odd
-The first and fourth differ by 1
+
+
+
+
+
