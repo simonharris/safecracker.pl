@@ -7,10 +7,7 @@ position_index(fourth, 4).
 
 
 parse_text(Text, Vars, Constraint) :-
-    % Vars = [A, B, C, D],
-
     split_string(Text, " ", "", TextList),
-    % writeln(TextList),
     maplist(atom_string, Atoms, TextList),
     % writeln(Atoms),
     parse_clue(Atoms, Clue),
@@ -22,18 +19,22 @@ parse_clue(Sentence, Clue) :-
 
 
 clue_constraint(clue(Position, less_than, Num), Vars, Constraint) :-
+    safe_digit_val(Num),
     position_index(Position, Index),
     nth1(Index, Vars, Var),
     Constraint = (Var #< Num).
 clue_constraint(clue(Position, greater_than, Num), Vars, Constraint) :-
+    safe_digit_val(Num),
     position_index(Position, Index),
     nth1(Index, Vars, Var),
-    writeln(Var),
     Constraint = (Var #> Num).
-clue_constraint(clue(Position, equal_to, Num), Vars, Constraint) :-
-    position_index(Position, Index),
-    nth1(Index, Vars, Var),
-    Constraint = (Var #= Num).
+clue_constraint(clue(Position1, less_than, Position2), Vars, Constraint) :-
+    position_val(Position2),
+    position_index(Position1, Index1),
+    position_index(Position2, Index2),
+    nth1(Index1, Vars, Var1),
+    nth1(Index2, Vars, Var2),
+    Constraint = (Var1 #< Var2).
 
 
 % eg. the third digit is less than 5
@@ -41,8 +42,19 @@ clue(clue(Ordinal, Operator, Number)) -->
     digit(Ordinal),
     i,
     operator(Operator),
-    safe_digit(Number).
+    safe_digit(Number),
+    !.
+clue(clue(Ordinal, Operator, Arg2)) -->
+    digit(Ordinal),
+    i,
+    operator(Operator),
+    digit(Arg2),
+    !.
 
+position_val(Token) :-
+    phrase(ord(Token), [_]).
+
+% TODO: rename eg. position
 digit(Ordinal) --> det, ord(Ordinal).
 digit(Ordinal) --> det, ord(Ordinal), d.
 
@@ -61,6 +73,9 @@ i --> ['is'].
 operator(less_than) --> [less, than].
 operator(greater_than) --> [greater, than].
 operator(equal_to) --> [equal, to].
+
+% safe_digit_val(Num) :- member(Num, [1, 2, 3, 4, 5, 6, 7, 8, 9, 0]).
+safe_digit_val(Num) :- phrase(safe_digit(Num), [_]).
 
 safe_digit(1) --> ['1'].
 safe_digit(2) --> ['2'].
