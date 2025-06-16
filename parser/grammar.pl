@@ -1,9 +1,21 @@
+:- use_module(library(clpfd)).
 
 position_index(first, 1).
 position_index(second, 2).
 position_index(third, 3).
 position_index(fourth, 4).
 
+
+parse_text(Text, Vars, Constraint) :-
+    % Vars = [A, B, C, D],
+
+    split_string(Text, " ", "", TextList),
+    % writeln(TextList),
+    maplist(atom_string, Atoms, TextList),
+    % writeln(Atoms),
+    parse_clue(Atoms, Clue),
+    % writeln(Clue),
+    clue_constraint(Clue, Vars, Constraint).
 
 parse_clue(Sentence, Clue) :-
     phrase(clue(Clue), Sentence).
@@ -16,6 +28,7 @@ clue_constraint(clue(Position, less_than, Num), Vars, Constraint) :-
 clue_constraint(clue(Position, greater_than, Num), Vars, Constraint) :-
     position_index(Position, Index),
     nth1(Index, Vars, Var),
+    writeln(Var),
     Constraint = (Var #> Num).
 clue_constraint(clue(Position, equal_to, Num), Vars, Constraint) :-
     position_index(Position, Index),
@@ -34,6 +47,7 @@ digit(Ordinal) --> det, ord(Ordinal).
 digit(Ordinal) --> det, ord(Ordinal), d.
 
 det --> ['the'].
+det --> ['The'].
 
 ord(first) --> ['first'].
 ord(second) --> ['second'].

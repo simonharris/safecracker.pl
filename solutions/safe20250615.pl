@@ -1,4 +1,5 @@
 :- use_module('../safe_cracker').
+:- ensure_loaded('../parser/grammar.pl').
 
 
 solution_20250615(A, B, C, D) :-
@@ -6,7 +7,9 @@ solution_20250615(A, B, C, D) :-
     common_constraints(Vs),
 
     % 1. The first digit is greater than 5
-    A #> 5,
+    %A #> 5,
+    parse_text('The first digit is greater than 5', Vs, Constraint),
+    call(Constraint),
 
     % 2. The third is 2 less than the fourth
     C #= D - 2,
