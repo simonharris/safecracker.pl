@@ -35,6 +35,13 @@ clue_constraint(clue(Position1, less_than, Position2), Vars, Constraint) :-
     nth1(Index1, Vars, Var1),
     nth1(Index2, Vars, Var2),
     Constraint = (Var1 #< Var2).
+clue_constraint(clue(Position1, greater_than, Position2), Vars, Constraint) :-
+    position_val(Position2),
+    position_index(Position1, Index1),
+    position_index(Position2, Index2),
+    nth1(Index1, Vars, Var1),
+    nth1(Index2, Vars, Var2),
+    Constraint = (Var1 #> Var2).
 
 
 % eg. the third digit is less than 5
