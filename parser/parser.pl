@@ -20,30 +20,21 @@ parse_text(Text, Vars, Constraint) :-
 parse_clue(Sentence, Clue) :-
     phrase(clue(Clue), Sentence).
 
-clue_constraint(clue(Position, less_than, Num), Vars, Constraint) :-
+clue_constraint(clue(Position, Relation, Num), Vars, Constraint) :-
     safe_digit_val(Num),
     position_index(Position, Index),
     nth1(Index, Vars, Var),
-    Constraint = (Var #< Num).
-clue_constraint(clue(Position, greater_than, Num), Vars, Constraint) :-
-    safe_digit_val(Num),
-    position_index(Position, Index),
-    nth1(Index, Vars, Var),
-    Constraint = (Var #> Num).
-clue_constraint(clue(Position1, less_than, Position2), Vars, Constraint) :-
+    relation_constraint(Relation, Var, Num, Constraint).
+clue_constraint(clue(Position1, Relation, Position2), Vars, Constraint) :-
     position_val(Position2),
     position_index(Position1, Index1),
     position_index(Position2, Index2),
     nth1(Index1, Vars, Var1),
     nth1(Index2, Vars, Var2),
-    Constraint = (Var1 #< Var2).
-clue_constraint(clue(Position1, greater_than, Position2), Vars, Constraint) :-
-    position_val(Position2),
-    position_index(Position1, Index1),
-    position_index(Position2, Index2),
-    nth1(Index1, Vars, Var1),
-    nth1(Index2, Vars, Var2),
-    Constraint = (Var1 #> Var2).
+    relation_constraint(Relation, Var1, Var2, Constraint).
+
+relation_constraint(less_than, A, B, A #< B).
+relation_constraint(greater_than, A, B, A #> B).
 
 position_index(first, 1).
 position_index(second, 2).
