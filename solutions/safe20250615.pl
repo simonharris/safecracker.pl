@@ -1,5 +1,5 @@
 :- use_module('../safe_cracker').
-:- ensure_loaded('../parser/grammar.pl').
+:- use_module('../parser/parser').
 
 
 solution_20250615(A, B, C, D) :-

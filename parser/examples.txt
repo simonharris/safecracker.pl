@@ -41,13 +41,15 @@ Exactly two digits are prime
 The second exceeds the first by more than 2
 
 Exactly one of the digits is 1
+
 The first and third total 13
+The first and second total the third
 
 Exactly two digits are divisible by 3
 
-The first and second total the third
 
 
+Either the second or the third is odd, but not both
 The sum of the second and third is a square
 Exactly three digits are even
 
