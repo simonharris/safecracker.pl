@@ -6,6 +6,10 @@ position_index(third, 3).
 position_index(fourth, 4).
 
 
+apply(Text, Vs) :-
+    parse_text(Text, Vs, Constraint),
+    call(Constraint).
+
 parse_text(Text, Vars, Constraint) :-
     split_string(Text, " ", "", TextList),
     maplist(atom_string, Atoms, TextList),

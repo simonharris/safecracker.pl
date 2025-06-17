@@ -13,13 +13,12 @@ solution_20250413(A, B, C, D) :-
 
     % 3. The fourth digit is less than 7
     %D #< 7,
-    parse_text('The fourth digit is less than 7', Vs, Constraint3),
-    call(Constraint3),
+    apply('The fourth digit is less than 7', Vs),
+
 
     % 4. The second is greater than the first
     % B #> A,
-    parse_text('The second is greater than the first', Vs, Constraint4),
-    call(Constraint4),
+    apply('The second is greater than the first', Vs),
 
     % 5. The fourth is greater than the sum of the second and fourth
     D #> (B + C),

@@ -8,16 +8,16 @@ solution_20250615(A, B, C, D) :-
 
     % 1. The first digit is greater than 5
     % A #> 5,
-    parse_text('The first digit is greater than 5', Vs, Constraint1),
-    call(Constraint1),
+    % parse_text('The first digit is greater than 5', Vs, Constraint1),
+    % call(Constraint1),
+    apply('The first digit is greater than 5', Vs),
 
     % 2. The third is 2 less than the fourth
     C #= D - 2,
 
     % 3. The fourth is less than the second
     %D #< B,
-    parse_text('The fourth is less than the second', Vs, Constraint3),
-    call(Constraint3),
+    apply('The fourth is less than the second', Vs),
 
     % 4. Only one digit is odd
     include(is_odd, Vs, Odds),

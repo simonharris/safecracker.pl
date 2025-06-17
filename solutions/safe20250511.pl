@@ -16,8 +16,8 @@ solution_20250511(A, B, C, D) :-
 
     % 4. The first is greater than the fourth
     % A #> D,
-    parse_text('The first is greater than the fourth', Vs, Constraint4),
-    call(Constraint4),
+    apply('The first is greater than the fourth', Vs),
+
 
     % 5. Exactly two digits are divisible by 3
     maplist(divides_by_3, Vs, Threes),
