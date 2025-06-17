@@ -40,7 +40,7 @@ test(clue_01) :-
     assertion(Clue = clue(second, less_than, 7)).
 
 test(clue_02) :-
-    Sentence = ['The', 'first', 'digit', 'is', 'greater', 'than', '5'],
+    Sentence = [the, first, digit, is, greater, than, '5'],
     parse_clue(Sentence, Clue),
     assertion(Clue = clue(first, greater_than, 5)).
 

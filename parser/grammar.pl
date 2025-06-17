@@ -9,9 +9,8 @@ position_index(fourth, 4).
 parse_text(Text, Vars, Constraint) :-
     split_string(Text, " ", "", TextList),
     maplist(atom_string, Atoms, TextList),
-    % writeln(Atoms),
-    parse_clue(Atoms, Clue),
-    % writeln(Clue),
+    maplist(downcase_atom, Atoms, AtomsLower),
+    parse_clue(AtomsLower, Clue),
     clue_constraint(Clue, Vars, Constraint).
 
 parse_clue(Sentence, Clue) :-
@@ -66,7 +65,6 @@ digit(Ordinal) --> det, ord(Ordinal).
 digit(Ordinal) --> det, ord(Ordinal), d.
 
 det --> ['the'].
-det --> ['The'].
 
 ord(first) --> ['first'].
 ord(second) --> ['second'].
