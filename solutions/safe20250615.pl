@@ -8,8 +8,6 @@ solution_20250615(A, B, C, D) :-
 
     % 1. The first digit is greater than 5
     % A #> 5,
-    % parse_text('The first digit is greater than 5', Vs, Constraint1),
-    % call(Constraint1),
     apply('The first digit is greater than 5', Vs),
 
     % 2. The third is 2 less than the fourth

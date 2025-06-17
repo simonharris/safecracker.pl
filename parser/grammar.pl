@@ -1,7 +1,7 @@
 :- module(grammar, [
     clue//1,
 
-    % for testing
+    adj//1,
     digit//1,
     operator//1,
     ord//1,
@@ -15,12 +15,22 @@ clue(clue(Ordinal, Operator, Number)) -->
     operator(Operator),
     safe_digit(Number),
     !.
+% eg. the third digit is less than the secod
 clue(clue(Ordinal, Operator, Arg2)) -->
     digit(Ordinal),
     i,
     operator(Operator),
     digit(Arg2),
     !.
+% eg. the second digit is odd
+clue(clue(Ordinal, Adj)) -->
+    digit(Ordinal),
+    i,
+    adj(Adj),
+    !.
+
+adj(Adj) --> [Adj], { member(Adj, [prime, odd, even ]) }.
+
 
 % TODO: rename eg. position
 digit(Ordinal) --> det, ord(Ordinal).
@@ -42,3 +52,5 @@ operator(greater_than) --> [greater, than].
 operator(equal_to) --> [equal, to].
 
 safe_digit(D) --> [C], { member(C, ['1','2','3','4','5','6','7','8','9']), atom_number(C, D) }.
+
+

@@ -1,4 +1,5 @@
 :- use_module('../safe_cracker').
+:- use_module('../parser/parser').
 
 
 solution_20250525(A, B, C, D) :-
@@ -6,7 +7,8 @@ solution_20250525(A, B, C, D) :-
     common_constraints(Vs),
 
     % 1. The fourth digit is odd
-    is_odd(D),
+    % is_odd(D),
+    apply('The fourth digit is odd', Vs),
 
     % 2. The first and second total the third
     (A + B) #= C,

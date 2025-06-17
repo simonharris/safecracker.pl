@@ -6,7 +6,8 @@ solution_20250504(A, B, C, D) :-
     common_constraints(Vs),
 
     % 1. The third digit is less than 5
-    C #< 5,
+    % C #< 5,
+    apply('The third digit is less than 5', Vs),
 
     % 2. The second is twice the fourth
     B #= 2 * D,

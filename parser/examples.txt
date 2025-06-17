@@ -1,16 +1,16 @@
 
 
-The third digit is less than 5
-The fourth digit is less than 7
-The first digit is greater than 5
+X The third digit is less than 5
+X The fourth digit is less than 7
+X The first digit is greater than 5
 
-The first is greater than the second
-The first is greater than the fourth
-The second is greater than the first
-The fourth is less than the second
+X The first is greater than the second
+X The first is greater than the fourth
+X The second is greater than the first
+X The fourth is less than the second
 
-The fourth digit is odd
-The fourth digit is prime
+X The fourth digit is odd
+X The fourth digit is prime
 
 The first and third differ by 1
 The third and fourth differ by 2

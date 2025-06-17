@@ -18,9 +18,11 @@ solution_20250601(A, B, C, D) :-
     abs(A - C) #= 1,
 
     % 4. The first is greater than the second
-    A #> B,
-
+    % A #> B,
+    apply('The first is greater than the second', Vs)
+,
     % 5. The fourth digit is prime
-    is_prime(D, 1),
+    % is_prime(D, 1),
+    apply('The fourth digit is prime', Vs),
 
     label(Vs).

@@ -1,5 +1,5 @@
 :- use_module(library(clpfd)).
-:- ensure_loaded('../parser/parser.pl').
+:- ensure_loaded('../parser/parser').
 
 :- begin_tests(parser).
 
@@ -24,5 +24,11 @@ test(clue_02) :-
 %     assertion(clue_constraint(clue(third, greater_than, 2), Vars, (C #> 2))),
 %     assertion(clue_constraint(clue(fourth, equal_to, 4), Vars, (D #= 4))),
 %     assertion(clue_constraint(clue(first, greater_than, 5), Vars, (A #> 5))).
+
+
+test(adjectives) :-
+    Sentence = [the, fourth, digit, is, odd],
+    parse_clue(Sentence, Clue),
+    assertion(Clue = clue(fourth, odd)).
 
 :- end_tests(parser).
