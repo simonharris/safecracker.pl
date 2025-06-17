@@ -3,7 +3,7 @@
 
     adj//1,
     fun//1,
-    num//1,
+    % num//1,
     operator//1,
     ord//1,
     position//1,
@@ -31,12 +31,13 @@ clue(clue(Ordinal, Adj)) -->
     adj(Adj),
     !.
 % eg. The third and fourth differ by 2
+% eg. he first and third total 13
 clue(clue(Ordinal1, Ordinal2, Func, Howmany)) -->
     position(Ordinal1),
     n,
     position(Ordinal2),
     function(Func),
-    num(Howmany),
+    numeric_string(Howmany),
     !.
 
 adj(Adj) --> [Adj], { member(Adj, ['prime', 'odd', 'even']) }.
@@ -57,7 +58,9 @@ ord(third) --> ['third'].
 ord(fourth) --> ['fourth'].
 
 function(differ_by) --> ['differ', 'by'].
-fun(Fun) --> [Fun], { member(Fun, ['differ_by']) }.
+function(add_up_to) --> ['total'].
+
+fun(Fun) --> [Fun], { member(Fun, ['differ_by', 'add_up_to']) }.
 
 operator(less_than) --> ['less', 'than'].
 operator(greater_than) --> ['greater', 'than'].
@@ -65,5 +68,5 @@ operator(equal_to) --> ['equal', 'to'].
 
 safe_digit(D) --> [C], { member(C, ['1','2','3','4','5','6','7','8','9']), atom_number(C, D) }.
 
-num(N) --> [C], { char_type(C, digit), number_chars(N, [C]) }.
+numeric_string(Num) --> [Num]. % yeah, you try doing better
 

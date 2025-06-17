@@ -18,7 +18,7 @@ X The first and fourth differ by 1
 X The first and third differ by 3
 X The first and third differ by 1
 
-The first and third total 13
+X The first and third total 13
 
 
 The fourth is 3 more than the first

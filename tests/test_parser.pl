@@ -34,11 +34,11 @@ test(adjectives) :-
 test(difference1) :-
     Sentence = [the, third, and, fourth, differ, by, '2'],
     parse_clue(Sentence, Clue),
-    assertion(Clue = clue(third, fourth, differ_by, 2)).
+    assertion(Clue = clue(third, fourth, differ_by, '2')).
 
 test(difference2) :-
     Sentence = [the, first, and, third, differ, by, '3'],
     parse_clue(Sentence, Clue),
-    assertion(Clue = clue(first, third, differ_by, 3)).
+    assertion(Clue = clue(first, third, differ_by, '3')).
 
 :- end_tests(parser).

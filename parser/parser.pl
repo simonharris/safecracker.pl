@@ -47,21 +47,23 @@ clue_constraint(clue(Position, Prop), Vars, Constraint) :-
     nth1(Index, Vars, Var),
     property_constraint(Prop, Var, Constraint).
 % eg. The third and fourth differ by 2
-clue_constraint(clue(Position1, Position2, Func, Howmany), Vars, Constraint) :-
+% eg. The first and third total 13
+clue_constraint(clue(Position1, Position2, Func, HowmanyStr), Vars, Constraint) :-
     position_val(Position1),
-    writeln(Position1),
+    % writeln(Position1),
     position_val(Position2),
-    writeln(Position2),
-    writeln(Func),
+    % writeln(Position2),
+    % writeln(Func),
     fun_val(Func),
-    writeln(Func),
-    number_val(Howmany),
+    % writeln(Func),
+    % integer(Howmany),
     position_index(Position1, Index1),
     position_index(Position2, Index2),
     nth1(Index1, Vars, Var1),
-    writeln(Var1),
+    % writeln(Var1),
     nth1(Index2, Vars, Var2),
-        writeln(Var1),
+    % writeln(Var1),
+    atom_number(HowmanyStr, Howmany),
     function_constraint(Func, Var1, Var2, Howmany, Constraint),
     writeln(Constraint).
 
@@ -74,6 +76,7 @@ property_constraint(even, Var, is_even(Var)).
 property_constraint(prime, Var, is_prime(Var, 1)).
 
 function_constraint(differ_by, Var1, Var2, Howmany, abs(Var1 - Var2) #= Howmany).
+function_constraint(add_up_to, Var1, Var2, Howmany, (Var1 + Var2) #= Howmany).
 
 position_index(first, 1).
 position_index(second, 2).
@@ -96,5 +99,5 @@ property_val(Prop) :-
 fun_val(Func) :-
     phrase(fun(Func), [_]).
 
-number_val(Num) :-
-    phrase(num(Num), [_]).
+% number_val(Num) :-
+%     phrase(num(Num), [_]).
