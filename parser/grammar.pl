@@ -86,12 +86,4 @@ operator(equal_to) --> [equal, to].
 % safe_digit_val(Num) :- member(Num, [1, 2, 3, 4, 5, 6, 7, 8, 9, 0]).
 safe_digit_val(Num) :- phrase(safe_digit(Num), [_]).
 
-safe_digit(1) --> ['1'].
-safe_digit(2) --> ['2'].
-safe_digit(3) --> ['3'].
-safe_digit(4) --> ['4'].
-safe_digit(5) --> ['5'].
-safe_digit(6) --> ['6'].
-safe_digit(7) --> ['7'].
-safe_digit(8) --> ['8'].
-safe_digit(9) --> ['9'].
+safe_digit(D) --> [C], { member(C, ['1','2','3','4','5','6','7','8','9']), atom_number(C, D) }.
