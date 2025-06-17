@@ -12,12 +12,12 @@ solution_20250511(A, B, C, D) :-
     A + C #= 13,
 
     % 3. The third and fourth differ by 2
-    abs(C - D) #= 2,
+    % abs(C - D) #= 2,
+    apply('The third and fourth differ by 2', Vs),
 
     % 4. The first is greater than the fourth
     % A #> D,
     apply('The first is greater than the fourth', Vs),
-
 
     % 5. Exactly two digits are divisible by 3
     maplist(divides_by_3, Vs, Threes),

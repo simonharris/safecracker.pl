@@ -16,7 +16,9 @@ parse_text(Text, Vars, Constraint) :-
     maplist(atom_string, Atoms, TextList),
     maplist(downcase_atom, Atoms, AtomsLower),
     parse_clue(AtomsLower, Clue),
-    clue_constraint(Clue, Vars, Constraint).
+    writeln(Clue),
+    clue_constraint(Clue, Vars, Constraint),
+    writeln(Constraint).
 
 parse_clue(Sentence, Clue) :-
     phrase(clue(Clue), Sentence).
@@ -28,7 +30,7 @@ clue_constraint(clue(Position, Relation, Num), Vars, Constraint) :-
     position_index(Position, Index),
     nth1(Index, Vars, Var),
     relation_constraint(Relation, Var, Num, Constraint).
-% eg. the third digit is less than the secod
+% eg. the third digit is less than the second
 clue_constraint(clue(Position1, Relation, Position2), Vars, Constraint) :-
     position_val(Position1),
     position_val(Position2),
@@ -44,6 +46,24 @@ clue_constraint(clue(Position, Prop), Vars, Constraint) :-
     position_index(Position, Index),
     nth1(Index, Vars, Var),
     property_constraint(Prop, Var, Constraint).
+% eg. The third and fourth differ by 2
+clue_constraint(clue(Position1, Position2, Func, Howmany), Vars, Constraint) :-
+    position_val(Position1),
+    writeln(Position1),
+    position_val(Position2),
+    writeln(Position2),
+    writeln(Func),
+    fun_val(Func),
+    writeln(Func),
+    number_val(Howmany),
+    position_index(Position1, Index1),
+    position_index(Position2, Index2),
+    nth1(Index1, Vars, Var1),
+    writeln(Var1),
+    nth1(Index2, Vars, Var2),
+        writeln(Var1),
+    function_constraint(Func, Var1, Var2, Howmany, Constraint),
+    writeln(Constraint).
 
 
 relation_constraint(less_than, A, B, A #< B).
@@ -53,6 +73,7 @@ property_constraint(odd, Var, is_odd(Var)).
 property_constraint(even, Var, is_even(Var)).
 property_constraint(prime, Var, is_prime(Var, 1)).
 
+function_constraint(differ_by, Var1, Var2, Howmany, abs(Var1 - Var2) #= Howmany).
 
 position_index(first, 1).
 position_index(second, 2).
@@ -71,3 +92,9 @@ safe_digit_val(Num) :-
 
 property_val(Prop) :-
     phrase(adj(Prop), [_]).
+
+fun_val(Func) :-
+    phrase(fun(Func), [_]).
+
+number_val(Num) :-
+    phrase(num(Num), [_]).

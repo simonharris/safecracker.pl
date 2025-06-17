@@ -20,6 +20,7 @@ solution_20250525(A, B, C, D) :-
     D #= A + 2,
 
     % 5. The first and third differ by 1
-    abs(A - C) #= 1,
+    %abs(A - C) #= 1,
+    apply('The first and third differ by 1', Vs),
 
     label(Vs).

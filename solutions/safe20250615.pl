@@ -22,6 +22,7 @@ solution_20250615(A, B, C, D) :-
     length(Odds, 1),
 
     % 5. The first and fourth differ by 1
-    abs(A - D) #= 1,
+    % abs(A - D) #= 1,
+    apply('The first and fourth differ by 1', Vs),
 
     label(Vs).

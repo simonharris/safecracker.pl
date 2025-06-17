@@ -15,12 +15,13 @@ solution_20250601(A, B, C, D) :-
     length(Evens, 3),
 
     % 3. The first and third differ by 1
-    abs(A - C) #= 1,
+    % abs(A - C) #= 1,
+    apply('The first and third differ by 1', Vs),
 
     % 4. The first is greater than the second
     % A #> B,
-    apply('The first is greater than the second', Vs)
-,
+    apply('The first is greater than the second', Vs),
+
     % 5. The fourth digit is prime
     % is_prime(D, 1),
     apply('The fourth digit is prime', Vs),

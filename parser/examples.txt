@@ -12,11 +12,14 @@ X The fourth is less than the second
 X The fourth digit is odd
 X The fourth digit is prime
 
-The first and third differ by 1
-The third and fourth differ by 2
-The first and fourth differ by 1
-The first and third differ by 3
-The first and third differ by 1
+X The first and third differ by 1
+X The third and fourth differ by 2
+X The first and fourth differ by 1
+X The first and third differ by 3
+X The first and third differ by 1
+
+The first and third total 13
+
 
 The fourth is 3 more than the first
 The fourth is 2 more than the first
@@ -46,8 +49,6 @@ The first and third total 13
 The first and second total the third
 
 Exactly two digits are divisible by 3
-
-
 
 Either the second or the third is odd, but not both
 The sum of the second and third is a square
