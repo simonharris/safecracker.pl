@@ -2,7 +2,7 @@
     clue//1,
 
     adj//1,
-    digit//1,
+    position//1,
     operator//1,
     ord//1,
     safe_digit//1
@@ -10,21 +10,21 @@
 
 % eg. the third digit is less than 5
 clue(clue(Ordinal, Operator, Number)) -->
-    digit(Ordinal),
+    position(Ordinal),
     i,
     operator(Operator),
     safe_digit(Number),
     !.
 % eg. the third digit is less than the secod
 clue(clue(Ordinal, Operator, Arg2)) -->
-    digit(Ordinal),
+    position(Ordinal),
     i,
     operator(Operator),
-    digit(Arg2),
+    position(Arg2),
     !.
 % eg. the second digit is odd
 clue(clue(Ordinal, Adj)) -->
-    digit(Ordinal),
+    position(Ordinal),
     i,
     adj(Adj),
     !.
@@ -32,9 +32,8 @@ clue(clue(Ordinal, Adj)) -->
 adj(Adj) --> [Adj], { member(Adj, [prime, odd, even ]) }.
 
 
-% TODO: rename eg. position
-digit(Ordinal) --> det, ord(Ordinal).
-digit(Ordinal) --> det, ord(Ordinal), d.
+position(Ordinal) --> det, ord(Ordinal).
+position(Ordinal) --> det, ord(Ordinal), d.
 
 det --> ['the'].
 

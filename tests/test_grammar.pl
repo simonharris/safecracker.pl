@@ -4,11 +4,11 @@
 :- begin_tests(grammar).
 
 test(digit) :-
-    assertion(phrase(digit(_), ['the', 'first'])),
-    assertion(phrase(digit(_), ['the', 'second', 'digit'])),
-    assertion(\+ phrase(digit(_), [])),
-    assertion(\+ phrase(digit(_), ['9'])),
-    assertion(\+ phrase(digit(_), ['the'])).
+    assertion(phrase(position(_), ['the', 'first'])),
+    assertion(phrase(position(_), ['the', 'second', 'digit'])),
+    assertion(\+ phrase(position(_), [])),
+    assertion(\+ phrase(position(_), ['9'])),
+    assertion(\+ phrase(position(_), ['the'])).
 
 test(ord) :-
     assertion(phrase(ord(_), ['first'])),
