@@ -1,6 +1,7 @@
 :- module(parser, [
     apply/2,
     % for testing
+    normalise_numbers/2,
     parse_clue/2
 ]).
 :- use_module(library(clpfd)).
@@ -15,7 +16,8 @@ parse_text(Text, Vars, Constraint) :-
     split_string(Text, " ", "", TextList),
     maplist(atom_string, Atoms, TextList),
     maplist(downcase_atom, Atoms, AtomsLower),
-    parse_clue(AtomsLower, Clue),
+    maplist(normalise_numbers, AtomsLower, AtomsWithnumbers),
+    parse_clue(AtomsWithnumbers, Clue),
     % writeln(Clue),
     clue_constraint(Clue, Vars, Constraint),
     %writeln(Constraint),
@@ -86,6 +88,18 @@ position_index(first, 1).
 position_index(second, 2).
 position_index(third, 3).
 position_index(fourth, 4).
+
+
+normalise_numbers('one', '1').
+normalise_numbers('two', '2').
+normalise_numbers('three', '3').
+normalise_numbers('four', '4').
+normalise_numbers('five', '5').
+normalise_numbers('six', '6').
+normalise_numbers('seven', '7').
+normalise_numbers('eight', '8').
+normalise_numbers('nine', '9').
+normalise_numbers(Atom, Atom).
 
 
 % Wrappers for DCG predicates in grammar.pl -----------------------------------

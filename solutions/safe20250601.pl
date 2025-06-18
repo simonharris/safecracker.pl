@@ -14,9 +14,9 @@ solution_20250601(A, B, C, D) :-
     include(is_even, Vs, Evens),
     length(Evens, 3),
 
-    % 3. The first and third differ by 1
+    % 3. The first and third differ by one
     % abs(A - C) #= 1,
-    apply('The first and third differ by 1', Vs),
+    apply('The first and third differ by one', Vs),
 
     % 4. The first is greater than the second
     % A #> B,

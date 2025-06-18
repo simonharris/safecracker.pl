@@ -12,9 +12,9 @@ solution_20250511(A, B, C, D) :-
     % A + C #= 13,
     apply('The first and third total 13', Vs),
 
-    % 3. The third and fourth differ by 2
+    % 3. The third and fourth differ by two
     % abs(C - D) #= 2,
-    apply('The third and fourth differ by 2', Vs),
+    apply('The third and fourth differ by two', Vs),
 
     % 4. The first is greater than the fourth
     % A #> D,

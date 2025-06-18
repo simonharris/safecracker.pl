@@ -5,9 +5,9 @@ solution_20250504(A, B, C, D) :-
     Vs = [A, B, C, D],
     common_constraints(Vs),
 
-    % 1. The third digit is less than 5
+    % 1. The third digit is less than five
     % C #< 5,
-    apply('The third digit is less than 5', Vs),
+    apply('The third digit is less than five', Vs),
 
     % 2. The second is twice the fourth
     B #= 2 * D,
@@ -16,12 +16,12 @@ solution_20250504(A, B, C, D) :-
     maplist(is_prime, Vs, PrimeDigits),
     sum(PrimeDigits, #=, 2),
 
-    % 4. The second exceeds the first by more than 2
+    % 4. The second exceeds the first by more than two
     B #> A + 2,
 
-    % 5. The first and third differ by 3
+    % 5. The first and third differ by three
     % abs(A - C) #= 3,
-    apply('The first and third differ by 3', Vs),
+    apply('The first and third differ by three', Vs),
 
     label(Vs).
 

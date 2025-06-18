@@ -16,12 +16,12 @@ solution_20250525(A, B, C, D) :-
     % 3. Exactly one digit is square
     include(is_square, Vs, [_]),
 
-    % 4. The fourth is 2 more than the first
+    % 4. The fourth is two more than the first
     % D #= A + 2,
-    apply('The fourth is 2 more than the first', Vs),
+    apply('The fourth is two more than the first', Vs),
 
-    % 5. The first and third differ by 1
+    % 5. The first and third differ by one
     %abs(A - C) #= 1,
-    apply('The first and third differ by 1', Vs),
+    apply('The first and third differ by one', Vs),
 
     label(Vs).

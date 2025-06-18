@@ -4,9 +4,6 @@
 :- begin_tests(parser).
 
 
-
-
-
 test(clue_01) :-
     Sentence = [the, second, digit, is, less, than, '7'],
     parse_clue(Sentence, Clue),
@@ -45,5 +42,13 @@ test(qualified_difference) :-
     Sentence = [the, fourth, is, '3', more, than, the, first],
     parse_clue(Sentence, Clue),
     assertion(Clue = clue(fourth, first, greater_than, '3')).
+
+test(normalise_numbers) :-
+    normalise_numbers('hello', 'hello'),
+    normalise_numbers('13', '13'),
+    normalise_numbers('one', '1'),
+    normalise_numbers('six', '6'),
+    normalise_numbers('nine', '9'),
+    !.
 
 :- end_tests(parser).
