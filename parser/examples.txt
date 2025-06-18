@@ -21,7 +21,7 @@ X The first and third differ by 1
 
 X The first and third total 13
 
-The first and second total the third
+X The first and second total the third
 
 X The fourth is 3 more than the first
 X The fourth is 2 more than the first
@@ -40,7 +40,7 @@ Exactly two digits are divisible by 3
 
 Either the second or the third is odd, but not both
 
-The fourth is greater than the sum of the second and fourth
+The fourth is greater than the sum of the second and third
 
 The second exceeds the first by more than 2
 

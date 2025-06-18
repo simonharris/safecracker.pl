@@ -20,7 +20,7 @@ solution_20250413(A, B, C, D) :-
     % B #> A,
     apply('The second is greater than the first', Vs),
 
-    % 5. The fourth is greater than the sum of the second and fourth
+    % 5. The fourth is greater than the sum of the second and third
     D #> (B + C),
 
     label(Vs).
