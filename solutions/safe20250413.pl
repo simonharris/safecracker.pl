@@ -6,7 +6,8 @@ solution_20250413(A, B, C, D) :-
     common_constraints(Vs),
 
     % 1. The fourth is 3 more than the first
-    D #= A + 3,
+    % D #= A + 3,
+    apply('The fourth is 3 more than the first', Vs),
 
     % 2. Either the second or the third is odd, but not both
     xor(B mod 2 #= 1, C mod 2 #= 1),
@@ -14,7 +15,6 @@ solution_20250413(A, B, C, D) :-
     % 3. The fourth digit is less than 7
     %D #< 7,
     apply('The fourth digit is less than 7', Vs),
-
 
     % 4. The second is greater than the first
     % B #> A,

@@ -17,7 +17,8 @@ solution_20250525(A, B, C, D) :-
     include(is_square, Vs, [_]),
 
     % 4. The fourth is 2 more than the first
-    D #= A + 2,
+    % D #= A + 2,
+    apply('The fourth is 2 more than the first', Vs),
 
     % 5. The first and third differ by 1
     %abs(A - C) #= 1,

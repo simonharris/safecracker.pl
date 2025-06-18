@@ -16,9 +16,10 @@ parse_text(Text, Vars, Constraint) :-
     maplist(atom_string, Atoms, TextList),
     maplist(downcase_atom, Atoms, AtomsLower),
     parse_clue(AtomsLower, Clue),
-    writeln(Clue),
+    % writeln(Clue),
     clue_constraint(Clue, Vars, Constraint),
-    writeln(Constraint).
+    %writeln(Constraint),
+    !.
 
 parse_clue(Sentence, Clue) :-
     phrase(clue(Clue), Sentence).
@@ -65,7 +66,8 @@ clue_constraint(clue(Position1, Position2, Func, HowmanyStr), Vars, Constraint) 
     % writeln(Var1),
     atom_number(HowmanyStr, Howmany),
     function_constraint(Func, Var1, Var2, Howmany, Constraint),
-    writeln(Constraint).
+    % writeln(Constraint),
+    !.
 
 
 relation_constraint(less_than, A, B, A #< B).
@@ -77,6 +79,8 @@ property_constraint(prime, Var, is_prime(Var, 1)).
 
 function_constraint(differ_by, Var1, Var2, Howmany, abs(Var1 - Var2) #= Howmany).
 function_constraint(add_up_to, Var1, Var2, Howmany, (Var1 + Var2) #= Howmany).
+function_constraint(less_than, Var1, Var2, Howmany, (Var2 - Var1) #= Howmany).
+function_constraint(greater_than, Var1, Var2, Howmany, (Var1 - Var2) #= Howmany).
 
 position_index(first, 1).
 position_index(second, 2).

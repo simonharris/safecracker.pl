@@ -1,5 +1,4 @@
 
-
 X The third digit is less than 5
 X The fourth digit is less than 7
 X The first digit is greater than 5
@@ -20,9 +19,8 @@ X The first and third differ by 1
 
 X The first and third total 13
 
-
-The fourth is 3 more than the first
-The fourth is 2 more than the first
+X The fourth is 3 more than the first
+X The fourth is 2 more than the first
 The third is 2 less than the fourth
 
 

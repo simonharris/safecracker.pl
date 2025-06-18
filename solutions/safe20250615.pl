@@ -11,7 +11,8 @@ solution_20250615(A, B, C, D) :-
     apply('The first digit is greater than 5', Vs),
 
     % 2. The third is 2 less than the fourth
-    C #= D - 2,
+    % C #= D - 2,
+    apply('The third is 2 less than the fourth', Vs),
 
     % 3. The fourth is less than the second
     %D #< B,

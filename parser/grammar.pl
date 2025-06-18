@@ -1,9 +1,7 @@
 :- module(grammar, [
     clue//1,
-
     adj//1,
     fun//1,
-    % num//1,
     operator//1,
     ord//1,
     position//1,
@@ -30,25 +28,32 @@ clue(clue(Ordinal, Adj)) -->
     i,
     adj(Adj),
     !.
-% eg. The third and fourth differ by 2
-% eg. he first and third total 13
+% eg. the third and fourth differ by 2
+% eg. the first and third total 13
 clue(clue(Ordinal1, Ordinal2, Func, Howmany)) -->
     position(Ordinal1),
-    n,
+    and,
     position(Ordinal2),
     function(Func),
     numeric_string(Howmany),
     !.
+% eg. The fourth is 3 more than the first
+clue(clue(Ordinal1, Ordinal2, Func, Howmany)) -->
+    position(Ordinal1),
+    i,
+    numeric_string(Howmany),
+    function(Func),
+    position(Ordinal2),
+    !.
 
 adj(Adj) --> [Adj], { member(Adj, ['prime', 'odd', 'even']) }.
-
 
 position(Ordinal) --> det, ord(Ordinal), d.
 position(Ordinal) --> det, ord(Ordinal).
 position(Ordinal) --> ord(Ordinal).
 
 det --> ['the'].
-n --> ['and'].
+and --> ['and'].
 d --> ['digit'].
 i --> ['is'].
 
@@ -59,8 +64,10 @@ ord(fourth) --> ['fourth'].
 
 function(differ_by) --> ['differ', 'by'].
 function(add_up_to) --> ['total'].
+function(greater_than) --> ['more', 'than'].
+function(less_than) --> ['less', 'than'].
 
-fun(Fun) --> [Fun], { member(Fun, ['differ_by', 'add_up_to']) }.
+fun(Fun) --> [Fun], { member(Fun, ['differ_by', 'add_up_to', 'greater_than', 'less_than']) }.
 
 operator(less_than) --> ['less', 'than'].
 operator(greater_than) --> ['greater', 'than'].
