@@ -34,6 +34,7 @@ clue_constraint(clue(Position, Relation, Num), Vars, Constraint) :-
     nth1(Index, Vars, Var),
     relation_constraint(Relation, Var, Num, Constraint).
 % eg. the third digit is less than the second
+% eg. the second is twice the fourth
 clue_constraint(clue(Position1, Relation, Position2), Vars, Constraint) :-
     position_val(Position1),
     position_val(Position2),
@@ -74,6 +75,7 @@ clue_constraint(clue(Position1, Position2, Func, HowmanyStr), Vars, Constraint) 
 
 relation_constraint(less_than, A, B, A #< B).
 relation_constraint(greater_than, A, B, A #> B).
+relation_constraint(twice, A, B, A #= B*2).
 
 property_constraint(odd, Var, is_odd(Var)).
 property_constraint(even, Var, is_even(Var)).
@@ -88,7 +90,6 @@ position_index(first, 1).
 position_index(second, 2).
 position_index(third, 3).
 position_index(fourth, 4).
-
 
 normalise_numbers('one', '1').
 normalise_numbers('two', '2').

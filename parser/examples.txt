@@ -8,6 +8,8 @@ X The first is greater than the fourth
 X The second is greater than the first
 X The fourth is less than the second
 
+X The second is twice the fourth
+
 X The fourth digit is odd
 X The fourth digit is prime
 
@@ -19,40 +21,28 @@ X The first and third differ by 1
 
 X The first and third total 13
 
+The first and second total the third
+
 X The fourth is 3 more than the first
 X The fourth is 2 more than the first
-The third is 2 less than the fourth
+X The third is 2 less than the fourth
 
-
-
-The second is twice the fourth
 
 Exactly one digit is square
 Only one digit is odd
+Exactly three digits are even
+Exactly two digits are prime
+Exactly one of the digits is 1
+Exactly two digits are divisible by 3
 
 ===================================
-
 
 
 Either the second or the third is odd, but not both
 
 The fourth is greater than the sum of the second and fourth
 
-Exactly two digits are prime
 The second exceeds the first by more than 2
 
-Exactly one of the digits is 1
-
-The first and third total 13
-The first and second total the third
-
-Exactly two digits are divisible by 3
-
-Either the second or the third is odd, but not both
 The sum of the second and third is a square
-Exactly three digits are even
-
-
-
-
 

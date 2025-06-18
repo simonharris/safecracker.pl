@@ -10,7 +10,8 @@ solution_20250504(A, B, C, D) :-
     apply('The third digit is less than five', Vs),
 
     % 2. The second is twice the fourth
-    B #= 2 * D,
+    %B #= 2 * D,
+    apply('The second is twice the fourth', Vs),
 
     % 3. Exactly two digits are prime
     maplist(is_prime, Vs, PrimeDigits),

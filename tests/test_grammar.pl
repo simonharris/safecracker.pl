@@ -19,7 +19,7 @@ test(ord) :-
 
 test(operator) :-
     assertion(phrase(operator(_), ['greater', 'than'])),
-    assertion(phrase(operator(_), ['equal', 'to'])),
+    %assertion(phrase(operator(_), ['equal', 'to'])),
     assertion(\+ phrase(operator(_), [])),
     assertion(\+ phrase(operator(_), ['9'])),
     assertion(\+ phrase(operator(_), ['telescope'])).

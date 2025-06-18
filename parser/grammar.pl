@@ -16,6 +16,7 @@ clue(clue(Ordinal, Operator, Number)) -->
     safe_digit(Number),
     !.
 % eg. the third digit is less than the second
+% eg. the second is twice the fourth
 clue(clue(Ordinal1, Operator, Ordinal2)) -->
     position(Ordinal1),
     i,
@@ -71,7 +72,8 @@ fun(Fun) --> [Fun], { member(Fun, ['differ_by', 'add_up_to', 'greater_than', 'le
 
 operator(less_than) --> ['less', 'than'].
 operator(greater_than) --> ['greater', 'than'].
-operator(equal_to) --> ['equal', 'to'].
+operator(twice) --> ['twice'].
+% operator(equal_to) --> ['equal', 'to'].
 
 safe_digit(D) --> [C], { member(C, ['1','2','3','4','5','6','7','8','9']), atom_number(C, D) }.
 

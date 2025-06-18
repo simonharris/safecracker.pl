@@ -38,6 +38,11 @@ test(difference2) :-
     parse_clue(Sentence, Clue),
     assertion(Clue = clue(first, third, differ_by, '3')).
 
+test(twice) :-
+    Sentence = [the, second, is, twice, the, fourth],
+    parse_clue(Sentence, Clue),
+    assertion(Clue = clue(second, twice, fourth)).
+
 test(qualified_difference) :-
     Sentence = [the, fourth, is, '3', more, than, the, first],
     parse_clue(Sentence, Clue),
