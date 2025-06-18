@@ -11,7 +11,7 @@
 % eg. the third digit is less than 5
 clue(clue(Ordinal, Operator, Number)) -->
     position(Ordinal),
-    i,
+    be,
     operator(Operator),
     safe_digit(Number),
     !.
@@ -19,15 +19,23 @@ clue(clue(Ordinal, Operator, Number)) -->
 % eg. the second is twice the fourth
 clue(clue(Ordinal1, Operator, Ordinal2)) -->
     position(Ordinal1),
-    i,
+    be,
     operator(Operator),
     position(Ordinal2),
     !.
 % eg. the second digit is odd
 clue(clue(Ordinal, Adj)) -->
     position(Ordinal),
-    i,
+    be,
     adj(Adj),
+    !.
+% eg. The first and second total the third
+clue(clue(Ordinal1, Ordinal2, Func, Ordinal3)) -->
+    position(Ordinal1),
+    and,
+    position(Ordinal2),
+    function(Func),
+    position(Ordinal3),
     !.
 % eg. the third and fourth differ by 2
 % eg. the first and third total 13
@@ -38,10 +46,11 @@ clue(clue(Ordinal1, Ordinal2, Func, Howmany)) -->
     function(Func),
     numeric_string(Howmany),
     !.
+
 % eg. The fourth is 3 more than the first
 clue(clue(Ordinal1, Ordinal2, Func, Howmany)) -->
     position(Ordinal1),
-    i,
+    be,
     numeric_string(Howmany),
     function(Func),
     position(Ordinal2),
@@ -56,7 +65,8 @@ position(Ordinal) --> ord(Ordinal).
 det --> ['the'].
 and --> ['and'].
 d --> ['digit'].
-i --> ['is'].
+be --> ['is'].
+be --> ['are'].
 
 ord(first) --> ['first'].
 ord(second) --> ['second'].

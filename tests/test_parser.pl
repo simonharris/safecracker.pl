@@ -43,6 +43,11 @@ test(twice) :-
     parse_clue(Sentence, Clue),
     assertion(Clue = clue(second, twice, fourth)).
 
+test(total_another_digit) :-
+    Sentence = [the, first, and, second, total, the, third],
+    parse_clue(Sentence, Clue),
+    assertion(Clue = clue(first, second, add_up_to, third)).
+
 test(qualified_difference) :-
     Sentence = [the, fourth, is, '3', more, than, the, first],
     parse_clue(Sentence, Clue),

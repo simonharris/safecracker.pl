@@ -11,7 +11,8 @@ solution_20250525(A, B, C, D) :-
     apply('The fourth digit is odd', Vs),
 
     % 2. The first and second total the third
-    (A + B) #= C,
+    % (A + B) #= C,
+    apply('The first and second total the third', Vs),
 
     % 3. Exactly one digit is square
     include(is_square, Vs, [_]),
