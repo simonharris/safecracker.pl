@@ -28,53 +28,35 @@ parse_clue(Sentence, Clue) :-
 
 % eg. the third digit is less than 5
 clue_constraint(clue(Position, Relation, Num), Vars, Constraint) :-
-    position_val(Position),
+    var_for_position(Position, Vars, Var),
     safe_digit_val(Num),
-    position_index(Position, Index),
-    nth1(Index, Vars, Var),
     relation_constraint(Relation, Var, Num, Constraint).
 % eg. the third digit is less than the second
 % eg. the second is twice the fourth
 clue_constraint(clue(Position1, Relation, Position2), Vars, Constraint) :-
-    position_val(Position1),
-    position_val(Position2),
-    position_index(Position1, Index1),
-    position_index(Position2, Index2),
-    nth1(Index1, Vars, Var1),
-    nth1(Index2, Vars, Var2),
+    var_for_position(Position1, Vars, Var1),
+    var_for_position(Position2, Vars, Var2),
     relation_constraint(Relation, Var1, Var2, Constraint).
 % eg. the second digit is odd
 clue_constraint(clue(Position, Adj), Vars, Constraint) :-
-    position_val(Position),
+    var_for_position(Position, Vars, Var),
     adjective_val(Adj),
-    position_index(Position, Index),
-    nth1(Index, Vars, Var),
     adjective_constraint(Adj, Var, Constraint).
 % eg. The third and fourth differ by 2
 % eg. The first and third total 13
 clue_constraint(clue(Position1, Position2, Func, HowmanyStr), Vars, Constraint) :-
-    position_val(Position1),
-    position_val(Position2),
+    var_for_position(Position1, Vars, Var1),
+    var_for_position(Position2, Vars, Var2),
     fun_val(Func),
-    position_index(Position1, Index1),
-    position_index(Position2, Index2),
-    nth1(Index1, Vars, Var1),
-    nth1(Index2, Vars, Var2),
     atom_number(HowmanyStr, Howmany),
     function_constraint(Func, Var1, Var2, Howmany, Constraint),
     !.
 % eg. The first and second total the third
 clue_constraint(clue(Position1, Position2, Func, Position3), Vars, Constraint) :-
-    position_val(Position1),
-    position_val(Position2),
-    position_val(Position3),
+    var_for_position(Position1, Vars, Var1),
+    var_for_position(Position2, Vars, Var2),
     fun_val(Func),
-    position_index(Position1, Index1),
-    position_index(Position2, Index2),
-    position_index(Position3, Index3),
-    nth1(Index1, Vars, Var1),
-    nth1(Index2, Vars, Var2),
-    nth1(Index3, Vars, Var3),
+    var_for_position(Position3, Vars, Var3),
     function_constraint(Func, Var1, Var2, Var3, Constraint),
     !.
 % eg. Only one digit is odd
@@ -122,6 +104,10 @@ position_index(second, 2).
 position_index(third, 3).
 position_index(fourth, 4).
 
+var_for_position(Position, Vars, Var) :-
+    position_index(Position, Index),
+    nth1(Index, Vars, Var).
+
 normalise_numbers('one', '1').
 normalise_numbers('two', '2').
 normalise_numbers('three', '3').
@@ -136,9 +122,6 @@ normalise_numbers(Atom, Atom).
 
 % Wrappers for DCG predicates in grammar.pl -----------------------------------
 
-
-position_val(Token) :-
-    phrase(ord(Token), [_]).
 
 safe_digit_val(Num) :-
     phrase(safe_digit(Num), [_]).
