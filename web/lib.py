@@ -5,7 +5,7 @@ from PIL import Image
 import pytesseract
 
 
-INFILE = 'ocr/photo01.jpg'
+INFILE = 'ocr/20250511_9146.jpg'
 REGEX = r'^[1-5] ([A-Za-z-0-9 ]+)[\.\n]'
 SOLVER_FILE = 'solver.pl'
 SOLVER_PRED = 'solution(A, B, C, D)'
@@ -18,7 +18,7 @@ DUMMY_CLUES = [
 ]
 
 def get_clues(imgfile: str) -> list:
-    return DUMMY_CLUES
+    #return DUMMY_CLUES
 
     content = pytesseract.image_to_string(Image.open(imgfile))
     return re.findall(REGEX, content, re.MULTILINE)
