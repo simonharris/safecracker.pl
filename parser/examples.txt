@@ -31,7 +31,8 @@ X Exactly one digit is square
 X Only one digit is odd
 X Exactly three digits are even
 X Exactly two digits are prime
-Exactly one of the digits is 1
+
+X Exactly one of the digits is 1
 Exactly two digits are divisible by 3
 
 ===================================

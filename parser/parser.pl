@@ -83,6 +83,12 @@ clue_constraint(clue(Prop, HowmanyStr), Vars, Constraint) :-
     atom_number(HowmanyStr, Howmany),
     qadj_constraint(Prop, Vars, Howmany, Constraint),
     !.
+% eg. Exactly one of the digits is 1
+clue_constraint(clue(equal, HowmanyStr, Value), Vars, Constraint) :-
+    atom_number(HowmanyStr, Howmany),
+    qequal_constraint(Vars, Howmany, Value, Constraint),
+    % writeln(Constraint),
+    !.
 
 relation_constraint(less_than, A, B, A #< B).
 relation_constraint(greater_than, A, B, A #> B).
@@ -96,6 +102,8 @@ qadj_constraint(odd, Vars, Howmany, (include(is_odd, Vars, Odds), length(Odds, H
 qadj_constraint(even, Vars, Howmany, (include(is_even, Vars, Odds), length(Odds, Howmany))).
 qadj_constraint(square, Vars, Howmany, (include(is_square, Vars, Odds), length(Odds, Howmany))).
 qadj_constraint(prime, Vars, Howmany, ( maplist(is_prime, Vars, PrimeDigits), sum(PrimeDigits, #=, Howmany))).
+
+qequal_constraint(Vars, Howmany, Value, occurrenceof(Vars, Howmany, Value)).
 
 function_constraint(differ_by, Var1, Var2, Howmany, abs(Var1 - Var2) #= Howmany).
 function_constraint(add_up_to, Var1, Var2, Howmany, (Var1 + Var2) #= Howmany).

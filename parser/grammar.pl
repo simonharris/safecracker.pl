@@ -56,12 +56,33 @@ clue(clue(Ordinal1, Ordinal2, Func, Howmany)) -->
     !.
 % eg. Exactly three digits are even
 clue(clue(Adj, Howmany)) -->
-    qmod,
-    numeric_string(Howmany),
-    d,
+    quant(Howmany),
     be,
     adj(Adj),
     !.
+% eg. Exactly one of the digits is 1
+clue(clue(equal, Howmany, Value)) -->
+    quant(Howmany),
+    be,
+    safe_digit(Value),
+    !.
+
+
+quant(Howmany) -->
+    qmod,
+    numeric_string(Howmany),
+    part,
+    d.
+
+qmod --> ['exactly'].
+qmod --> ['only'].
+qmod --> [].
+
+part --> ['of', 'the'].
+part --> [].
+
+d --> ['digit'].
+d --> ['digits'].
 
 
 adj(Adj) --> [Adj], { member(Adj, ['prime', 'odd', 'even', 'square']) }.
@@ -72,12 +93,10 @@ position(Ordinal) --> ord(Ordinal).
 
 det --> ['the'].
 and --> ['and'].
-d --> ['digit'].
-d --> ['digits'].
+
 be --> ['is'].
 be --> ['are'].
-qmod --> ['exactly'].
-qmod --> ['only'].
+
 
 ord(first) --> ['first'].
 ord(second) --> ['second'].

@@ -68,6 +68,11 @@ test(quantified_adjective3) :-
     parse_clue(Sentence, Clue),
     assertion(Clue = clue(even, '3')).
 
+test(quantified_equality) :-
+    Sentence = [exactly, '1', of, the, digits, is, '3'],
+    parse_clue(Sentence, Clue),
+    assertion(Clue = clue(equal, '1', 3)).
+
 test(normalise_numbers) :-
     normalise_numbers('hello', 'hello'),
     normalise_numbers('13', '13'),
