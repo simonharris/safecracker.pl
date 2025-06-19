@@ -44,12 +44,12 @@ clue_constraint(clue(Position1, Relation, Position2), Vars, Constraint) :-
     nth1(Index2, Vars, Var2),
     relation_constraint(Relation, Var1, Var2, Constraint).
 % eg. the second digit is odd
-clue_constraint(clue(Position, Prop), Vars, Constraint) :-
+clue_constraint(clue(Position, Adj), Vars, Constraint) :-
     position_val(Position),
-    property_val(Prop),
+    adjective_val(Adj),
     position_index(Position, Index),
     nth1(Index, Vars, Var),
-    property_constraint(Prop, Var, Constraint).
+    adjective_constraint(Adj, Var, Constraint).
 % eg. The third and fourth differ by 2
 % eg. The first and third total 13
 clue_constraint(clue(Position1, Position2, Func, HowmanyStr), Vars, Constraint) :-
@@ -78,10 +78,10 @@ clue_constraint(clue(Position1, Position2, Func, Position3), Vars, Constraint) :
     function_constraint(Func, Var1, Var2, Var3, Constraint),
     !.
 % eg. Only one digit is odd
-clue_constraint(clue(Prop, HowmanyStr), Vars, Constraint) :-
-    property_val(Prop),
+clue_constraint(clue(Adj, HowmanyStr), Vars, Constraint) :-
+    adjective_val(Adj),
     atom_number(HowmanyStr, Howmany),
-    qadj_constraint(Prop, Vars, Howmany, Constraint),
+    qadj_constraint(Adj, Vars, Howmany, Constraint),
     !.
 % eg. Exactly one of the digits is 1
 % eg. Exactly two digits are divisible by three
@@ -96,9 +96,9 @@ relation_constraint(less_than, A, B, A #< B).
 relation_constraint(greater_than, A, B, A #> B).
 relation_constraint(twice, A, B, A #= B*2).
 
-property_constraint(odd, Var, is_odd(Var)).
-property_constraint(even, Var, is_even(Var)).
-property_constraint(prime, Var, is_prime(Var, 1)).
+adjective_constraint(odd, Var, is_odd(Var)).
+adjective_constraint(even, Var, is_even(Var)).
+adjective_constraint(prime, Var, is_prime(Var, 1)).
 
 qadj_constraint(odd, Vars, Howmany, (include(is_odd, Vars, Odds), length(Odds, Howmany))).
 qadj_constraint(even, Vars, Howmany, (include(is_even, Vars, Odds), length(Odds, Howmany))).
@@ -143,8 +143,8 @@ position_val(Token) :-
 safe_digit_val(Num) :-
     phrase(safe_digit(Num), [_]).
 
-property_val(Prop) :-
-    phrase(adj(Prop), [_]).
+adjective_val(Adj) :-
+    phrase(adj(Adj), [_]).
 
 fun_val(Func) :-
     phrase(fun(Func), [_]).

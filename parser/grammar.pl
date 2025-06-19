@@ -9,22 +9,22 @@
     safe_digit//1
 ]).
 
-% eg. the third digit is less than 5
+% eg. The third digit is less than five
 clue(clue(Ordinal, Operator, Number)) -->
     position(Ordinal),
     be,
     operator(Operator),
     safe_digit(Number),
     !.
-% eg. the third digit is less than the second
-% eg. the second is twice the fourth
+% eg. The third digit is less than the second
+% eg. The second is twice the fourth
 clue(clue(Ordinal1, Operator, Ordinal2)) -->
     position(Ordinal1),
     be,
     operator(Operator),
     position(Ordinal2),
     !.
-% eg. the second digit is odd
+% eg. The second digit is odd
 clue(clue(Ordinal, Adj)) -->
     position(Ordinal),
     be,
@@ -38,8 +38,8 @@ clue(clue(Ordinal1, Ordinal2, Func, Ordinal3)) -->
     function(Func),
     position(Ordinal3),
     !.
-% eg. the third and fourth differ by 2
-% eg. the first and third total 13
+% eg. The third and fourth differ by two
+% eg. The first and third total 13
 clue(clue(Ordinal1, Ordinal2, Func, Howmany)) -->
     position(Ordinal1),
     and,
@@ -47,7 +47,7 @@ clue(clue(Ordinal1, Ordinal2, Func, Howmany)) -->
     function(Func),
     numeric_string(Howmany),
     !.
-% eg. The fourth is 3 more than the first
+% eg. The fourth is three more than the first
 clue(clue(Ordinal1, Ordinal2, Func, Howmany)) -->
     position(Ordinal1),
     be,
@@ -61,13 +61,12 @@ clue(clue(Adj, Howmany)) -->
     be,
     adj(Adj),
     !.
-% eg. Exactly one of the digits is 1
+% eg. Exactly one of the digits is one
 clue(clue(Outcome, Howmany, Value)) -->
     quant(Howmany),
     outcome(Outcome),
     safe_digit(Value),
     !.
-
 
 quant(Howmany) -->
     qmod,
@@ -115,7 +114,6 @@ fun(Fun) --> [Fun], { member(Fun, ['differ_by', 'add_up_to', 'greater_than', 'le
 operator(less_than) --> ['less', 'than'].
 operator(greater_than) --> ['greater', 'than'].
 operator(twice) --> ['twice'].
-% operator(equal_to) --> ['equal', 'to'].
 
 safe_digit(D) --> [C], { member(C, ['1','2','3','4','5','6','7','8','9']), atom_number(C, D) }.
 
