@@ -19,8 +19,9 @@ solution_20250615(A, B, C, D) :-
     apply('The fourth is less than the second', Vs),
 
     % 4. Only one digit is odd
-    include(is_odd, Vs, Odds),
-    length(Odds, 1),
+    % include(is_odd, Vs, Odds),
+    % length(Odds, 1),
+    apply('Only one digit is odd', Vs),
 
     % 5. The first and fourth differ by one
     % abs(A - D) #= 1,

@@ -46,7 +46,6 @@ clue(clue(Ordinal1, Ordinal2, Func, Howmany)) -->
     function(Func),
     numeric_string(Howmany),
     !.
-
 % eg. The fourth is 3 more than the first
 clue(clue(Ordinal1, Ordinal2, Func, Howmany)) -->
     position(Ordinal1),
@@ -55,8 +54,17 @@ clue(clue(Ordinal1, Ordinal2, Func, Howmany)) -->
     function(Func),
     position(Ordinal2),
     !.
+% eg. Exactly three digits are even
+clue(clue(Adj, Howmany)) -->
+    qmod,
+    numeric_string(Howmany),
+    d,
+    be,
+    adj(Adj),
+    !.
 
-adj(Adj) --> [Adj], { member(Adj, ['prime', 'odd', 'even']) }.
+
+adj(Adj) --> [Adj], { member(Adj, ['prime', 'odd', 'even', 'square']) }.
 
 position(Ordinal) --> det, ord(Ordinal), d.
 position(Ordinal) --> det, ord(Ordinal).
@@ -65,8 +73,11 @@ position(Ordinal) --> ord(Ordinal).
 det --> ['the'].
 and --> ['and'].
 d --> ['digit'].
+d --> ['digits'].
 be --> ['is'].
 be --> ['are'].
+qmod --> ['exactly'].
+qmod --> ['only'].
 
 ord(first) --> ['first'].
 ord(second) --> ['second'].

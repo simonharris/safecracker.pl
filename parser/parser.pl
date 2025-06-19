@@ -77,6 +77,12 @@ clue_constraint(clue(Position1, Position2, Func, Position3), Vars, Constraint) :
     nth1(Index3, Vars, Var3),
     function_constraint(Func, Var1, Var2, Var3, Constraint),
     !.
+% eg. Only one digit is odd
+clue_constraint(clue(Prop, HowmanyStr), Vars, Constraint) :-
+    property_val(Prop),
+    atom_number(HowmanyStr, Howmany),
+    qadj_constraint(Prop, Vars, Howmany, Constraint),
+    !.
 
 relation_constraint(less_than, A, B, A #< B).
 relation_constraint(greater_than, A, B, A #> B).
@@ -85,6 +91,11 @@ relation_constraint(twice, A, B, A #= B*2).
 property_constraint(odd, Var, is_odd(Var)).
 property_constraint(even, Var, is_even(Var)).
 property_constraint(prime, Var, is_prime(Var, 1)).
+
+qadj_constraint(odd, Vars, Howmany, (include(is_odd, Vars, Odds), length(Odds, Howmany))).
+qadj_constraint(even, Vars, Howmany, (include(is_even, Vars, Odds), length(Odds, Howmany))).
+qadj_constraint(square, Vars, Howmany, (include(is_square, Vars, Odds), length(Odds, Howmany))).
+qadj_constraint(prime, Vars, Howmany, ( maplist(is_prime, Vars, PrimeDigits), sum(PrimeDigits, #=, Howmany))).
 
 function_constraint(differ_by, Var1, Var2, Howmany, abs(Var1 - Var2) #= Howmany).
 function_constraint(add_up_to, Var1, Var2, Howmany, (Var1 + Var2) #= Howmany).

@@ -15,7 +15,8 @@ solution_20250525(A, B, C, D) :-
     apply('The first and second total the third', Vs),
 
     % 3. Exactly one digit is square
-    include(is_square, Vs, [_]),
+    % include(is_square, Vs, [_]),
+    apply('Exactly one digit is square', Vs),
 
     % 4. The fourth is two more than the first
     % D #= A + 2,

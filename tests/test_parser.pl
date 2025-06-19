@@ -53,6 +53,21 @@ test(qualified_difference) :-
     parse_clue(Sentence, Clue),
     assertion(Clue = clue(fourth, first, greater_than, '3')).
 
+test(quantified_adjective1) :-
+    Sentence = [exactly, '1', digit, is, square],
+    parse_clue(Sentence, Clue),
+    assertion(Clue = clue(square, '1')).
+
+test(quantified_adjective2) :-
+    Sentence = [only, '1', digit, is, odd],
+    parse_clue(Sentence, Clue),
+    assertion(Clue = clue(odd, '1')).
+
+test(quantified_adjective3) :-
+    Sentence = [exactly, '3', digits, are, even],
+    parse_clue(Sentence, Clue),
+    assertion(Clue = clue(even, '3')).
+
 test(normalise_numbers) :-
     normalise_numbers('hello', 'hello'),
     normalise_numbers('13', '13'),

@@ -5,14 +5,13 @@ solution_20250601(A, B, C, D) :-
     Vs = [A, B, C, D],
     common_constraints(Vs),
 
-    A #= 6,
-
     % 1. The sum of the second and third is a square
     is_square(B + C),
 
     % 2. Exactly three digits are even
-    include(is_even, Vs, Evens),
-    length(Evens, 3),
+    % include(is_even, Vs, Evens),
+    % length(Evens, 3),
+    apply('Exactly three digits are even', Vs),
 
     % 3. The first and third differ by one
     % abs(A - C) #= 1,

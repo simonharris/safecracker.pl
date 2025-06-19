@@ -14,8 +14,9 @@ solution_20250504(A, B, C, D) :-
     apply('The second is twice the fourth', Vs),
 
     % 3. Exactly two digits are prime
-    maplist(is_prime, Vs, PrimeDigits),
-    sum(PrimeDigits, #=, 2),
+    % maplist(is_prime, Vs, PrimeDigits),
+    % sum(PrimeDigits, #=, 2),
+    apply('Exactly two digits are prime', Vs),
 
     % 4. The second exceeds the first by more than two
     B #> A + 2,

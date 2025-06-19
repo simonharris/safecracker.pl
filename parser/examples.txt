@@ -28,10 +28,10 @@ X The fourth is 2 more than the first
 X The third is 2 less than the fourth
 
 
-Exactly one digit is square
-Only one digit is odd
-Exactly three digits are even
-Exactly two digits are prime
+X Exactly one digit is square
+X Only one digit is odd
+X Exactly three digits are even
+X Exactly two digits are prime
 Exactly one of the digits is 1
 Exactly two digits are divisible by 3
 
