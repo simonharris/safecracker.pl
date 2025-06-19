@@ -4,6 +4,7 @@
     fun//1,
     operator//1,
     ord//1,
+    out//1,
     position//1,
     safe_digit//1
 ]).
@@ -61,9 +62,9 @@ clue(clue(Adj, Howmany)) -->
     adj(Adj),
     !.
 % eg. Exactly one of the digits is 1
-clue(clue(equal, Howmany, Value)) -->
+clue(clue(Outcome, Howmany, Value)) -->
     quant(Howmany),
-    be,
+    outcome(Outcome),
     safe_digit(Value),
     !.
 
@@ -84,7 +85,6 @@ part --> [].
 d --> ['digit'].
 d --> ['digits'].
 
-
 adj(Adj) --> [Adj], { member(Adj, ['prime', 'odd', 'even', 'square']) }.
 
 position(Ordinal) --> det, ord(Ordinal), d.
@@ -97,6 +97,9 @@ and --> ['and'].
 be --> ['is'].
 be --> ['are'].
 
+outcome(divisible_by) --> be, [ 'divisible', 'by'].
+outcome(equal) --> be.
+out(Out) --> [Out], { member(Out, ['divisible_by', 'equal']) }.
 
 ord(first) --> ['first'].
 ord(second) --> ['second'].
@@ -107,7 +110,6 @@ function(differ_by) --> ['differ', 'by'].
 function(add_up_to) --> ['total'].
 function(greater_than) --> ['more', 'than'].
 function(less_than) --> ['less', 'than'].
-
 fun(Fun) --> [Fun], { member(Fun, ['differ_by', 'add_up_to', 'greater_than', 'less_than']) }.
 
 operator(less_than) --> ['less', 'than'].

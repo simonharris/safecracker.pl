@@ -21,9 +21,10 @@ solution_20250511(A, B, C, D) :-
     % A #> D,
     apply('The first is greater than the fourth', Vs),
 
-    % 5. Exactly two digits are divisible by 3
-    maplist(divides_by_3, Vs, Threes),
-    sum(Threes, #=, 2),
+    % 5. Exactly two digits are divisible by three
+    % maplist(divides_by_3, Vs, Threes),
+    % sum(Threes, #=, 2),
+    apply('Exactly two digits are divisible by three', Vs),
 
     label(Vs).
 

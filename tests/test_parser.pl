@@ -14,15 +14,6 @@ test(clue_02) :-
     parse_clue(Sentence, Clue),
     assertion(Clue = clue(first, greater_than, 5)).
 
-% test(some_clue) :-
-%     Vars = [A, B, C, D],
-%     assertion(clue_constraint(clue(first, less_than, 7), Vars, (A #< 7))),
-%     assertion(clue_constraint(clue(second, less_than, 7), Vars, (B #< 7))),
-%     assertion(clue_constraint(clue(third, greater_than, 2), Vars, (C #> 2))),
-%     assertion(clue_constraint(clue(fourth, equal_to, 4), Vars, (D #= 4))),
-%     assertion(clue_constraint(clue(first, greater_than, 5), Vars, (A #> 5))).
-
-
 test(adjectives) :-
     Sentence = [the, fourth, digit, is, odd],
     parse_clue(Sentence, Clue),
@@ -68,10 +59,16 @@ test(quantified_adjective3) :-
     parse_clue(Sentence, Clue),
     assertion(Clue = clue(even, '3')).
 
-test(quantified_equality) :-
+test(quantified_outcome1) :-
     Sentence = [exactly, '1', of, the, digits, is, '3'],
     parse_clue(Sentence, Clue),
     assertion(Clue = clue(equal, '1', 3)).
+
+test(quantified_outcome2) :-
+    Sentence = [exactly, '2', digits, are, divisible, by, '3'],
+    parse_clue(Sentence, Clue),
+    assertion(Clue = clue(divisible_by, '2', 3)).
+
 
 test(normalise_numbers) :-
     normalise_numbers('hello', 'hello'),

@@ -84,9 +84,11 @@ clue_constraint(clue(Prop, HowmanyStr), Vars, Constraint) :-
     qadj_constraint(Prop, Vars, Howmany, Constraint),
     !.
 % eg. Exactly one of the digits is 1
-clue_constraint(clue(equal, HowmanyStr, Value), Vars, Constraint) :-
+% eg. Exactly two digits are divisible by three
+clue_constraint(clue(Outcome, HowmanyStr, Value), Vars, Constraint) :-
+    outcome_val(Outcome),
     atom_number(HowmanyStr, Howmany),
-    qequal_constraint(Vars, Howmany, Value, Constraint),
+    qoutcome_constraint(Outcome, Vars, Howmany, Value, Constraint),
     % writeln(Constraint),
     !.
 
@@ -103,7 +105,12 @@ qadj_constraint(even, Vars, Howmany, (include(is_even, Vars, Odds), length(Odds,
 qadj_constraint(square, Vars, Howmany, (include(is_square, Vars, Odds), length(Odds, Howmany))).
 qadj_constraint(prime, Vars, Howmany, ( maplist(is_prime, Vars, PrimeDigits), sum(PrimeDigits, #=, Howmany))).
 
-qequal_constraint(Vars, Howmany, Value, occurrenceof(Vars, Howmany, Value)).
+qoutcome_constraint(equal, Vars, Howmany, Value, occurrenceof(Vars, Howmany, Value)).
+qoutcome_constraint(divisible_by, Vars, Howmany, Divisor,
+                   (maplist(divisible_by(Divisor), Vars, Bs),
+                    sum(Bs, #=, Howmany))).
+
+divisible_by(Divisor, X, B) :- (X mod Divisor #= 0) #<==> B.
 
 function_constraint(differ_by, Var1, Var2, Howmany, abs(Var1 - Var2) #= Howmany).
 function_constraint(add_up_to, Var1, Var2, Howmany, (Var1 + Var2) #= Howmany).
@@ -142,5 +149,5 @@ property_val(Prop) :-
 fun_val(Func) :-
     phrase(fun(Func), [_]).
 
-% number_val(Num) :-
-%     phrase(num(Num), [_]).
+outcome_val(Outcome) :-
+    phrase(out(Outcome), [_]).
