@@ -12,15 +12,24 @@
     <div class="container">
         <h1>Safe Cracker</h1>
 
+        {{ render_form(form) }}
+
+        <hr>
+
         {% if result: %}
         <pre>{{ result | tojson(indent=4) }}</pre>
+
+        <hr>
+
+        <p><img class="img-thumbnail img-fluid" src="static/uploads/{{ result.filename }}" /></p>
+
         {% else: %}
         <p>No result yet</p>
         {% endif %}
 
-        <hr>
 
-        {{ render_form(form) }}
+
+
 
     </div>
   </body>

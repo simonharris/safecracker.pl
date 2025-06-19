@@ -46,10 +46,10 @@ def get_result(clues: list):
     return details
 
 
-def run_solve() -> str:
+def run_solve(filename: str) -> str:
 
     output = {}
-    clues = get_clues(INFILE)
+    clues = get_clues(filename)
     output['clues'] = clues
     output['result'] = get_result(clues)
     return output
