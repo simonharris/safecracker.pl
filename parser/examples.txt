@@ -27,7 +27,6 @@ X The fourth is 3 more than the first
 X The fourth is 2 more than the first
 X The third is 2 less than the fourth
 
-
 X Exactly one digit is square
 X Only one digit is odd
 X Exactly three digits are even

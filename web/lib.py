@@ -1,12 +1,15 @@
 import re
 import subprocess
 
+import cv2
 from PIL import Image
 import pytesseract
 
 
 INFILE = 'ocr/20250511_9146.jpg'
-REGEX = r'^[1-5] ([A-Za-z-0-9 ]+)[\.\n]'
+# INFILE = 'ocr/20250601_6452.jpg'
+# INFILE = 'ocr/20250615_7846.jpg'
+REGEX = r'[1-5] ([A-Za-z-0-9 ]+)[\.\n]'
 SOLVER_FILE = 'solver.pl'
 SOLVER_PRED = 'solution(A, B, C, D)'
 
@@ -17,10 +20,14 @@ DUMMY_CLUES = [
     "The first digit is greater than eight",
 ]
 
+
 def get_clues(imgfile: str) -> list:
     #return DUMMY_CLUES
+    img = cv2.imread(imgfile)
+    img = cv2.fastNlMeansDenoisingColored(img, None, 10, 10, 7, 15)
+    img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+    content = pytesseract.image_to_string(img)
 
-    content = pytesseract.image_to_string(Image.open(imgfile))
     return re.findall(REGEX, content, re.MULTILINE)
 
 
@@ -39,12 +46,9 @@ def get_result(clues: list):
     return details
 
 
-
-
 def run_solve() -> str:
 
     output = {}
-
     clues = get_clues(INFILE)
     output['clues'] = clues
     output['result'] = get_result(clues)
