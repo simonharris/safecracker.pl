@@ -10,7 +10,8 @@ solution_20250413(A, B, C, D) :-
     apply('The fourth is three more than the first', Vs),
 
     % 2. Either the second or the third is odd, but not both
-    xor(B mod 2 #= 1, C mod 2 #= 1),
+    % xor(B mod 2 #= 1, C mod 2 #= 1),
+    apply('Either the second or the third is odd, but not both', Vs),
 
     % 3. The fourth digit is less than seven
     %D #< 7,

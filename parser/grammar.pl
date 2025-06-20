@@ -87,6 +87,16 @@ clue(clue(sum, Ordinal1, Ordinal2, Adj)) -->
     det,
     adj(Adj),
     !.
+% eg. Either the second or the third is odd, but not both
+clue(clue(either, Ordinal1, Ordinal2, Adj)) -->
+    either,
+    position(Ordinal1),
+    or,
+    position(Ordinal2),
+    be,
+    adj(Adj),
+    superfluous_waffle,
+    !.
 
 quant(Howmany) -->
     qmod,
@@ -114,6 +124,7 @@ det --> ['the'].
 det --> ['a'].
 
 and --> ['and'].
+or --> ['or'].
 
 be --> ['is'].
 be --> ['are'].
@@ -143,7 +154,11 @@ operator(twice) --> ['twice'].
 
 sumof --> ['the', 'sum', 'of'].
 
+either --> ['either'].
+
 safe_digit(D) --> [C], { member(C, ['1','2','3','4','5','6','7','8','9']), atom_number(C, D) }.
 
 numeric_string(Num) --> [Num]. % yeah, you try doing better
 
+superfluous_waffle --> ['but', 'not', 'both'].
+superfluous_waffle --> [].

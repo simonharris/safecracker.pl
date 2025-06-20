@@ -14,7 +14,8 @@ apply(Text, Vs) :-
 
 parse_text(Text, Vars, Constraint) :-
     % pre-processing
-    split_string(Text, " ", "", TextList),
+    strip_commas(Text, CleanText),
+    split_string(CleanText, " ", "", TextList),
     maplist(atom_string, Atoms, TextList),
     maplist(downcase_atom, Atoms, AtomsLower),
     maplist(normalise_numbers, AtomsLower, AtomsWithnumbers),
@@ -76,15 +77,20 @@ clue_constraint(clue(Outcome, HowmanyStr, Value), Vars, Constraint) :-
     outcome_val(Outcome),
     atom_number(HowmanyStr, Howmany),
     qoutcome_constraint(Outcome, Vars, Howmany, Value, Constraint),
-    % writeln(Constraint),
     !.
-% % eg. The sum of the second and third is a square
+% eg. The sum of the second and third is a square
 clue_constraint(clue(sum, Position1, Position2, square), Vars, Constraint) :-
     var_for_position(Position1, Vars, Var1),
     var_for_position(Position2, Vars, Var2),
     boutcome_constraint(sum, Var1, Var2, square, Constraint),
-%     % writeln(Constraint),
-     !.
+    !.
+% eg. Either the second or the third is odd, but not both
+clue_constraint(clue(either, Position1, Position2, Adj), Vars, Constraint) :-
+    % writeln('suree why not'),
+    var_for_position(Position1, Vars, Var1),
+    var_for_position(Position2, Vars, Var2),
+    either_constraint(Adj, Var1, Var2, Constraint),
+    !.
 
 
 %% constraint factories -------------------------------------------------------
@@ -98,6 +104,12 @@ adjective_constraint(odd, Var, is_odd(Var)).
 adjective_constraint(even, Var, is_even(Var)).
 adjective_constraint(prime, Var, is_prime(Var, 1)).
 
+function_constraint(differ_by, Var1, Var2, Howmany, abs(Var1 - Var2) #= Howmany).
+function_constraint(add_up_to, Var1, Var2, Howmany, (Var1 + Var2) #= Howmany).
+function_constraint(less_than, Var1, Var2, Howmany, (Var2 - Var1) #= Howmany).
+function_constraint(greater_than, Var1, Var2, Howmany, (Var1 - Var2) #= Howmany).
+function_constraint(add_up_to_less_than, Var1, Var2, Howmany, (Var1 + Var2) #< Howmany).
+
 qadj_constraint(odd, Vars, Howmany, (include(is_odd, Vars, Odds), length(Odds, Howmany))).
 qadj_constraint(even, Vars, Howmany, (include(is_even, Vars, Odds), length(Odds, Howmany))).
 qadj_constraint(square, Vars, Howmany, (include(is_square, Vars, Odds), length(Odds, Howmany))).
@@ -110,14 +122,16 @@ qoutcome_constraint(divisible_by, Vars, Howmany, Divisor,
 
 boutcome_constraint(sum, Var1, Var2, square, is_square(Var1 + Var2)).
 
-function_constraint(differ_by, Var1, Var2, Howmany, abs(Var1 - Var2) #= Howmany).
-function_constraint(add_up_to, Var1, Var2, Howmany, (Var1 + Var2) #= Howmany).
-function_constraint(less_than, Var1, Var2, Howmany, (Var2 - Var1) #= Howmany).
-function_constraint(greater_than, Var1, Var2, Howmany, (Var1 - Var2) #= Howmany).
-function_constraint(add_up_to_less_than, Var1, Var2, Howmany, (Var1 + Var2) #< Howmany).
+either_constraint(odd, Var1, Var2, xor(Var1 mod 2 #= 1, Var2 mod 2 #= 1)).
 
 
 %% utils ----------------------------------------------------------------------
+
+
+strip_commas(String, Stripped) :-
+    atom_chars(String, Chars),
+    exclude(=(','), Chars, StrippedChars),
+    atomics_to_string(StrippedChars, Stripped).
 
 divisible_by(Divisor, X, B) :- (X mod Divisor #= 0) #<==> B.
 
