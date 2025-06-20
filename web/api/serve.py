@@ -19,13 +19,17 @@ DUMMY_CLUES = [
     "The first digit is greater than eight",
 ]
 
+INFILE = 'ocr/20250511_9146.jpg'
+# INFILE = 'ocr/20250601_6452.jpg'
+# INFILE = 'ocr/20250615_7846.jpg'
+REGEX = r'[1-5] ([A-Za-z-0-9 ]+)[\.\n]'
 SOLVER_FILE = 'solver.pl'
 SOLVER_PRED = 'solution(A, B, C, D)'
 
 
 
 def get_clues(imgfile: str) -> list:
-    return DUMMY_CLUES
+    #return DUMMY_CLUES
     img = cv2.imread(imgfile)
     img = cv2.fastNlMeansDenoisingColored(img, None, 10, 10, 7, 15)
     img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
@@ -69,7 +73,7 @@ def solve(puzzle_id):
         yield "event: begin\ndata: Beginning OCR...\n\n"
         time.sleep(2)
 
-        clues = get_clues(puzzle_id)
+        clues = get_clues(INFILE)
 
         for clue in clues:
             yield f"event: message\ndata: {clue}\n\n"
