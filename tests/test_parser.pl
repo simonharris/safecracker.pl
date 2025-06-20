@@ -39,6 +39,11 @@ test(total_another_digit) :-
     parse_clue(Sentence, Clue),
     assertion(Clue = clue(first, second, add_up_to, third)).
 
+test(total_less_than_another_digit) :-
+    Sentence = [the, fourth, is, greater, than, the, sum, of, the, second, and, third],
+    parse_clue(Sentence, Clue),
+    assertion(Clue = clue(second, third, add_up_to_less_than, fourth)).
+
 test(qualified_difference) :-
     Sentence = [the, fourth, is, '3', more, than, the, first],
     parse_clue(Sentence, Clue),

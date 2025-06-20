@@ -21,6 +21,7 @@ solution_20250413(A, B, C, D) :-
     apply('The second is greater than the first', Vs),
 
     % 5. The fourth is greater than the sum of the second and third
-    D #> (B + C),
+    % D #> (B + C),
+    apply('The fourth is greater than the sum of the second and third', Vs),
 
     label(Vs).

@@ -38,6 +38,16 @@ clue(clue(Ordinal1, Ordinal2, Func, Ordinal3)) -->
     function(Func),
     position(Ordinal3),
     !.
+% eg. The fourth is greater than the sum of the second and third
+clue(clue(Ordinal2,  Ordinal3, add_up_to_less_than, Ordinal1)) -->
+    position(Ordinal1),
+    be,
+    gt,
+    sumof,
+    position(Ordinal2),
+    and,
+    position(Ordinal3),
+    !.
 % eg. The third and fourth differ by two
 % eg. The first and third total 13
 clue(clue(Ordinal1, Ordinal2, Func, Howmany)) -->
@@ -105,15 +115,21 @@ ord(second) --> ['second'].
 ord(third) --> ['third'].
 ord(fourth) --> ['fourth'].
 
+gt --> ['greater', 'than'].
+
 function(differ_by) --> ['differ', 'by'].
 function(add_up_to) --> ['total'].
 function(greater_than) --> ['more', 'than'].
+function(greater_than) --> gt.
 function(less_than) --> ['less', 'than'].
-fun(Fun) --> [Fun], { member(Fun, ['differ_by', 'add_up_to', 'greater_than', 'less_than']) }.
+fun(Fun) -->
+    [Fun], { member(Fun, ['differ_by', 'add_up_to', 'greater_than', 'less_than', 'add_up_to_less_than']) }.
 
 operator(less_than) --> ['less', 'than'].
 operator(greater_than) --> ['greater', 'than'].
 operator(twice) --> ['twice'].
+
+sumof --> ['the', 'sum', 'of'].
 
 safe_digit(D) --> [C], { member(C, ['1','2','3','4','5','6','7','8','9']), atom_number(C, D) }.
 

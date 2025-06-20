@@ -52,6 +52,7 @@ clue_constraint(clue(Position1, Position2, Func, HowmanyStr), Vars, Constraint) 
     function_constraint(Func, Var1, Var2, Howmany, Constraint),
     !.
 % eg. The first and second total the third
+% eg. The fourth is greater than the sum of the second and third
 clue_constraint(clue(Position1, Position2, Func, Position3), Vars, Constraint) :-
     var_for_position(Position1, Vars, Var1),
     var_for_position(Position2, Vars, Var2),
@@ -98,6 +99,7 @@ function_constraint(differ_by, Var1, Var2, Howmany, abs(Var1 - Var2) #= Howmany)
 function_constraint(add_up_to, Var1, Var2, Howmany, (Var1 + Var2) #= Howmany).
 function_constraint(less_than, Var1, Var2, Howmany, (Var2 - Var1) #= Howmany).
 function_constraint(greater_than, Var1, Var2, Howmany, (Var1 - Var2) #= Howmany).
+function_constraint(add_up_to_less_than, Var1, Var2, Howmany, (Var1 + Var2) #< Howmany).
 
 position_index(first, 1).
 position_index(second, 2).
