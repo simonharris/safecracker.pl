@@ -19,12 +19,13 @@ DUMMY_CLUES = [
     "The first digit is greater than eight",
 ]
 
-INFILE = 'ocr/20250511_9146.jpg'
-# INFILE = 'ocr/20250601_6452.jpg'
-# INFILE = 'ocr/20250615_7846.jpg'
+#INFILE = 'web/api/static/examples/20250511_9146.jpg'
+#INFILE = 'web/api/static/examples/20250601_6452.jpg'
+INFILE = 'web/api/static/examples/20250615_7846.jpg'
 REGEX = r'[1-5] ([A-Za-z-0-9 ]+)[\.\n]'
-SOLVER_FILE = 'solver.pl'
-SOLVER_PRED = 'solution(A, B, C, D)'
+SOLVER_FILE = 'parser/solver.pl'
+SOLVER_PRED = 'solution(A, B, C, D), halt'
+COUNTER_PRED = 'solution_count(A, B, C, D, Count), writeln(Count), halt.'
 
 
 
@@ -40,7 +41,7 @@ def get_clues(imgfile: str) -> list:
 def get_result(clues: list) -> dict:
     details = {}
 
-    prolog_command =prolog_command = ["swipl", "-f", SOLVER_FILE, "-g", SOLVER_PRED]
+    prolog_command = prolog_command = ["swipl", "-f", SOLVER_FILE, "-g", SOLVER_PRED]
     result = subprocess.run(prolog_command,
                             input='\n'.join(clues),
                             capture_output=True,
@@ -48,6 +49,26 @@ def get_result(clues: list) -> dict:
 
     details['cmd'] = prolog_command
     details['output'] = result.stdout.strip()
+    details['error'] = result.stderr.strip()
+    return details
+
+
+def get_count(clues: list) -> dict:
+    details = {}
+
+    prolog_command = prolog_command = ["swipl", "-f", SOLVER_FILE, "-g", COUNTER_PRED]
+    result = subprocess.run(prolog_command,
+                            input='\n'.join(clues),
+                            capture_output=True,
+                            text=True)
+    lines = result.stdout.strip().split('\n')
+
+    count = int(lines.pop(-1))
+    final = lines.pop(-1)
+
+    #details['cmd'] = prolog_command
+    details['count'] = count
+    details['final'] = final
     details['error'] = result.stderr.strip()
     return details
 
@@ -87,7 +108,7 @@ def solve(puzzle_id):
             constraints.append(clue)
 
             yield f"event: message\ndata: Applying {clue}...\n\n"
-            results = get_result(constraints)
+            results = get_count(constraints)
             yield f"event: message\ndata: {results}\n\n"
 
 
