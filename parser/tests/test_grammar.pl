@@ -1,4 +1,4 @@
-:- ensure_loaded('../parser/grammar').
+:- ensure_loaded('../grammar').
 
 
 :- begin_tests(grammar).

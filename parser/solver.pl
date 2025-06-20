@@ -20,6 +20,12 @@ solution(A, B, C, D) :-
     format('~w~n', [Vs]).
 
 
+solution_count(A, B, C, D, Count) :-
+    findall(t, solution(A, B, C, D), Solutions),
+    length(Solutions, Count).
+
+
+
 % read_input_once :-
 %     input_cached(Input), !.
 % read_input_once :-

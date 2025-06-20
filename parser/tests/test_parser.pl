@@ -1,5 +1,5 @@
 :- use_module(library(clpfd)).
-:- ensure_loaded('../parser/parser').
+:- ensure_loaded('../parser').
 
 :- begin_tests(parser).
 
