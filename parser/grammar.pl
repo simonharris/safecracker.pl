@@ -97,6 +97,17 @@ clue(clue(either, Ordinal1, Ordinal2, Adj)) -->
     adj(Adj),
     superfluous_waffle,
     !.
+% eg. The second exceeds the first by more than two
+% We're deep into the outliers here, let's just get it out the way
+clue(clue(Ordinal1, Ordinal2, exceeds_by_more_than, Howmany)) -->
+    position(Ordinal1),
+    exceeds,
+    position(Ordinal2),
+    by,
+    more,
+    than,
+    numeric_string(Howmany),
+    !.
 
 quant(Howmany) -->
     qmod,
@@ -146,7 +157,9 @@ function(greater_than) --> ['more', 'than'].
 function(greater_than) --> gt.
 function(less_than) --> ['less', 'than'].
 fun(Fun) -->
-    [Fun], { member(Fun, ['differ_by', 'add_up_to', 'greater_than', 'less_than', 'add_up_to_less_than']) }.
+    [Fun], { member(Fun, ['differ_by', 'add_up_to', 'greater_than',
+                            'less_than', 'add_up_to_less_than',
+                            'exceeds_by_more_than']) }.
 
 operator(less_than) --> ['less', 'than'].
 operator(greater_than) --> ['greater', 'than'].
@@ -162,3 +175,9 @@ numeric_string(Num) --> [Num]. % yeah, you try doing better
 
 superfluous_waffle --> ['but', 'not', 'both'].
 superfluous_waffle --> [].
+
+exceeds --> ['exceeds'].
+by --> ['by'].
+more --> ['more'].
+than --> ['than'].
+

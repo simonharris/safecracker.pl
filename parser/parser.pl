@@ -109,6 +109,7 @@ function_constraint(add_up_to, Var1, Var2, Howmany, (Var1 + Var2) #= Howmany).
 function_constraint(less_than, Var1, Var2, Howmany, (Var2 - Var1) #= Howmany).
 function_constraint(greater_than, Var1, Var2, Howmany, (Var1 - Var2) #= Howmany).
 function_constraint(add_up_to_less_than, Var1, Var2, Howmany, (Var1 + Var2) #< Howmany).
+function_constraint(exceeds_by_more_than, Var1, Var2, Howmany, Var1 #> (Var2 + Howmany)).
 
 qadj_constraint(odd, Vars, Howmany, (include(is_odd, Vars, Odds), length(Odds, Howmany))).
 qadj_constraint(even, Vars, Howmany, (include(is_even, Vars, Odds), length(Odds, Howmany))).

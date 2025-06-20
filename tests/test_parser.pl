@@ -84,6 +84,11 @@ test(either_odd) :-
     parse_clue(Sentence, Clue),
     assertion(Clue = clue(either, second, third, odd)).
 
+test(exceeds_more_than) :-
+    Sentence = [the, second, exceeds, the, first, by, more, than, '2'],
+    parse_clue(Sentence, Clue),
+    assertion(Clue = clue(second, first, exceeds_by_more_than, '2')).
+
 test(normalise_numbers) :-
     normalise_numbers('hello', 'hello'),
     normalise_numbers('13', '13'),

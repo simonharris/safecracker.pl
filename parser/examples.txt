@@ -41,6 +41,6 @@ X The sum of the second and third is a square
 
 X Either the second or the third is odd, but not both
 
-The second exceeds the first by more than 2
+X The second exceeds the first by more than 2
 
 

@@ -19,7 +19,8 @@ solution_20250504(A, B, C, D) :-
     apply('Exactly two digits are prime', Vs),
 
     % 4. The second exceeds the first by more than two
-    B #> A + 2,
+    % B #> A + 2,
+    apply('The second exceeds the first by more than two', Vs),
 
     % 5. The first and third differ by three
     % abs(A - C) #= 3,
