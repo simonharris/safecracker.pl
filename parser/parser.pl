@@ -26,23 +26,27 @@ parse_text(Text, Vars, Constraint) :-
 parse_clue(Sentence, Clue) :-
     phrase(clue(Clue), Sentence).
 
-% eg. the third digit is less than 5
+
+%% map clues to constraint types ----------------------------------------------
+
+
+% eg. The third digit is less than five
 clue_constraint(clue(Position, Relation, Num), Vars, Constraint) :-
     var_for_position(Position, Vars, Var),
     safe_digit_val(Num),
     relation_constraint(Relation, Var, Num, Constraint).
-% eg. the third digit is less than the second
-% eg. the second is twice the fourth
+% eg. The third digit is less than the second
+% eg. The second is twice the fourth
 clue_constraint(clue(Position1, Relation, Position2), Vars, Constraint) :-
     var_for_position(Position1, Vars, Var1),
     var_for_position(Position2, Vars, Var2),
     relation_constraint(Relation, Var1, Var2, Constraint).
-% eg. the second digit is odd
+% eg. The second digit is odd
 clue_constraint(clue(Position, Adj), Vars, Constraint) :-
     var_for_position(Position, Vars, Var),
     adjective_val(Adj),
     adjective_constraint(Adj, Var, Constraint).
-% eg. The third and fourth differ by 2
+% eg. The third and fourth differ by two
 % eg. The first and third total 13
 clue_constraint(clue(Position1, Position2, Func, HowmanyStr), Vars, Constraint) :-
     var_for_position(Position1, Vars, Var1),
@@ -66,7 +70,7 @@ clue_constraint(clue(Adj, HowmanyStr), Vars, Constraint) :-
     atom_number(HowmanyStr, Howmany),
     qadj_constraint(Adj, Vars, Howmany, Constraint),
     !.
-% eg. Exactly one of the digits is 1
+% eg. Exactly one of the digits is one
 % eg. Exactly two digits are divisible by three
 clue_constraint(clue(Outcome, HowmanyStr, Value), Vars, Constraint) :-
     outcome_val(Outcome),
@@ -74,6 +78,10 @@ clue_constraint(clue(Outcome, HowmanyStr, Value), Vars, Constraint) :-
     qoutcome_constraint(Outcome, Vars, Howmany, Value, Constraint),
     % writeln(Constraint),
     !.
+
+
+%% constraint factories -------------------------------------------------------
+
 
 relation_constraint(less_than, A, B, A #< B).
 relation_constraint(greater_than, A, B, A #> B).
@@ -100,6 +108,10 @@ function_constraint(add_up_to, Var1, Var2, Howmany, (Var1 + Var2) #= Howmany).
 function_constraint(less_than, Var1, Var2, Howmany, (Var2 - Var1) #= Howmany).
 function_constraint(greater_than, Var1, Var2, Howmany, (Var1 - Var2) #= Howmany).
 function_constraint(add_up_to_less_than, Var1, Var2, Howmany, (Var1 + Var2) #< Howmany).
+
+
+%% utils ----------------------------------------------------------------------
+
 
 position_index(first, 1).
 position_index(second, 2).

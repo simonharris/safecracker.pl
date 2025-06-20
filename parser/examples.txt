@@ -32,15 +32,17 @@ X Only one digit is odd
 X Exactly three digits are even
 X Exactly two digits are prime
 
-X Exactly one of the digits is 1
+X Exactly one of the digits is one
 X Exactly two digits are divisible by three
 
 X The fourth is greater than the sum of the second and third
 
+The sum of the second and third is a square
+
 ===================================
 
 
-The sum of the second and third is a square
+
 Either the second or the third is odd, but not both
 The second exceeds the first by more than 2
 

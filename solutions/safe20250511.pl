@@ -5,9 +5,9 @@ solution_20250511(A, B, C, D) :-
     Vs = [A, B, C, D],
     common_constraints(Vs),
 
-    % 1. Exactly one of the digits is 1
+    % 1. Exactly one of the digits is one
     % occurrenceof(Vs, 1, 1),
-    apply('Exactly one of the digits is 1', Vs),
+    apply('Exactly one of the digits is one', Vs),
 
     % 2. The first and third total 13
     % A + C #= 13,
