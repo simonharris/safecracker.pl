@@ -6,7 +6,8 @@ solution_20250601(A, B, C, D) :-
     common_constraints(Vs),
 
     % 1. The sum of the second and third is a square
-    is_square(B + C),
+    % is_square(B + C),
+    apply('The sum of the second and third is a square', Vs),
 
     % 2. Exactly three digits are even
     % include(is_even, Vs, Evens),

@@ -37,7 +37,7 @@ X Exactly two digits are divisible by three
 
 X The fourth is greater than the sum of the second and third
 
-The sum of the second and third is a square
+X The sum of the second and third is a square
 
 ===================================
 

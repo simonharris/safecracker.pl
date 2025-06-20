@@ -74,6 +74,11 @@ test(quantified_outcome2) :-
     parse_clue(Sentence, Clue),
     assertion(Clue = clue(divisible_by, '2', 3)).
 
+test(twonary_outcome) :-
+    Sentence = [the, sum, of, the, second, and, third, is, a, square],
+    parse_clue(Sentence, Clue),
+    assertion(Clue = clue(sum, second, third, square)).
+
 
 test(normalise_numbers) :-
     normalise_numbers('hello', 'hello'),

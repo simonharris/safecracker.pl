@@ -78,6 +78,13 @@ clue_constraint(clue(Outcome, HowmanyStr, Value), Vars, Constraint) :-
     qoutcome_constraint(Outcome, Vars, Howmany, Value, Constraint),
     % writeln(Constraint),
     !.
+% % eg. The sum of the second and third is a square
+clue_constraint(clue(sum, Position1, Position2, square), Vars, Constraint) :-
+    var_for_position(Position1, Vars, Var1),
+    var_for_position(Position2, Vars, Var2),
+    boutcome_constraint(sum, Var1, Var2, square, Constraint),
+%     % writeln(Constraint),
+     !.
 
 
 %% constraint factories -------------------------------------------------------
@@ -101,7 +108,7 @@ qoutcome_constraint(divisible_by, Vars, Howmany, Divisor,
                    (maplist(divisible_by(Divisor), Vars, Bs),
                     sum(Bs, #=, Howmany))).
 
-divisible_by(Divisor, X, B) :- (X mod Divisor #= 0) #<==> B.
+boutcome_constraint(sum, Var1, Var2, square, is_square(Var1 + Var2)).
 
 function_constraint(differ_by, Var1, Var2, Howmany, abs(Var1 - Var2) #= Howmany).
 function_constraint(add_up_to, Var1, Var2, Howmany, (Var1 + Var2) #= Howmany).
@@ -112,6 +119,7 @@ function_constraint(add_up_to_less_than, Var1, Var2, Howmany, (Var1 + Var2) #< H
 
 %% utils ----------------------------------------------------------------------
 
+divisible_by(Divisor, X, B) :- (X mod Divisor #= 0) #<==> B.
 
 position_index(first, 1).
 position_index(second, 2).

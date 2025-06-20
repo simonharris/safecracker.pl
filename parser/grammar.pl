@@ -77,6 +77,16 @@ clue(clue(Outcome, Howmany, Value)) -->
     outcome(Outcome),
     safe_digit(Value),
     !.
+% eg. The sum of the second and third is a square
+clue(clue(sum, Ordinal1, Ordinal2, Adj)) -->
+    sumof,
+    position(Ordinal1),
+    and,
+    position(Ordinal2),
+    be,
+    det,
+    adj(Adj),
+    !.
 
 quant(Howmany) -->
     qmod,
@@ -101,6 +111,8 @@ position(Ordinal) --> det, ord(Ordinal).
 position(Ordinal) --> ord(Ordinal).
 
 det --> ['the'].
+det --> ['a'].
+
 and --> ['and'].
 
 be --> ['is'].
