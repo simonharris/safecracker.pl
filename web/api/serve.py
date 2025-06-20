@@ -1,4 +1,5 @@
 import re
+import subprocess
 import time
 
 import cv2
@@ -18,6 +19,11 @@ DUMMY_CLUES = [
     "The first digit is greater than eight",
 ]
 
+SOLVER_FILE = 'solver.pl'
+SOLVER_PRED = 'solution(A, B, C, D)'
+
+
+
 def get_clues(imgfile: str) -> list:
     return DUMMY_CLUES
     img = cv2.imread(imgfile)
@@ -27,6 +33,19 @@ def get_clues(imgfile: str) -> list:
 
     return re.findall(REGEX, content, re.MULTILINE)
 
+def get_result(clues: list) -> dict:
+    details = {}
+
+    prolog_command =prolog_command = ["swipl", "-f", SOLVER_FILE, "-g", SOLVER_PRED]
+    result = subprocess.run(prolog_command,
+                            input='\n'.join(clues),
+                            capture_output=True,
+                            text=True)
+
+    details['cmd'] = prolog_command
+    details['output'] = result.stdout.strip()
+    details['error'] = result.stderr.strip()
+    return details
 
 # @app.route('/events')
 # def events():
@@ -55,8 +74,17 @@ def solve(puzzle_id):
         for clue in clues:
             yield f"event: message\ndata: {clue}\n\n"
 
-        yield "event: begin\ndata: Beginning OCR...\n\n"
+        yield "event: message\ndata: Consulting parser...\n\n"
         time.sleep(2)
+        yield "event: message\ndata: Applying constraints...\n\n"
+
+        constraints = []
+        for clue in clues:
+            constraints.append(clue)
+
+            yield f"event: message\ndata: Applying {clue}...\n\n"
+            results = get_result(constraints)
+            yield f"event: message\ndata: {results}\n\n"
 
 
         time.sleep(2)

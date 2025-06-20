@@ -77,6 +77,10 @@ export default {
         console.log('Received "message" event:', event.data);
         this.messages.push(event.data);
       });
+      this.eventSource.addEventListener('solution', (event) => {
+        console.log('Received "solution" event:', event.data);
+        this.messages.push(event.data);
+      });
     },
     stopEventSource() {
       if (this.eventSource) {
