@@ -18,11 +18,18 @@ class SolverService {
 //       this.listeners.splice(index, 1);
 //     }
 //   }
+    solveExample(puzzleid) {
+        const path = '/solve/example/' + puzzleid;
+        this.solve(path);
+    }
 
-    solve(puzzleid) {
-        //alert('GOT PUZZ:' + puzzleid);
+    // solveUpload(_) {
+    //     alert("Unimplemented");
+    // }
 
-        this.eventSource = new EventSource(API_HOST + '/solve/' + puzzleid);
+    solve(path) {
+
+        this.eventSource = new EventSource(API_HOST + path);
 
         this.eventSource.onerror = () => {
             console.log('Error occurred. Ready state:', this.eventSource.readyState);

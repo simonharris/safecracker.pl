@@ -41,7 +41,7 @@ export default {
     handleFormSubmission(puzzleid) {
       //alert('Form submitted');
       this.solverservice = new SolverService();
-      this.solverservice.solve(puzzleid);
+      this.solverservice.solveExample(puzzleid);
     }
   }
 }

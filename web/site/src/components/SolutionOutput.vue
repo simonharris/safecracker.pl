@@ -26,7 +26,7 @@ export default {
 },
 computed: {
   messages() {
-    return this.solverservice?.messages || [];
+    return this.solverservice?.messages || ['Awaiting puzzle'];
   }
 },
   mounted() {

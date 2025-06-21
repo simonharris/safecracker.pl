@@ -12,7 +12,9 @@ CORS(app, send_wildcard=False)
 
 #INFILE = 'web/api/static/examples/20250511_9146.jpg'
 #INFILE = 'web/api/static/examples/20250601_6452.jpg'
-INFILE = 'web/api/static/examples/20250615_7846.jpg'
+#INFILE = 'web/api/static/examples/20250615_7846.jpg'
+
+EXAMPLE_DIR = 'web/api/static/examples/'
 
 
 EXAMPLES = [
@@ -22,11 +24,11 @@ EXAMPLES = [
     },
     {
         'id': '20250601_6452',
-        'name': '1st June, 2025',
+        'name': '1st June, 2025 (broken)',
     },
     {
         'id': '20250615_7846',
-        'name': '15th June, 2025 (broken)',
+        'name': '15th June, 2025',
     },
 ]
 
@@ -36,14 +38,17 @@ def examples():
     return jsonify(examples=EXAMPLES)
 
 
-@app.route('/solve/<puzzle_id>')
-def solve(puzzle_id):
+@app.route('/solve/example/<puzzle_id>')
+def solve_example(puzzle_id):
+
+    puzzle_file = EXAMPLE_DIR + puzzle_id + '.jpg'
+
     def puzzle_stream():
 
         yield "event: begin\ndata: Beginning OCR...\n\n"
         time.sleep(2)
 
-        clues = get_clues(INFILE)
+        clues = get_clues(puzzle_file)
 
         for clue in clues:
             yield f"event: message\ndata: {clue}\n\n"
