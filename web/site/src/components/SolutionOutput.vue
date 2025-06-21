@@ -2,10 +2,8 @@
 <template>
 <hr>
 
-
 <!-- button @click="solvePuzzle" id="start-button">Start</button>
 <button @click="stopEventSource" id="stop-button">Stop</button -->
-
 
 <div id="output-panel" ref="outputPanel"  class="output-panel h-50 overflow-auto p-2">
   <div v-for="(message, index) in messages" :key="index">{{ message }}</div>
@@ -16,6 +14,7 @@
 <script>
 
 export default {
+  name: 'SolutionOutput',
   data() {
     return {
       //messages: [],
@@ -23,12 +22,12 @@ export default {
   },
   props: {
     solverservice: Object
-},
-computed: {
-  messages() {
-    return this.solverservice?.messages || ['Awaiting puzzle'];
-  }
-},
+  },
+  computed: {
+    messages() {
+      return this.solverservice?.messages || ['Awaiting puzzle'];
+    }
+  },
   mounted() {
     //alert('mounted:' + this.solverservice);
     // this.solveService.addListener({
@@ -68,7 +67,7 @@ computed: {
 #output-panel {
   background-color: black;
   color: white;
-  /* font-family: 'Sixtyfour', sans-serif; */
+  font-family: 'Cutive Mono', serif;
   font-size: smaller;
 }
 

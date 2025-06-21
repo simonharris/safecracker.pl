@@ -6,9 +6,9 @@ import SolverService from '@/services/SolverService.js';
 
   <h1>Solve from Examples</h1>
 
-    <ExampleSelectForm @form-submitted="handleFormSubmission" />
-    <!-- image-preview / -->
-    <SolutionOutput :solverservice="solverservice" />
+  <ExampleSelectForm @form-submitted="handleFormSubmission" />
+  <!-- image-preview / -->
+  <SolutionOutput :solverservice="solverservice" />
 
 </template>
 

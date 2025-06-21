@@ -1,3 +1,6 @@
+import axios from 'axios';
+
+
 const API_HOST = 'http://127.0.0.1:5000'
 
 
@@ -23,9 +26,10 @@ class SolverService {
         this.solve(path);
     }
 
-    // solveUpload(_) {
-    //     alert("Unimplemented");
-    // }
+    solveUpload(filename) {
+        const path = '/solve/upload/' + filename;
+        this.solve(path);
+    }
 
     solve(path) {
 
@@ -69,6 +73,27 @@ class SolverService {
             console.error(error);
             throw error;
         }
+    }
+
+    async upload(file) {
+
+        const formData = new FormData();
+        formData.append('file', file);
+
+        this.uploading = true;
+        return axios.post(API_HOST + '/upload', formData, {
+            onUploadProgress: (progressEvent) => {
+                this.progress = Math.round((progressEvent.loaded * 100) / progressEvent.total);
+            }
+        })
+        // .then((response) => {
+        //     this.uploading = false;
+        //     console.log('From service: ' + response.data)
+        // })
+        // .catch((error) => {
+        //     console.error(error);
+        //     this.uploading = false;
+        // })
     }
 }
 
