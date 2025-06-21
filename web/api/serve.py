@@ -15,11 +15,20 @@ CORS(app, send_wildcard=False)
 INFILE = 'web/api/static/examples/20250615_7846.jpg'
 
 
-EXAMPLES = {
-    '20250511_9146': '11th May, 2025',
-    '20250601_6452': '1st June, 2025',
-    '20250615_7846': '15th June, 2025 (broken)',
-}
+EXAMPLES = [
+    {
+        'id': '20250511_9146',
+        'name': '11th May, 2025',
+    },
+    {
+        'id': '20250601_6452',
+        'name': '1st June, 2025',
+    },
+    {
+        'id': '20250615_7846',
+        'name': '15th June, 2025 (broken)',
+    },
+]
 
 
 @app.route('/examples')

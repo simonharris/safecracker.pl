@@ -16,14 +16,49 @@
 <script>
 
 export default {
-  props: {
-    messages: {
-      type: Array,
-      required: true
-    }
+  data() {
+    return {
+      //messages: [],
+    };
   },
-  // ...
-}
+  props: {
+    solverservice: Object
+},
+computed: {
+  messages() {
+    return this.solverservice?.messages || [];
+  }
+},
+  mounted() {
+    //alert('mounted:' + this.solverservice);
+    // this.solveService.addListener({
+    //   onError: () => {
+    //     console.log('Error occurred');
+    //   },
+    //   onOpen: () => {
+    //     console.log('Connection established');
+    //   },
+    //   onBegin: (data) => {
+    //     this.messages = [];
+    //     this.messages.push(data);
+    //   },
+    //   onEnd: (data) => {
+    //     this.messages.push(data);
+    //   },
+    //   onMessage: (data) => {
+    //     this.messages.push(data);
+    //   },
+    //   onSolution: (data) => {
+    //     this.messages.push(data);
+    //   },
+    // });
+  },
+  methods: {
+    // startSolve() {
+    //   this.solveService.solve();
+    // },
+  },
+};
 
 </script>
 

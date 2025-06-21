@@ -1,17 +1,18 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import SolveView from '../views/SolveView.vue'
+import UploadSolveView from '../views/UploadSolveView.vue'
+import ExampleSolveView from '../views/ExampleSolveView.vue'
 import AboutView from '../views/AboutView.vue'
 
 const routes = [
   {
     path: '/',
     name: 'home',
-    component: SolveView
+    component: UploadSolveView
   },
   {
     path: '/examples',
     name: 'examples',
-    component: SolveView
+    component: ExampleSolveView
   },
   {
     path: '/about',
