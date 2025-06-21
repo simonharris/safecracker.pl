@@ -15,9 +15,9 @@
         <!-- li class="nav-item">
           <router-link class="nav-link" to="/">Home</router-link>
         </li -->
-        <!-- li class="nav-item">
+        <li class="nav-item">
           <router-link class="nav-link" to="/examples">Examples</router-link>
-        </li -->
+        </li>
         <li class="nav-item">
           <router-link class="nav-link" to="/about">About</router-link>
         </li>
@@ -27,7 +27,7 @@
 </nav>
 
 <div class="container-fluid">
-  <div class="container-lg">
+  <div class="container-lg mt-4">
     <router-view/>
   </div><!-- /container-lg -->
 </div><!-- /container-fluid -->

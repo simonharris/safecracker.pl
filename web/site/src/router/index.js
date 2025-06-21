@@ -8,6 +8,11 @@ const routes = [
     component: SolveView
   },
   {
+    path: '/examples',
+    name: 'examples',
+    component: SolveView
+  },
+  {
     path: '/about',
     name: 'about',
     // route level code-splitting
