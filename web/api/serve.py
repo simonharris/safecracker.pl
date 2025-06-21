@@ -1,90 +1,18 @@
-import re
-import subprocess
 import time
 
-import cv2
 from flask import Flask, jsonify, Response
 from flask_cors import CORS
-import pytesseract
+
+from lib import get_count, get_clues
 
 
 app = Flask(__name__)
 CORS(app, send_wildcard=False)
 
 
-DUMMY_CLUES = [
-    "The fourth digit is greater than five",
-    "The third digit is greater than six",
-    "The second digit is greater than seven",
-    "The first digit is greater than eight",
-]
-
 #INFILE = 'web/api/static/examples/20250511_9146.jpg'
 #INFILE = 'web/api/static/examples/20250601_6452.jpg'
 INFILE = 'web/api/static/examples/20250615_7846.jpg'
-REGEX = r'[1-5] ([A-Za-z-0-9 ]+)[\.\n]'
-SOLVER_FILE = 'parser/solver.pl'
-SOLVER_PRED = 'solution(A, B, C, D), halt'
-COUNTER_PRED = 'solution_count(A, B, C, D, Count), writeln(Count), halt.'
-
-
-
-def get_clues(imgfile: str) -> list:
-    #return DUMMY_CLUES
-    img = cv2.imread(imgfile)
-    img = cv2.fastNlMeansDenoisingColored(img, None, 10, 10, 7, 15)
-    img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
-    content = pytesseract.image_to_string(img)
-
-    return re.findall(REGEX, content, re.MULTILINE)
-
-def get_result(clues: list) -> dict:
-    details = {}
-
-    prolog_command = prolog_command = ["swipl", "-f", SOLVER_FILE, "-g", SOLVER_PRED]
-    result = subprocess.run(prolog_command,
-                            input='\n'.join(clues),
-                            capture_output=True,
-                            text=True)
-
-    details['cmd'] = prolog_command
-    details['output'] = result.stdout.strip()
-    details['error'] = result.stderr.strip()
-    return details
-
-
-def get_count(clues: list) -> dict:
-    details = {}
-
-    prolog_command = prolog_command = ["swipl", "-f", SOLVER_FILE, "-g", COUNTER_PRED]
-    result = subprocess.run(prolog_command,
-                            input='\n'.join(clues),
-                            capture_output=True,
-                            text=True)
-    lines = result.stdout.strip().split('\n')
-
-    count = int(lines.pop(-1))
-    final = lines.pop(-1)
-
-    #details['cmd'] = prolog_command
-    details['count'] = count
-    details['final'] = final
-    details['error'] = result.stderr.strip()
-    return details
-
-# @app.route('/events')
-# def events():
-#     def event_stream():
-#         ctr = 0
-#         while True:
-#             # Yield an event every now and then
-#             yield f"data: Hello, world! {ctr}\n\n"
-#             # Add a sleep or some other logic to control the event frequency
-#             import time
-#             time.sleep(2)  # Yield an event every 10 seconds
-#             ctr += 1
-
-#     return Response(event_stream(), mimetype="text/event-stream")
 
 
 @app.route('/solve/<puzzle_id>')
@@ -110,7 +38,6 @@ def solve(puzzle_id):
             yield f"event: message\ndata: Applying {clue}...\n\n"
             results = get_count(constraints)
             yield f"event: message\ndata: {results}\n\n"
-
 
         time.sleep(2)
         yield "event: end\ndata: finished\n\n"
