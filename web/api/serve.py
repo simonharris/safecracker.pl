@@ -15,6 +15,18 @@ CORS(app, send_wildcard=False)
 INFILE = 'web/api/static/examples/20250615_7846.jpg'
 
 
+EXAMPLES = {
+    '20250511_9146': '11th May, 2025',
+    '20250601_6452': '1st June, 2025',
+    '20250615_7846': '15th June, 2025 (broken)',
+}
+
+
+@app.route('/examples')
+def examples():
+    return jsonify(examples=EXAMPLES)
+
+
 @app.route('/solve/<puzzle_id>')
 def solve(puzzle_id):
     def puzzle_stream():
