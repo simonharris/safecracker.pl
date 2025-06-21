@@ -1,29 +1,33 @@
 <template>
 
-<FileUpload />
-<SolutionOutput />
 
+  <div>
+    <FileUploadForm v-if="isHomeRoute" />
+    <ExampleSelectForm v-else />
 
 <button @click="solvePuzzle" id="start-button">Start</button>
 <button @click="stopEventSource" id="stop-button">Stop</button>
 
 
-<div id="output-panel" ref="outputPanel"  class="output-panel h-50 overflow-auto p-2">
-  <div v-for="(message, index) in messages" :key="index">{{ message }}</div>
-</div>
+
+    <!-- image-preview / -->
+    <SolutionOutput :messages="messages" />
+  </div>
 
 
 </template>
 
 <script>
 // @ is an alias to /src
-import FileUpload from '@/components/FileUpload.vue'
+import FileUploadForm from '@/components/FileUploadForm.vue'
+import ExampleSelectForm from '@/components/ExampleSelectForm.vue'
 import SolutionOutput from '@/components/SolutionOutput.vue'
 
 export default {
   name: 'HomeView',
   components: {
-    FileUpload,
+    FileUploadForm,
+    ExampleSelectForm,
     SolutionOutput,
   },
   data() {
@@ -37,6 +41,11 @@ export default {
   },
   mounted() {
     // ...
+  },
+  computed: {
+    isHomeRoute() {
+      return this.$route.name === 'home'
+    }
   },
   methods: {
     solvePuzzle() {
@@ -94,13 +103,6 @@ export default {
 
 
 <style scoped>
-
-#output-panel {
-  background-color: black;
-  color: white;
-  /* font-family: 'Sixtyfour', sans-serif; */
-  font-size: smaller;
-}
 
 </style>
 

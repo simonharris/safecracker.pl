@@ -36,16 +36,13 @@
 
     <h3>API</h3>
 
-    <p>Python, Flask, OCR using Tesseract and <tt>pytesseract</tt>, communicated with Prolog using <tt>subprocess</tt>.</p>
+    <p>Python, Flask, OCR using Tesseract and <code>pytesseract</code>, communicated with Prolog using <code>subprocess</code>.</p>
 
 
-      <h3>Front end web app</h3>
+    <h3>Front end web app</h3>
 
 
-      <p>Vue.js responsive, mobile friendly</p>
-
-
-
+    <p>Vue.js responsive, mobile friendly</p>
 
   </div>
 </template>
