@@ -1,5 +1,5 @@
 <script setup>
-import SolverService from '@/services/SolverService.js';
+import solverService from '@/services/SolverService.js';
 </script>
 
 <template>
@@ -27,7 +27,7 @@ export default {
     return {
       examples: [],
       selectedExample: "",
-      solverService: new SolverService(),
+      service: solverService,
     }
   },
   mounted() {
@@ -36,7 +36,7 @@ export default {
   methods: {
     async fetchExamples() {
       try {
-        const data = await this.solverService.getExamples();
+        const data = await this.service.getExamples();
         this.examples = data.examples;
       } catch (error) {
         console.error(error);

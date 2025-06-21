@@ -1,5 +1,5 @@
 <script setup>
-//import SolverService from '@/services/SolverService.js';
+import solverService from '@/services/SolverService.js';
 import FileUploadForm from '@/components/FileUploadForm.vue'
 import SolutionOutput from '@/components/SolutionOutput.vue'
 </script>
@@ -8,9 +8,9 @@ import SolutionOutput from '@/components/SolutionOutput.vue'
 
   <h1>Solve from Upload</h1>
 
-  <FileUploadForm />
+  <FileUploadForm :solverservice="service" />
   <!-- image-preview / -->
-  <SolutionOutput :solverservice="solverservice" />
+  <SolutionOutput :solverservice="service" />
 
 </template>
 
@@ -25,7 +25,7 @@ export default {
   },
   data() {
     return {
-      solverservice: Object(),
+      service: solverService,
       messages: [],
     }
   },
@@ -39,11 +39,7 @@ export default {
     // ...
   },
   methods: {
-    // handleFormSubmission() {
-    //   alert('Form submitted');
-    //   //this.solverservice = new SolverService();
-    //   //this.solverservice.solveExample(puzzleid);
-    // }
+    // ...
   }
 }
 </script>

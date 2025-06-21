@@ -1,5 +1,5 @@
 <script setup>
-import SolverService from '@/services/SolverService.js';
+import solverService from '@/services/SolverService.js';
 </script>
 
 <template>
@@ -8,7 +8,7 @@ import SolverService from '@/services/SolverService.js';
 
   <ExampleSelectForm @form-submitted="handleFormSubmission" />
   <!-- image-preview / -->
-  <SolutionOutput :solverservice="solverservice" />
+  <SolutionOutput :solverservice="service" />
 
 </template>
 
@@ -24,7 +24,7 @@ export default {
   },
   data() {
     return {
-      solverservice: Object(),
+      service: solverService,
       messages: [],
     }
   },
@@ -40,8 +40,8 @@ export default {
   methods: {
     handleFormSubmission(puzzleid) {
       //alert('Form submitted');
-      this.solverservice = new SolverService();
-      this.solverservice.solveExample(puzzleid);
+      //this.solverservice = new SolverService();
+      this.service.solveExample(puzzleid);
     }
   }
 }

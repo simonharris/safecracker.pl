@@ -97,4 +97,4 @@ class SolverService {
     }
 }
 
-export default SolverService;
+export default new SolverService();

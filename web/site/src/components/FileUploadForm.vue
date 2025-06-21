@@ -1,5 +1,5 @@
 <script setup>
-import SolverService from '@/services/SolverService.js';
+
 </script>
 
 <template>
@@ -20,12 +20,11 @@ export default {
     return {
       uploading: false,
       progress: 0,
-      solverservice: new SolverService(),
     }
   },
-  // props: {
-  //   solverservice: Object
-  // },
+  props: {
+    solverservice: Object
+  },
   methods: {
     handleSubmit() {
       const file = this.$refs.fileInput.files[0];
