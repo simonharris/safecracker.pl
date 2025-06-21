@@ -12,7 +12,7 @@
     <p>Each week the premise is the same:</p>
 
     <blockquote>
-      Four different digits between 1-9 are required to open a safe. From the
+      Four different digits between 1-9 [inclusive] are required to open a safe. From the
       clues below, can you work out the correct four-digit combination?
     </blockquote>
 
