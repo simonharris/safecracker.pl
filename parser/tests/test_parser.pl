@@ -79,6 +79,11 @@ test(twonary_outcome) :-
     parse_clue(Sentence, Clue),
     assertion(Clue = clue(sum, second, third, square)).
 
+test(sum_of_exceeds) :-
+    Sentence = [the, sum, of, the, first, and, third, exceeds, 10],
+    parse_clue(Sentence, Clue),
+    assertion(Clue = clue(sum_of_exceeds, first, third, 10)).
+
 test(either_odd) :-
     Sentence = [either, the, second, or, the, third, is, odd, but, not, both],
     parse_clue(Sentence, Clue),

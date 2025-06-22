@@ -43,10 +43,7 @@ clue(clue(Ordinal2,  Ordinal3, add_up_to_less_than, Ordinal1)) -->
     position(Ordinal1),
     be,
     gt,
-    sumof,
-    position(Ordinal2),
-    and,
-    position(Ordinal3),
+    sum_clause(Ordinal2, Ordinal3),
     !.
 % eg. The third and fourth differ by two
 % eg. The first and third total 13
@@ -79,13 +76,16 @@ clue(clue(Outcome, Howmany, Value)) -->
     !.
 % eg. The sum of the second and third is a square
 clue(clue(sum, Ordinal1, Ordinal2, Adj)) -->
-    sumof,
-    position(Ordinal1),
-    and,
-    position(Ordinal2),
+    sum_clause(Ordinal1, Ordinal2),
     be,
     det,
     adj(Adj),
+    !.
+% eg. The sum of the first and third exceeds 10
+clue(clue(sum_of_exceeds, Ordinal1, Ordinal2, Howmany)) -->
+    sum_clause(Ordinal1, Ordinal2),
+    exceeds,
+    numeric_string(Howmany),
     !.
 % eg. Either the second or the third is odd, but not both
 clue(clue(either, Ordinal1, Ordinal2, Adj)) -->
@@ -166,6 +166,12 @@ operator(greater_than) --> ['greater', 'than'].
 operator(twice) --> ['twice'].
 
 sumof --> ['the', 'sum', 'of'].
+
+sum_clause(Ordinal1, Ordinal2) -->
+    sumof,
+    position(Ordinal1),
+    and,
+    position(Ordinal2).
 
 either --> ['either'].
 

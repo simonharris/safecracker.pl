@@ -1,5 +1,6 @@
 :- module(parser, [
     apply/2,
+    apply_clue/2,
     % for testing
     normalise_numbers/2,
     parse_clue/2
@@ -8,6 +9,12 @@
 :- use_module('grammar').
 
 
+apply_clue(Text, Vs) :-
+    parse_text(Text, Vs, Constraint),
+    call(Constraint).
+
+
+% deprecated, clashes with SWI-Prolog apply/2
 apply(Text, Vs) :-
     parse_text(Text, Vs, Constraint),
     call(Constraint).
@@ -84,6 +91,13 @@ clue_constraint(clue(sum, Position1, Position2, square), Vars, Constraint) :-
     var_for_position(Position2, Vars, Var2),
     boutcome_constraint(sum, Var1, Var2, square, Constraint),
     !.
+% eg. The sum of the first and third exceeds 10
+clue_constraint(clue(sum_of_exceeds, Position1, Position2, HowmanyStr), Vars, Constraint) :-
+    var_for_position(Position1, Vars, Var1),
+    var_for_position(Position2, Vars, Var2),
+    atom_number(HowmanyStr, Howmany),
+    bexceeds_constraint(sum_of_exceeds, Var1, Var2, Howmany, Constraint),
+    !.
 % eg. Either the second or the third is odd, but not both
 clue_constraint(clue(either, Position1, Position2, Adj), Vars, Constraint) :-
     % writeln('suree why not'),
@@ -122,6 +136,8 @@ qoutcome_constraint(divisible_by, Vars, Howmany, Divisor,
                     sum(Bs, #=, Howmany))).
 
 boutcome_constraint(sum, Var1, Var2, square, is_square(Var1 + Var2)).
+
+bexceeds_constraint(sum_of_exceeds, Var1, Var2, Howmany, (Var1 + Var2) #> Howmany ).
 
 either_constraint(odd, Var1, Var2, xor(Var1 mod 2 #= 1, Var2 mod 2 #= 1)).
 
