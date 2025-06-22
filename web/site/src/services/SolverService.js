@@ -1,7 +1,8 @@
 import axios from 'axios';
 
 
-const API_HOST = 'http://127.0.0.1:5000'
+const API_HOST = 'http://192.168.1.73:80'
+//const API_HOST = 'http  ://safe-api.pointbeing.net:8080'
 
 
 class SolverService {

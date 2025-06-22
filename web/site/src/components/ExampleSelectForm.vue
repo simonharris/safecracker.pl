@@ -3,20 +3,20 @@ import solverService from '@/services/SolverService.js';
 </script>
 
 <template>
-
+<!-- div class="form-group d-flex flex-wrap justify-content-center" -->
 <form @submit.prevent="handleSubmit">
 
-<select v-model="selectedExample">
+<select v-model="selectedExample" class="form-control w-100 Xw-lg-50 mb-2">
 <option value="" selected>Please select example &raquo;</option>
     <option v-for="example in examples" :key="example.id" :value="example.id">
     {{ example.name }}
     </option>
 </select>
 
-<button>Solve</button>
+<button class="btn btn-secondary w-100 Xw-lg-50">Solve</button>
 
 </form>
-
+<!-- /div -->
 </template>
 
 <script>

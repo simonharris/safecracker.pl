@@ -2,7 +2,7 @@
 <template>
 <hr>
 
-<div id="output-panel" ref="outputPanel"  class="output-panel h-50 overflow-auto p-2">
+<div id="output-panel" ref="outputPanel" class="p-2">
   <div v-for="(message, index) in messages" :key="index">{{ message }}</div>
 </div>
 
@@ -22,17 +22,29 @@ export default {
   },
   computed: {
     messages() {
-      return this.solverservice?.messages || ['Awaiting puzzle'];
+      return this.solverservice?.messages?.length > 0 ? this.solverservice.messages : ['Awaiting puzzle...'];
     }
   },
   mounted() {
     // ...
   },
   methods: {
-    // startSolve() {
-    //   this.solveService.solve();
-    // },
+    scrollToBottom() {
+      this.$nextTick(() => {
+        const outputPanel = this.$refs.outputPanel;
+        outputPanel.scrollTop = outputPanel.scrollHeight;
+      });
+    },
   },
+  watch: {
+    messages: {
+      deep: true,
+      handler() {
+        console.log('Scrollin');
+        this.scrollToBottom();
+      }
+    }
+  }
 };
 
 </script>

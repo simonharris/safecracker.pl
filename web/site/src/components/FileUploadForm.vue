@@ -3,13 +3,13 @@
 </script>
 
 <template>
-  <div class="upload-component">
-    <form @submit.prevent="handleSubmit">
-      <input type="file" ref="fileInput" />
-      <button>Upload</button>
+  <!-- div class="form-group d-flex flex-wrap justify-content-center" -->
+    <form @submit.prevent="handleSubmit" class="mb-3">
+      <input type="file" ref="fileInput" class="form-control w-100 mb-2" />
+      <button class="btn btn-secondary w-100">Solve</button>
     </form>
-    <progress v-if="solverservice.uploading" :value="solverservice.progress" max="100">{{ solverservice.progress }}%</progress>
-  </div>
+    <progress class="w-100" v-if="solverservice.uploading" :value="solverservice.progress" max="100">{{ solverservice.progress }}%</progress>
+  <!-- /div -->
 </template>
 
 <script>

@@ -6,6 +6,10 @@ import solverService from '@/services/SolverService.js';
 
   <h1>Solve from Examples</h1>
 
+
+  <p>A few examples of previous weeks' puzzles are included below. Select one
+    and we'll see if we can solve it!</p>
+
   <ExampleSelectForm @form-submitted="handleFormSubmission" />
   <!-- image-preview / -->
   <SolutionOutput :solverservice="service" />
@@ -25,7 +29,6 @@ export default {
   data() {
     return {
       service: solverService,
-      messages: [],
     }
   },
   setup() {
