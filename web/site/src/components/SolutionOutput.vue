@@ -3,7 +3,7 @@
 <hr>
 
 <div id="output-panel" ref="outputPanel" class="p-2">
-  <div v-for="(message, index) in messages" :key="index">{{ message }}</div>
+  <div v-for="(message, index) in messages" :key="index" v-bind:class="message.type">{{ message.content }}</div>
 </div>
 
 </template>
@@ -40,7 +40,6 @@ export default {
     messages: {
       deep: true,
       handler() {
-        console.log('Scrollin');
         this.scrollToBottom();
       }
     }
@@ -57,6 +56,24 @@ export default {
   color: white;
   font-family: 'Cutive Mono', serif;
   font-size: smaller;
+  height: 24em;
+  overflow-y: scroll;
 }
+
+#output-panel::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+  background-color: #f0f0f0;
+}
+
+#output-panel::-webkit-scrollbar-thumb {
+  background-color: #ccc;
+  border-radius: 5px;
+}
+
+.msg-phase { color: #4AF626; }
+.msg-progress { color: orange; }
+.msg-solution {  font-family: 'Sixtyfour Convergence', sans-serif; }
+
 
 </style>

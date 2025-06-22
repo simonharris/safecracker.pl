@@ -1,3 +1,4 @@
+import json
 import os
 import time
 
@@ -36,6 +37,13 @@ def allowed_file(filename):
            filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
 
+def message(type, content):
+    return json.dumps({
+        'type': type,
+        'content': content,
+    })
+
+
 ## routes ---------------------------------------------------------------------
 
 
@@ -59,27 +67,39 @@ def solve_upload(puzzle_filename):
 def solve(puzzle_file):
     def puzzle_stream():
 
-        yield "event: begin\ndata: Beginning OCR...\n\n"
-        time.sleep(2)
+        yield "event: begin\ndata: ...\n\n"
+        yield f"event: message\ndata: { message('msg-phase', 'Beginning OCR...') }\n\n"
 
         clues = get_clues(puzzle_file)
+        yield f"event: update\ndata: { message('msg-phase', 'Beginning OCR...done') }\n\n"
+
 
         for clue in clues:
-            yield f"event: message\ndata: {clue}\n\n"
+            yield f"event: message\ndata: { message('msg-clue', clue) }\n\n"
 
-        yield "event: message\ndata: Consulting parser...\n\n"
-        time.sleep(2)
-        yield "event: message\ndata: Applying constraints...\n\n"
+        yield f"event: message\ndata: { message('msg-phase', 'Consulting parser...') }\n\n"
+        time.sleep(1)
+        yield f"event: update\ndata: { message('msg-phase', 'Consulting parser...done') }\n\n"
+        yield f"event: message\ndata: { message('msg-phase', 'Applying constraints...') }\n\n"
 
         constraints = []
         for clue in clues:
             constraints.append(clue)
 
-            yield f"event: message\ndata: Applying {clue}...\n\n"
+            msg = f"Applying '{clue}'"
+            yield f"event: message\ndata: { message('msg-clue', msg) }\n\n"
             results = get_count(constraints)
-            yield f"event: message\ndata: {results}\n\n"
+            msg = f"Candidate solutions remaining: { results['count'] }"
+            yield f"event: message\ndata: { message('msg-progress', msg) }\n\n"
 
-        time.sleep(2)
+        if results['count'] == 1:
+            yield f"event: message\ndata: { message('msg-phase', 'Retrieving solution...') }\n\n"
+            time.sleep(1)
+            yield f"event: update\ndata: { message('msg-phase', 'Retrieving solution...done') }\n\n"
+            msg = f"The solution is: { results['final'] }"
+            yield f"event: message\ndata: { message('msg-solution', msg) }\n\n"
+
+        yield f"event: message\ndata: { message('msg-phase', 'Done') }\n\n"
         yield "event: end\ndata: finished\n\n"
 
     return Response(puzzle_stream(), mimetype="text/event-stream", status=200)

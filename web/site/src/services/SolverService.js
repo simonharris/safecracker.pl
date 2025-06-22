@@ -45,20 +45,24 @@ class SolverService {
         this.eventSource.addEventListener('begin', (event) => {
             console.log('Received "begin" event:', event.data);
             this.messages = [];
-            this.messages.push(event.data);
+            //this.messages.push(event);
         });
         this.eventSource.addEventListener('end', (event) => {
             console.log('Received "end" event:', event.data);
             this.eventSource.close();
-            this.messages.push(event.data);
+            this.messages.push(event);
             //console.log(this.messages);
         });
         this.eventSource.addEventListener('message', (event) => {
-            console.log('Received "message" event:', event.data);
-            this.messages.push(event.data);
+            console.log('Received "message" event:', JSON.parse(event.data));
+            this.messages.push(JSON.parse(event.data));
+        });
+        this.eventSource.addEventListener('update', (event) => {
+            console.log('Received "update" event:', JSON.parse(event.data));
+            this.messages[this.messages.length - 1] = JSON.parse(event.data);
         });
         this.eventSource.addEventListener('solution', (event) => {
-            console.log('Received "solution" event:', event.data);
+            console.log('Received "solution" event:', event);
         });
     }
 
