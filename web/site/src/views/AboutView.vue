@@ -37,7 +37,7 @@
       <p>The application has three subsystems:</p>
 
       <ul>
-        <li>A logical reasoning engine written in Prolog</li>
+        <li>An NLP and logical reasoning engine written in Prolog</li>
         <li>A back-end system built in Python, which performs the OCR, interfaces with Prolog, and exposes an HTTP API</li>
         <li>A responsive front-end JavaScript web app</li>
       </ul>
@@ -82,9 +82,10 @@
 
     <h3>Web application</h3>
 
-    <p>The front-end web app is built in JavaScript using the  <a href="https://vuejs.org/">Vue.js</a> framework,
-      using the ubiquitous <a href="https://getbootstrap.com/">Bootstrap</a> toolkit.
-      I hope it's responsive and mobile friendly, and it's what you're looking at now.</p>
+    <p>The front-end web app is what you're looking at now, and is built in JavaScript using the
+       <a href="https://vuejs.org/">Vue.js</a> framework and
+      the ubiquitous <a href="https://getbootstrap.com/">Bootstrap</a> toolkit.
+      I hope it's responsive and mobile friendly.</p>
 
   </div>
 
