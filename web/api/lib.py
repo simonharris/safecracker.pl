@@ -2,6 +2,7 @@ import re
 import subprocess
 
 import cv2
+from pyswip import Prolog
 import pytesseract
 
 from config import COUNTER_PRED, SOLVER_FILE, SOLVER_PRED
@@ -25,36 +26,30 @@ def get_clues(imgfile: str) -> list:
 
     return re.findall(OCR_REGEX, content, re.MULTILINE)
 
-def get_result(clues: list) -> dict:
-    details = {}
-
-    prolog_command = prolog_command = ["swipl", "-f", SOLVER_FILE, "-g", SOLVER_PRED]
-    result = subprocess.run(prolog_command,
-                            input='\n'.join(clues),
-                            capture_output=True,
-                            text=True)
-
-    details['cmd'] = prolog_command
-    details['output'] = result.stdout.strip()
-    details['error'] = result.stderr.strip()
-    return details
-
 
 def get_count(clues: list) -> dict:
+
+    prolog = Prolog()
+    prolog.consult(SOLVER_FILE)
+    prolog.retractall("clue(_)")
+
     details = {}
 
-    prolog_command = prolog_command = ["swipl", "-f", SOLVER_FILE, "-g", COUNTER_PRED]
-    result = subprocess.run(prolog_command,
-                            input='\n'.join(clues),
-                            capture_output=True,
-                            text=True)
-    lines = result.stdout.strip().split('\n')
+    for clue in clues:
+        prolog.asserta(f"clue('{clue}')")
 
-    count = int(lines.pop(-1))
-    final = lines.pop(-1)
+    q = prolog.query("solution_count(A, B, C, D, Count)")
+    sol = next(q)
+    q.close()
 
-    #details['cmd'] = prolog_command
-    details['count'] = count
-    details['final'] = final
-    details['error'] = result.stderr.strip()
+    details['count'] = sol['Count']
+
+    if sol['Count'] == 1:
+
+        q = prolog.query("solution(A, B, C, D)")
+        sol = next(q)
+        q.close()
+
+        details['final'] = list(sol.values())
+
     return details

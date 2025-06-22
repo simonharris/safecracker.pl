@@ -4,3 +4,4 @@ Flask_WTF
 Bootstrap_Flask
 pytesseract
 OpenCV-python
+pyswip
