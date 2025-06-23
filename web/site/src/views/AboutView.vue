@@ -76,8 +76,7 @@
       <a href="https://github.com/tesseract-ocr/tesseract">Tesseract</a> OCR libraries,
       and the <a href="https://pypi.org/project/pytesseract/">pytesseract</a> wrapper for Python.</p>
 
-      <p>Communication between Python and Prolog is achieved using a Python <code>subprocess</code>.
-      Sadly this does not play well within a WSGI web server context, so is the subject of further research.</p>
+      <p>Communication between Python and Prolog is achieved using <a href="https://pyswip.org/">PySwip</a>.</p>
 
 
     <h3>Web application</h3>
