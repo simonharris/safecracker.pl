@@ -2,7 +2,7 @@
 <template>
 <hr>
 
-<div id="output-panel" ref="outputPanel" class="p-2">
+<div id="output-panel" ref="outputPanel" class="p-2 mb-4">
   <div v-for="(message, index) in messages" :key="index" v-bind:class="message.type">{{ message.content }}</div>
 </div>
 

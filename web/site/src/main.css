@@ -20,10 +20,11 @@ blockquote {
     margin-right: 2em;
 }
 
-footer a {
-    color: white;
-}
-
 input, select, button {
     box-sizing: border-box;
 }
+
+.magenta { background-color: magenta; }
+.yellow { background-color: yellow; }
+.cyan { background-color: cyan; }
+
