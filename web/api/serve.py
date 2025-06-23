@@ -68,10 +68,11 @@ def solve(puzzle_file):
     def puzzle_stream():
 
         yield "event: begin\ndata: ...\n\n"
+        yield f"event: message\ndata: { message('msg-phase', 'Awaiting puzzle...RECEIVED') }\n\n"
         yield f"event: message\ndata: { message('msg-phase', 'Beginning OCR...') }\n\n"
 
         clues = get_clues(puzzle_file)
-        yield f"event: update\ndata: { message('msg-phase', 'Beginning OCR...done') }\n\n"
+        yield f"event: update\ndata: { message('msg-phase', 'Beginning OCR...DONE') }\n\n"
 
 
         for clue in clues:
@@ -79,7 +80,7 @@ def solve(puzzle_file):
 
         yield f"event: message\ndata: { message('msg-phase', 'Consulting parser...') }\n\n"
         time.sleep(1)
-        yield f"event: update\ndata: { message('msg-phase', 'Consulting parser...done') }\n\n"
+        yield f"event: update\ndata: { message('msg-phase', 'Consulting parser...DONE') }\n\n"
         yield f"event: message\ndata: { message('msg-phase', 'Applying constraints...') }\n\n"
 
         constraints = []
@@ -95,11 +96,11 @@ def solve(puzzle_file):
         if results['count'] == 1:
             yield f"event: message\ndata: { message('msg-phase', 'Retrieving solution...') }\n\n"
             time.sleep(1)
-            yield f"event: update\ndata: { message('msg-phase', 'Retrieving solution...done') }\n\n"
-            msg = f"The solution is: { results['final'] }"
+            yield f"event: update\ndata: { message('msg-phase', 'Retrieving solution...DONE') }\n\n"
+            msg = f"Solution: { results['final'] }"
             yield f"event: message\ndata: { message('msg-solution', msg) }\n\n"
 
-        yield f"event: message\ndata: { message('msg-phase', 'Done') }\n\n"
+        yield f"event: message\ndata: { message('msg-phase', 'Puzzle solved.') }\n\n"
         yield "event: end\ndata: finished\n\n"
 
     return Response(puzzle_stream(), mimetype="text/event-stream", status=200)

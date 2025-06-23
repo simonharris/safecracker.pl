@@ -22,7 +22,7 @@ export default {
   },
   computed: {
     messages() {
-      return this.solverservice?.messages?.length > 0 ? this.solverservice.messages : ['Awaiting puzzle...'];
+      return this.solverservice?.messages?.length > 0 ? this.solverservice.messages : [{ type: 'msg-phase', content: 'Awaiting puzzle...'}];
     }
   },
   mounted() {
