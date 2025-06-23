@@ -4,22 +4,22 @@
 
 <nav class="navbar navbar-expand-md bg-dark border-bottom border-body" data-bs-theme="dark">
   <div class="container-fluid">
-    <router-link class="navbar-brand sitename" to="/">SafeCracker</router-link>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+    <router-link @click="navOpen = false" class="navbar-brand sitename" to="/">SafeCracker</router-link>
+    <button  @click="navOpen = !navOpen" class="navbar-toggler" type="button" data-bs-toggle="collapse"
         data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
         aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <div class="collapse navbar-collapse" :class="{ show: navOpen }" id="navbarSupportedContent">
       <ul class="navbar-nav me-auto mb-2 mb-md-0">
         <li class="nav-item">
-          <router-link class="nav-link" to="/">Upload</router-link>
+          <router-link @click="navOpen = false" class="nav-link" to="/">Upload</router-link>
         </li>
         <li class="nav-item">
-          <router-link class="nav-link" to="/examples">Examples</router-link>
+          <router-link @click="navOpen = false" class="nav-link" to="/examples">Examples</router-link>
         </li>
         <li class="nav-item">
-          <router-link class="nav-link" to="/about">About</router-link>
+          <router-link @click="navOpen = false" class="nav-link" to="/about">About</router-link>
         </li>
       </ul>
     </div>
@@ -60,6 +60,16 @@
 
 </template>
 
+
+<script>
+export default {
+  data() {
+    return {
+      navOpen: false
+    }
+  }
+}
+</script>
 
 <style>
 
