@@ -1,13 +1,16 @@
+import asyncio
 import json
 import os
 import time
 
-from flask import Flask, jsonify, request, Response
+from flask import (
+    Flask, jsonify, request, Response, stream_with_context
+)
 from flask_cors import CORS
 from werkzeug.utils import secure_filename
 
 from config import ALLOWED_EXTENSIONS, EXAMPLE_DIR, UPLOAD_DIR
-from lib import get_count, get_clues
+from lib import get_count, get_clues, get_clues_async
 
 
 app = Flask(__name__)
@@ -28,6 +31,7 @@ EXAMPLES = [
         'name': '15th June, 2025',
     },
 ]
+
 
 ## utils ----------------------------------------------------------------------
 
@@ -59,51 +63,68 @@ def solve_example(puzzle_id):
 
 
 @app.route('/solve/upload/<puzzle_filename>')
-def solve_upload(puzzle_filename):
-    puzzle_file = UPLOAD_DIR + puzzle_filename
-    return solve(puzzle_file)
+async def solve_upload(puzzle_filename):
+    return "Hello, World!"
+    # puzzle_file = UPLOAD_DIR + puzzle_filename
+    # return await solve(puzzle_file)
+
+
+def puzzle_stream(puzzle_file):
+    async def fetch_clues():
+        clues = await get_clues_async(puzzle_file)
+        return clues
+
+    yield "event: begin\ndata: ...\n\n"
+    yield f"event: message\ndata: { message('msg-phase', 'Awaiting puzzle...RECEIVED') }\n\n"
+    yield f"event: message\ndata: { message('msg-phase', 'Beginning OCR') }\n\n"
+
+    loop = asyncio.new_event_loop()
+    asyncio.set_event_loop(loop)
+    task = loop.create_task(fetch_clues())
+
+    ctr = 0
+    while not task.done():
+        msg = f"Beginning OCR{'.' * ctr}"
+        yield f"event: update\ndata: { message('msg-phase', msg) }\n\n"
+        loop.run_until_complete(asyncio.sleep(1))
+        ctr += 1
+
+    clues = task.result()
+
+    dots = '.' * ctr
+    yield f"event: update\ndata: { message('msg-phase', f"Beginning OCR{dots}DONE") }\n\n"
+
+    for clue in clues:
+        yield f"event: message\ndata: { message('msg-clue', clue) }\n\n"
+
+    yield f"event: message\ndata: { message('msg-phase', 'Consulting parser...') }\n\n"
+    time.sleep(1)
+    yield f"event: update\ndata: { message('msg-phase', 'Consulting parser...DONE') }\n\n"
+    yield f"event: message\ndata: { message('msg-phase', 'Applying constraints...') }\n\n"
+
+    constraints = []
+    for clue in clues:
+        constraints.append(clue)
+
+        msg = f"Applying '{clue}'"
+        yield f"event: message\ndata: { message('msg-clue', msg) }\n\n"
+        results = get_count(constraints)
+        msg = f"Candidate solutions remaining: { results['count'] }"
+        yield f"event: message\ndata: { message('msg-progress', msg) }\n\n"
+
+    if results['count'] == 1:
+        yield f"event: message\ndata: { message('msg-phase', 'Retrieving solution...') }\n\n"
+        time.sleep(1)
+        yield f"event: update\ndata: { message('msg-phase', 'Retrieving solution...DONE') }\n\n"
+        msg = f"Solution: { results['final'] }"
+        yield f"event: message\ndata: { message('msg-solution', msg) }\n\n"
+
+    yield f"event: message\ndata: { message('msg-phase', 'Finished.') }\n\n"
+    yield "event: end\ndata: finished\n\n"
 
 
 def solve(puzzle_file):
-    def puzzle_stream():
-
-        yield "event: begin\ndata: ...\n\n"
-        yield f"event: message\ndata: { message('msg-phase', 'Awaiting puzzle...RECEIVED') }\n\n"
-        yield f"event: message\ndata: { message('msg-phase', 'Beginning OCR...') }\n\n"
-
-        clues = get_clues(puzzle_file)
-        yield f"event: update\ndata: { message('msg-phase', 'Beginning OCR...DONE') }\n\n"
-
-
-        for clue in clues:
-            yield f"event: message\ndata: { message('msg-clue', clue) }\n\n"
-
-        yield f"event: message\ndata: { message('msg-phase', 'Consulting parser...') }\n\n"
-        time.sleep(1)
-        yield f"event: update\ndata: { message('msg-phase', 'Consulting parser...DONE') }\n\n"
-        yield f"event: message\ndata: { message('msg-phase', 'Applying constraints...') }\n\n"
-
-        constraints = []
-        for clue in clues:
-            constraints.append(clue)
-
-            msg = f"Applying '{clue}'"
-            yield f"event: message\ndata: { message('msg-clue', msg) }\n\n"
-            results = get_count(constraints)
-            msg = f"Candidate solutions remaining: { results['count'] }"
-            yield f"event: message\ndata: { message('msg-progress', msg) }\n\n"
-
-        if results['count'] == 1:
-            yield f"event: message\ndata: { message('msg-phase', 'Retrieving solution...') }\n\n"
-            time.sleep(1)
-            yield f"event: update\ndata: { message('msg-phase', 'Retrieving solution...DONE') }\n\n"
-            msg = f"Solution: { results['final'] }"
-            yield f"event: message\ndata: { message('msg-solution', msg) }\n\n"
-
-        yield f"event: message\ndata: { message('msg-phase', 'Puzzle solved.') }\n\n"
-        yield "event: end\ndata: finished\n\n"
-
-    return Response(puzzle_stream(), mimetype="text/event-stream", status=200)
+    return Response(puzzle_stream(puzzle_file), mimetype="text/event-stream", status=200)
 
 
 @app.route('/upload', methods=['POST'])

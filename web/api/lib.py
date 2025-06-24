@@ -1,5 +1,5 @@
+import asyncio
 import re
-import subprocess
 
 import cv2
 from pyswip import Prolog
@@ -25,6 +25,10 @@ def get_clues(imgfile: str) -> list:
     content = pytesseract.image_to_string(img)
 
     return re.findall(OCR_REGEX, content, re.MULTILINE)
+
+
+async def get_clues_async(imgfile: str) -> list:
+    return await asyncio.to_thread(get_clues, imgfile)
 
 
 def get_count(clues: list) -> dict:

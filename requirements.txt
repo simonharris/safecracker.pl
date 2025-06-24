@@ -1,4 +1,5 @@
 flask
+flask[async]
 flask_cors
 Flask_WTF
 Bootstrap_Flask
