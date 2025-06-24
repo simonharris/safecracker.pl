@@ -92,7 +92,8 @@ def puzzle_stream(puzzle_file):
     clues = task.result()
 
     dots = '.' * ctr
-    yield f"event: update\ndata: { message('msg-phase', f"Beginning OCR{dots}DONE") }\n\n"
+    msg = f"Beginning OCR{dots}DONE"
+    yield f"event: update\ndata: { message('msg-phase', msg) }\n\n"
 
     for clue in clues:
         yield f"event: message\ndata: { message('msg-clue', clue) }\n\n"
