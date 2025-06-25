@@ -48,27 +48,6 @@ def message(type, content):
     })
 
 
-## routes ---------------------------------------------------------------------
-
-
-@app.route('/examples')
-def examples():
-    return jsonify(examples=EXAMPLES)
-
-
-@app.route('/solve/example/<puzzle_id>')
-def solve_example(puzzle_id):
-    puzzle_file = EXAMPLE_DIR + puzzle_id + '.jpg'
-    return solve(puzzle_file)
-
-
-@app.route('/solve/upload/<puzzle_filename>')
-async def solve_upload(puzzle_filename):
-    return "Hello, World!"
-    # puzzle_file = UPLOAD_DIR + puzzle_filename
-    # return await solve(puzzle_file)
-
-
 def puzzle_stream(puzzle_file):
     async def fetch_clues():
         clues = await get_clues_async(puzzle_file)
@@ -126,6 +105,26 @@ def puzzle_stream(puzzle_file):
 
 def solve(puzzle_file):
     return Response(puzzle_stream(puzzle_file), mimetype="text/event-stream", status=200)
+
+
+## routes ---------------------------------------------------------------------
+
+
+@app.route('/examples')
+def examples():
+    return jsonify(examples=EXAMPLES)
+
+
+@app.route('/solve/example/<puzzle_id>')
+def solve_example(puzzle_id):
+    puzzle_file = EXAMPLE_DIR + puzzle_id + '.jpg'
+    return solve(puzzle_file)
+
+
+@app.route('/solve/upload/<puzzle_filename>')
+async def solve_upload(puzzle_filename):
+    puzzle_file = UPLOAD_DIR + puzzle_filename
+    return await solve(puzzle_file)
 
 
 @app.route('/upload', methods=['POST'])
