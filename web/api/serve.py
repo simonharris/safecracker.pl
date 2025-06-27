@@ -126,10 +126,9 @@ def solve_example(puzzle_id):
 
 
 @app.route('/solve/upload/<puzzle_filename>')
-async def solve_upload(puzzle_filename):
+def solve_upload(puzzle_filename):
     puzzle_file = UPLOAD_DIR + puzzle_filename
-    return await solve(puzzle_file)
-
+    return solve(puzzle_file)
 
 @app.route('/upload', methods=['POST'])
 def upload():
