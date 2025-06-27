@@ -83,6 +83,10 @@ def puzzle_stream(puzzle_file):
     yield f"event: message\ndata: { message('msg-phase', 'Applying constraints...') }\n\n"
 
     constraints = []
+    results = get_count(constraints)
+    msg = f"Candidate solutions remaining: { results['count'] }"
+    yield f"event: message\ndata: { message('msg-progress', msg) }\n\n"
+
     for clue in clues:
         constraints.append(clue)
 
