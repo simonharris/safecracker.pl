@@ -29,6 +29,16 @@ test(difference2) :-
     parse_clue(Sentence, Clue),
     assertion(Clue = clue(first, third, differ_by, '3')).
 
+test(difference3) :-
+    Sentence = [the, first, and, last, digits, differ, by, '3'],
+    parse_clue(Sentence, Clue),
+    assertion(Clue = clue(first, fourth, differ_by, '3')).
+
+test(add_up_to) :-
+    Sentence = [the, second, and, third, digits, total, '11'],
+    parse_clue(Sentence, Clue),
+    assertion(Clue = clue(second, third, add_up_to, '11')).
+
 test(twice) :-
     Sentence = [the, second, is, twice, the, fourth],
     parse_clue(Sentence, Clue),
@@ -64,6 +74,11 @@ test(quantified_adjective3) :-
     parse_clue(Sentence, Clue),
     assertion(Clue = clue(even, '3')).
 
+test(quantified_adjective4) :-
+    Sentence = [exactly, '2', digits, are, not, prime],
+    parse_clue(Sentence, Clue),
+    assertion(Clue = clue(not_prime, '2')).
+
 test(quantified_outcome1) :-
     Sentence = [exactly, '1', of, the, digits, is, '3'],
     parse_clue(Sentence, Clue),
@@ -84,6 +99,11 @@ test(sum_of_exceeds) :-
     parse_clue(Sentence, Clue),
     assertion(Clue = clue(sum_of_exceeds, first, third, 10)).
 
+test(sum_of_exceeds2) :-
+    Sentence = [the, sum, of, the, first, and, third, is, greater, than, 13],
+    parse_clue(Sentence, Clue),
+    assertion(Clue = clue(sum_of_exceeds, first, third, 13)).
+
 test(either_odd) :-
     Sentence = [either, the, second, or, the, third, is, odd, but, not, both],
     parse_clue(Sentence, Clue),
@@ -93,6 +113,11 @@ test(exceeds_more_than) :-
     Sentence = [the, second, exceeds, the, first, by, more, than, '2'],
     parse_clue(Sentence, Clue),
     assertion(Clue = clue(second, first, exceeds_by_more_than, '2')).
+
+test(this_one_fails) :-
+    Sentence = [the, first, digit, is, divisible, by, '3'],
+    parse_clue(Sentence, Clue),
+    assertion(Clue = clue(first, divisible_by, 3)).
 
 test(normalise_numbers) :-
     normalise_numbers('hello', 'hello'),

@@ -9,6 +9,8 @@
     safe_digit//1
 ]).
 
+% TODO: there's a lot of duplication of "greater than" in here
+
 % eg. The third digit is less than five
 clue(clue(Ordinal, Operator, Number)) -->
     position(Ordinal),
@@ -47,6 +49,7 @@ clue(clue(Ordinal2,  Ordinal3, add_up_to_less_than, Ordinal1)) -->
     !.
 % eg. The third and fourth differ by two
 % eg. The first and third total 13
+% eg. The first and last digits differ by three
 clue(clue(Ordinal1, Ordinal2, Func, Howmany)) -->
     position(Ordinal1),
     and,
@@ -63,6 +66,7 @@ clue(clue(Ordinal1, Ordinal2, Func, Howmany)) -->
     position(Ordinal2),
     !.
 % eg. Exactly three digits are even
+% eg  Exactly two digits are not prime
 clue(clue(Adj, Howmany)) -->
     quant(Howmany),
     be,
@@ -82,6 +86,7 @@ clue(clue(sum, Ordinal1, Ordinal2, Adj)) -->
     adj(Adj),
     !.
 % eg. The sum of the first and third exceeds 10
+% eg. The sum of the first and third is greater than 13
 clue(clue(sum_of_exceeds, Ordinal1, Ordinal2, Howmany)) -->
     sum_clause(Ordinal1, Ordinal2),
     exceeds,
@@ -125,10 +130,12 @@ part --> [].
 d --> ['digit'].
 d --> ['digits'].
 
-adj(Adj) --> [Adj], { member(Adj, ['prime', 'odd', 'even', 'square']) }.
+adj(not_prime) --> [not, prime]. % we need to discuss negation
+adj(Adj) --> [Adj], { member(Adj, ['prime', 'not_prime', 'odd', 'even', 'square']) }.
 
 position(Ordinal) --> det, ord(Ordinal), d.
 position(Ordinal) --> det, ord(Ordinal).
+position(Ordinal) --> ord(Ordinal), d.
 position(Ordinal) --> ord(Ordinal).
 
 det --> ['the'].
@@ -148,6 +155,7 @@ ord(first) --> ['first'].
 ord(second) --> ['second'].
 ord(third) --> ['third'].
 ord(fourth) --> ['fourth'].
+ord(fourth) --> ['last'].
 
 gt --> ['greater', 'than'].
 
@@ -163,6 +171,7 @@ fun(Fun) -->
 
 operator(less_than) --> ['less', 'than'].
 operator(greater_than) --> ['greater', 'than'].
+operator(divisible_by) --> ['divisible', 'by']. % ugh, duplication
 operator(twice) --> ['twice'].
 
 sumof --> ['the', 'sum', 'of'].
@@ -183,6 +192,7 @@ superfluous_waffle --> ['but', 'not', 'both'].
 superfluous_waffle --> [].
 
 exceeds --> ['exceeds'].
+exceeds --> ['is', 'greater', 'than'].
 by --> ['by'].
 more --> ['more'].
 than --> ['than'].

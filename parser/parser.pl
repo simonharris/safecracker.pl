@@ -41,7 +41,7 @@ parse_clue(Sentence, Clue) :-
 % eg. The third digit is less than five
 clue_constraint(clue(Position, Relation, Num), Vars, Constraint) :-
     var_for_position(Position, Vars, Var),
-    safe_digit_val(Num),
+    safe_digit_val(Num), % this is a bit fragile
     relation_constraint(Relation, Var, Num, Constraint).
 % eg. The third digit is less than the second
 % eg. The second is twice the fourth
@@ -73,6 +73,7 @@ clue_constraint(clue(Position1, Position2, Func, Position3), Vars, Constraint) :
     function_constraint(Func, Var1, Var2, Var3, Constraint),
     !.
 % eg. Only one digit is odd
+% eg. Exactly two digits are not prime
 clue_constraint(clue(Adj, HowmanyStr), Vars, Constraint) :-
     adjective_val(Adj),
     atom_number(HowmanyStr, Howmany),
@@ -100,7 +101,6 @@ clue_constraint(clue(sum_of_exceeds, Position1, Position2, HowmanyStr), Vars, Co
     !.
 % eg. Either the second or the third is odd, but not both
 clue_constraint(clue(either, Position1, Position2, Adj), Vars, Constraint) :-
-    % writeln('suree why not'),
     var_for_position(Position1, Vars, Var1),
     var_for_position(Position2, Vars, Var2),
     either_constraint(Adj, Var1, Var2, Constraint),
@@ -112,6 +112,7 @@ clue_constraint(clue(either, Position1, Position2, Adj), Vars, Constraint) :-
 
 relation_constraint(less_than, A, B, A #< B).
 relation_constraint(greater_than, A, B, A #> B).
+relation_constraint(divisible_by, A, B, divides_by(A, B)).
 relation_constraint(twice, A, B, A #= B*2).
 
 adjective_constraint(odd, Var, is_odd(Var)).
@@ -129,6 +130,7 @@ qadj_constraint(odd, Vars, Howmany, (include(is_odd, Vars, Odds), length(Odds, H
 qadj_constraint(even, Vars, Howmany, (include(is_even, Vars, Odds), length(Odds, Howmany))).
 qadj_constraint(square, Vars, Howmany, (include(is_square, Vars, Odds), length(Odds, Howmany))).
 qadj_constraint(prime, Vars, Howmany, ( maplist(is_prime, Vars, PrimeDigits), sum(PrimeDigits, #=, Howmany))).
+qadj_constraint(not_prime, Vars, Howmany, ( maplist(is_prime, Vars, PrimeDigits), sum(PrimeDigits, #=, (4-Howmany)))).
 
 qoutcome_constraint(equal, Vars, Howmany, Value, occurrenceof(Vars, Howmany, Value)).
 qoutcome_constraint(divisible_by, Vars, Howmany, Divisor,
