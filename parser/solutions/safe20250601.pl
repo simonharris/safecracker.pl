@@ -1,4 +1,5 @@
 :- use_module('../safe_cracker').
+:- use_module('../parser').
 
 
 solution_20250601(A, B, C, D) :-
@@ -7,23 +8,23 @@ solution_20250601(A, B, C, D) :-
 
     % 1. The sum of the second and third is a square
     % is_square(B + C),
-    apply('The sum of the second and third is a square', Vs),
+    apply_clue('The sum of the second and third is a square', Vs),
 
     % 2. Exactly three digits are even
     % include(is_even, Vs, Evens),
     % length(Evens, 3),
-    apply('Exactly three digits are even', Vs),
+    apply_clue('Exactly three digits are even', Vs),
 
     % 3. The first and third differ by one
     % abs(A - C) #= 1,
-    apply('The first and third differ by one', Vs),
+    apply_clue('The first and third differ by one', Vs),
 
     % 4. The first is greater than the second
     % A #> B,
-    apply('The first is greater than the second', Vs),
+    apply_clue('The first is greater than the second', Vs),
 
     % 5. The fourth digit is prime
     % is_prime(D, 1),
-    apply('The fourth digit is prime', Vs),
+    apply_clue('The fourth digit is prime', Vs),
 
     label(Vs).
