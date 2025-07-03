@@ -5,6 +5,7 @@
 :- ensure_loaded('../solutions/safe20250601').
 :- ensure_loaded('../solutions/safe20250615').
 :- ensure_loaded('../solutions/safe20250622').
+:- ensure_loaded('../solutions/safe20250629').
 
 
 :- begin_tests(safe_cracker_solutions).
@@ -36,5 +37,9 @@ test(solution_20250615) :-
 test(solution_20250622) :-
     once(solution_20250622(A, B, C, D)),
     assertion((A = 5, B = 1, C = 7, D = 4)).
+
+test(solution_20250629) :-
+    once(solution_20250629(A, B, C, D)),
+    assertion((A = 6, B = 2, C = 9, D = 3)).
 
 :- end_tests(safe_cracker_solutions).
