@@ -6,6 +6,7 @@ testprolog:
 						  parser/tests/test_parser,\
 						  parser/tests/test_solutions]), run_tests" -t halt
 
+
 .PHONY: web
 web:
 	cd web/site/ && npm run serve -- --host 0.0.0.0
@@ -13,3 +14,11 @@ web:
 
 constraints:
 	@grep -h "% [1-5]. "parser/solutions/safe202* | cut -d' ' -f7-
+
+
+update:
+	git stash
+	git pull
+	git stash apply
+	touch wsgi.py 
+
