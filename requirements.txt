@@ -1,9 +1,5 @@
-flask
-flask[async]
-flask_cors
-Flask_WTF
-Bootstrap_Flask
 pytesseract
 OpenCV-python
 pyswip
-async
+fastapi
+uvicorn

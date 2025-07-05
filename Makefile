@@ -20,5 +20,10 @@ update:
 	git stash
 	git pull
 	git stash apply
-	touch wsgi.py 
+	touch wsgi.py
+.PHONY: api
+
+
+api:
+	cd web/api2 && uvicorn main:app --reload
 
