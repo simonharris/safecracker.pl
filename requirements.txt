@@ -3,3 +3,4 @@ OpenCV-python
 pyswip
 fastapi
 uvicorn
+python-multipart

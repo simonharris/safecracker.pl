@@ -1,6 +1,30 @@
-from fastapi import FastAPI
+import shutil
+from typing import Annotated
+
+from fastapi import FastAPI, HTTPException, UploadFile
+from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import PlainTextResponse
+from fastapi.staticfiles import StaticFiles
+
+from config import UPLOAD_DIR
+
 
 app = FastAPI()
+
+origins = [
+    '*',
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=['*'],
+    allow_headers=['*'],
+)
+
+app.mount('/static', StaticFiles(directory='static'), name='static')
+
 
 EXAMPLES = [
     {
@@ -22,6 +46,15 @@ EXAMPLES = [
 ]
 
 
-@app.get("/examples")
+@app.get('/examples')
 def read_examples():
     return {'examples': EXAMPLES}
+
+
+@app.post('/upload')
+def upload(file: UploadFile):
+
+    with open(f"{UPLOAD_DIR}{file.filename}", 'wb') as f:
+        shutil.copyfileobj(file.file, f)
+
+    return PlainTextResponse(file.filename)
