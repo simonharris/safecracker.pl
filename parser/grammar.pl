@@ -41,9 +41,8 @@ clue(clue(Ordinal1, Ordinal2, Func, Ordinal3)) -->
     position(Ordinal3),
     !.
 % eg. The fourth is greater than the sum of the second and third
-clue(clue(Ordinal2,  Ordinal3, add_up_to_less_than, Ordinal1)) -->
+clue(clue(sum, lt, Ordinal2,  Ordinal3, Ordinal1)) -->
     position(Ordinal1),
-    be,
     gt,
     sum_clause(Ordinal2, Ordinal3),
     !.
@@ -87,9 +86,9 @@ clue(clue(sum, Ordinal1, Ordinal2, Adj)) -->
     !.
 % eg. The sum of the first and third exceeds 10
 % eg. The sum of the first and third is greater than 13
-clue(clue(sum_of_exceeds, Ordinal1, Ordinal2, Howmany)) -->
+clue(clue(sum, gt, Ordinal1, Ordinal2, Howmany)) -->
     sum_clause(Ordinal1, Ordinal2),
-    exceeds,
+    gt,
     numeric_string(Howmany),
     !.
 % eg. Either the second or the third is odd, but not both
@@ -102,11 +101,10 @@ clue(clue(either, Ordinal1, Ordinal2, Adj)) -->
     adj(Adj),
     superfluous_waffle,
     !.
-% eg. The second exceeds the first by more than two
-% We're deep into the outliers here, let's just get it out the way
+% eg. The second exceeds the first by more than twov
 clue(clue(Ordinal1, Ordinal2, exceeds_by_more_than, Howmany)) -->
     position(Ordinal1),
-    exceeds,
+    gt,
     position(Ordinal2),
     by,
     more,
@@ -157,11 +155,13 @@ ord(third) --> ['third'].
 ord(fourth) --> ['fourth'].
 ord(fourth) --> ['last'].
 
+gt --> ['more', 'than'].
+gt --> ['is', 'greater', 'than'].
 gt --> ['greater', 'than'].
+gt --> ['exceeds'].
 
 function(differ_by) --> ['differ', 'by'].
 function(add_up_to) --> ['total'].
-function(greater_than) --> ['more', 'than'].
 function(greater_than) --> gt.
 function(less_than) --> ['less', 'than'].
 fun(Fun) -->
@@ -191,8 +191,6 @@ numeric_string(Num) --> [Num]. % yeah, you try doing better
 superfluous_waffle --> ['but', 'not', 'both'].
 superfluous_waffle --> [].
 
-exceeds --> ['exceeds'].
-exceeds --> ['is', 'greater', 'than'].
 by --> ['by'].
 more --> ['more'].
 than --> ['than'].
