@@ -1,5 +1,4 @@
 :- module(parser, [
-    apply/2,
     apply_clue/2,
     % for testing
     normalise_numbers/2,
@@ -14,11 +13,6 @@ apply_clue(Text, Vs) :-
     call(Constraint).
 
 
-% deprecated, clashes with SWI-Prolog apply/2
-apply(Text, Vs) :-
-    parse_text(Text, Vs, Constraint),
-    call(Constraint).
-
 parse_text(Text, Vars, Constraint) :-
     % pre-processing
     strip_commas(Text, CleanText),
@@ -31,12 +25,18 @@ parse_text(Text, Vars, Constraint) :-
     % turn the clue into a constraint object
     clue_constraint(Clue, Vars, Constraint).
 
+
 parse_clue(Sentence, Clue) :-
     phrase(clue(Clue), Sentence).
 
 
 %% map clues to constraint types ----------------------------------------------
 
+/*
+
+one digit
+
+*/
 
 % eg. The third digit is less than five
 clue_constraint(clue(Position, Relation, Num), Vars, Constraint) :-
@@ -54,6 +54,13 @@ clue_constraint(clue(Position, Adj), Vars, Constraint) :-
     var_for_position(Position, Vars, Var),
     adjective_val(Adj),
     adjective_constraint(Adj, Var, Constraint).
+
+/*
+
+two digits --------------------------------------------------------------------
+
+*/
+
 % eg. The third and fourth differ by two
 % eg. The first and third total 13
 clue_constraint(clue(Position1, Position2, Func, HowmanyStr), Vars, Constraint) :-
@@ -63,8 +70,43 @@ clue_constraint(clue(Position1, Position2, Func, HowmanyStr), Vars, Constraint) 
     atom_number(HowmanyStr, Howmany),
     function_constraint(Func, Var1, Var2, Howmany, Constraint),
     !.
-% eg. The first and second total the third
+% eg. The sum of the second and third is a square
+clue_constraint(clue(sum, Position1, Position2, square), Vars, Constraint) :-
+    var_for_position(Position1, Vars, Var1),
+    var_for_position(Position2, Vars, Var2),
+    boutcome_constraint(sum, Var1, Var2, square, Constraint),
+    !.
+% eg. The sum of the first and third exceeds 10
+clue_constraint(clue(sum, gt, Position1, Position2, HowmanyStr), Vars, Constraint) :-
+    var_for_position(Position1, Vars, Var1),
+    var_for_position(Position2, Vars, Var2),
+    atom_number(HowmanyStr, Howmany),
+    sum_rel_constraint(gt, Var1, Var2, Howmany, Constraint),
+    !.
+% eg. The second minus the first is less than three
+clue_constraint(clue(minus, lt, Position1, Position2, HowmanyStr), Vars, Constraint) :-
+    var_for_position(Position1, Vars, Var1),
+    var_for_position(Position2, Vars, Var2),
+    atom_number(HowmanyStr, Howmany),
+    minus_rel_constraint(lt, Var1, Var2, Howmany, Constraint),
+    !.
+
+/*
+
+three digits ------------------------------------------------------------------
+
+*/
+
 % eg. The fourth is greater than the sum of the second and third
+% TODO: generalise with the one above (see #10)
+clue_constraint(clue(sum, lt, Position1, Position2, Position3), Vars, Constraint) :-
+    var_for_position(Position1, Vars, Var1),
+    var_for_position(Position2, Vars, Var2),
+    var_for_position(Position3, Vars, Var3),
+    sum_rel_constraint(lt, Var1, Var2, Var3, Constraint),
+    !.
+
+% eg. The first and second total the third % TODO: should be a sum_rel?
 clue_constraint(clue(Position1, Position2, Func, Position3), Vars, Constraint) :-
     var_for_position(Position1, Vars, Var1),
     var_for_position(Position2, Vars, Var2),
@@ -72,6 +114,13 @@ clue_constraint(clue(Position1, Position2, Func, Position3), Vars, Constraint) :
     var_for_position(Position3, Vars, Var3),
     function_constraint(Func, Var1, Var2, Var3, Constraint),
     !.
+
+/*
+
+exactly how many digits -------------------------------------------------------
+
+*/
+
 % eg. Only one digit is odd
 % eg. Exactly two digits are not prime
 clue_constraint(clue(Adj, HowmanyStr), Vars, Constraint) :-
@@ -86,19 +135,13 @@ clue_constraint(clue(Outcome, HowmanyStr, Value), Vars, Constraint) :-
     atom_number(HowmanyStr, Howmany),
     qoutcome_constraint(Outcome, Vars, Howmany, Value, Constraint),
     !.
-% eg. The sum of the second and third is a square
-clue_constraint(clue(sum, Position1, Position2, square), Vars, Constraint) :-
-    var_for_position(Position1, Vars, Var1),
-    var_for_position(Position2, Vars, Var2),
-    boutcome_constraint(sum, Var1, Var2, square, Constraint),
-    !.
-% eg. The sum of the first and third exceeds 10
-clue_constraint(clue(sum_of_exceeds, Position1, Position2, HowmanyStr), Vars, Constraint) :-
-    var_for_position(Position1, Vars, Var1),
-    var_for_position(Position2, Vars, Var2),
-    atom_number(HowmanyStr, Howmany),
-    bexceeds_constraint(sum_of_exceeds, Var1, Var2, Howmany, Constraint),
-    !.
+
+/*
+
+Odds and ends -----------------------------------------------------------------
+
+*/
+
 % eg. Either the second or the third is odd, but not both
 clue_constraint(clue(either, Position1, Position2, Adj), Vars, Constraint) :-
     var_for_position(Position1, Vars, Var1),
@@ -123,7 +166,6 @@ function_constraint(differ_by, Var1, Var2, Howmany, abs(Var1 - Var2) #= Howmany)
 function_constraint(add_up_to, Var1, Var2, Howmany, (Var1 + Var2) #= Howmany).
 function_constraint(less_than, Var1, Var2, Howmany, (Var2 - Var1) #= Howmany).
 function_constraint(greater_than, Var1, Var2, Howmany, (Var1 - Var2) #= Howmany).
-function_constraint(add_up_to_less_than, Var1, Var2, Howmany, (Var1 + Var2) #< Howmany).
 function_constraint(exceeds_by_more_than, Var1, Var2, Howmany, Var1 #> (Var2 + Howmany)).
 
 qadj_constraint(odd, Vars, Howmany, (include(is_odd, Vars, Odds), length(Odds, Howmany))).
@@ -139,7 +181,14 @@ qoutcome_constraint(divisible_by, Vars, Howmany, Divisor,
 
 boutcome_constraint(sum, Var1, Var2, square, is_square(Var1 + Var2)).
 
-bexceeds_constraint(sum_of_exceeds, Var1, Var2, Howmany, (Var1 + Var2) #> Howmany ).
+% Rhs can be a column variable or a number literal
+sum_rel_constraint(gt, Var1, Var2, Rhs, (Var1 + Var2) #> Rhs).
+sum_rel_constraint(lt, Var1, Var2, Rhs, (Var1 + Var2) #< Rhs).
+sum_rel_constraint(eq, Var1, Var2, Rhs, (Var1 + Var2) #= Rhs).
+
+minus_rel_constraint(gt, Var1, Var2, Rhs, (Var1 - Var2) #> Rhs).
+minus_rel_constraint(lt, Var1, Var2, Rhs, (Var1 - Var2) #< Rhs).
+minus_rel_constraint(eq, Var1, Var2, Rhs, (Var1 - Var2) #= Rhs).
 
 either_constraint(odd, Var1, Var2, xor(Var1 mod 2 #= 1, Var2 mod 2 #= 1)).
 

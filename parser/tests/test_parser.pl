@@ -52,7 +52,16 @@ test(total_another_digit) :-
 test(total_less_than_another_digit) :-
     Sentence = [the, fourth, is, greater, than, the, sum, of, the, second, and, third],
     parse_clue(Sentence, Clue),
-    assertion(Clue = clue(second, third, add_up_to_less_than, fourth)).
+    assertion(Clue = clue(sum, lt, second, third, fourth)).
+test(total_less_than_another_digit2) :-
+     Sentence = [the, sum, of, the, first, and, second, is, less, than, the, third],
+     parse_clue(Sentence, Clue),
+     assertion(Clue = clue(sum, lt, first, second, third)).
+test(minus_less_than) :-
+    Sentence = [the, second, minus, the, first, is, less, than, '3'],
+    parse_clue(Sentence, Clue),
+    assertion(Clue = clue(minus, lt, second, first, '3')).
+
 
 test(qualified_difference) :-
     Sentence = [the, fourth, is, '3', more, than, the, first],
@@ -97,12 +106,12 @@ test(twonary_outcome) :-
 test(sum_of_exceeds) :-
     Sentence = [the, sum, of, the, first, and, third, exceeds, 10],
     parse_clue(Sentence, Clue),
-    assertion(Clue = clue(sum_of_exceeds, first, third, 10)).
+    assertion(Clue = clue(sum, gt, first, third, 10)).
 
-test(sum_of_exceeds2) :-
+test(sum_of_gt) :-
     Sentence = [the, sum, of, the, first, and, third, is, greater, than, 13],
     parse_clue(Sentence, Clue),
-    assertion(Clue = clue(sum_of_exceeds, first, third, 13)).
+    assertion(Clue = clue(sum, gt, first, third, 13)).
 
 test(either_odd) :-
     Sentence = [either, the, second, or, the, third, is, odd, but, not, both],
@@ -118,6 +127,7 @@ test(this_one_fails) :-
     Sentence = [the, first, digit, is, divisible, by, '3'],
     parse_clue(Sentence, Clue),
     assertion(Clue = clue(first, divisible_by, 3)).
+
 
 test(normalise_numbers) :-
     normalise_numbers('hello', 'hello'),
