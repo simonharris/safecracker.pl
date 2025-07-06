@@ -77,12 +77,18 @@ clue_constraint(clue(sum, Position1, Position2, square), Vars, Constraint) :-
     boutcome_constraint(sum, Var1, Var2, square, Constraint),
     !.
 % eg. The sum of the first and third exceeds 10
-
 clue_constraint(clue(sum, gt, Position1, Position2, HowmanyStr), Vars, Constraint) :-
     var_for_position(Position1, Vars, Var1),
     var_for_position(Position2, Vars, Var2),
     atom_number(HowmanyStr, Howmany),
     sum_rel_constraint(gt, Var1, Var2, Howmany, Constraint),
+    !.
+% eg. The second minus the first is less than three
+clue_constraint(clue(minus, lt, Position1, Position2, HowmanyStr), Vars, Constraint) :-
+    var_for_position(Position1, Vars, Var1),
+    var_for_position(Position2, Vars, Var2),
+    atom_number(HowmanyStr, Howmany),
+    minus_rel_constraint(lt, Var1, Var2, Howmany, Constraint),
     !.
 
 /*
@@ -108,7 +114,6 @@ clue_constraint(clue(Position1, Position2, Func, Position3), Vars, Constraint) :
     var_for_position(Position3, Vars, Var3),
     function_constraint(Func, Var1, Var2, Var3, Constraint),
     !.
-% eg. The sum of the first and second is less than the third
 
 /*
 
@@ -180,6 +185,10 @@ boutcome_constraint(sum, Var1, Var2, square, is_square(Var1 + Var2)).
 sum_rel_constraint(gt, Var1, Var2, Rhs, (Var1 + Var2) #> Rhs).
 sum_rel_constraint(lt, Var1, Var2, Rhs, (Var1 + Var2) #< Rhs).
 sum_rel_constraint(eq, Var1, Var2, Rhs, (Var1 + Var2) #= Rhs).
+
+minus_rel_constraint(gt, Var1, Var2, Rhs, (Var1 - Var2) #> Rhs).
+minus_rel_constraint(lt, Var1, Var2, Rhs, (Var1 - Var2) #< Rhs).
+minus_rel_constraint(eq, Var1, Var2, Rhs, (Var1 - Var2) #= Rhs).
 
 either_constraint(odd, Var1, Var2, xor(Var1 mod 2 #= 1, Var2 mod 2 #= 1)).
 

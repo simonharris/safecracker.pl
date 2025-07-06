@@ -10,6 +10,6 @@ solution_20250706(A, B, C, D) :-
     apply_clue('The sum of the second and fourth is greater than 12', Vs),
     apply_clue('Exactly two digits are odd', Vs),
     apply_clue('The sum of the first and second is less than the third', Vs),
-    % apply_clue('The second minus the first is less than three', Vs),
+    apply_clue('The second minus the first is less than three', Vs),
 
     label(Vs).
