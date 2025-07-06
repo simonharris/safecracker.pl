@@ -16,7 +16,7 @@ clue(clue(Ordinal, Operator, Number)) -->
     position(Ordinal),
     be,
     operator(Operator),
-    safe_digit(Number),
+    safe_digit(Number), % TODO: this probably works by coincidence
     !.
 % eg. The third digit is less than the second
 % eg. The second is twice the fourth
@@ -91,6 +91,18 @@ clue(clue(sum, gt, Ordinal1, Ordinal2, Howmany)) -->
     gt,
     numeric_string(Howmany),
     !.
+% eg. The second minus the first is less than three
+clue(clue(minus, lt, Ordinal1, Ordinal2, Howmany)) -->
+    minus_clause(Ordinal1, Ordinal2),
+    lt,
+    numeric_string(Howmany),
+    !.
+% eg. The sum of the first and second is less than the third
+clue(clue(sum, lt, Ordinal1, Ordinal2, Ordinal3)) -->
+    sum_clause(Ordinal1, Ordinal2),
+    lt,
+    position(Ordinal3),
+    !.
 % eg. Either the second or the third is odd, but not both
 clue(clue(either, Ordinal1, Ordinal2, Adj)) -->
     either,
@@ -101,7 +113,7 @@ clue(clue(either, Ordinal1, Ordinal2, Adj)) -->
     adj(Adj),
     superfluous_waffle,
     !.
-% eg. The second exceeds the first by more than twov
+% eg. The second exceeds the first by more than two
 clue(clue(Ordinal1, Ordinal2, exceeds_by_more_than, Howmany)) -->
     position(Ordinal1),
     gt,
@@ -160,6 +172,8 @@ gt --> ['is', 'greater', 'than'].
 gt --> ['greater', 'than'].
 gt --> ['exceeds'].
 
+lt --> ['is', 'less', 'than'].
+
 function(differ_by) --> ['differ', 'by'].
 function(add_up_to) --> ['total'].
 function(greater_than) --> gt.
@@ -175,11 +189,17 @@ operator(divisible_by) --> ['divisible', 'by']. % ugh, duplication
 operator(twice) --> ['twice'].
 
 sumof --> ['the', 'sum', 'of'].
+minus --> ['minus'].
 
 sum_clause(Ordinal1, Ordinal2) -->
     sumof,
     position(Ordinal1),
     and,
+    position(Ordinal2).
+
+minus_clause(Ordinal1, Ordinal2) -->
+    position(Ordinal1),
+    minus,
     position(Ordinal2).
 
 either --> ['either'].
