@@ -64,12 +64,11 @@
 
     <h3>API</h3>
 
-    <p>The back-end API is built in Python using the incredibly simple-yet-powerful
-      <a href="https://flask.palletsprojects.com/en/stable/">Flask</a> framework.
+    <p>The back-end API is built in Python using the
+      <a href="https://fastapi.tiangolo.com/">FastAPI</a> framework, which seems to suit the task well.
       This takes care of one or two HTTP+JSON calls (of the type which are often
-      erroneously described as REST), but does most of its work via streaming/socket-type
-      functionality, sending real-time progress updates back to the browser.
-      This is almost trivially easy in Flask.</p>
+      flatteringly described as REST), but does most of its work via streaming/socket-type
+      functionality, sending real-time progress updates back to the browser.</p>
 
     <p>This is also where the Optical Character Recognition (OCR) happens, extracting
       the clue text from the uploaded cameraphone snap. This is done using the open-source
