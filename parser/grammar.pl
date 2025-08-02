@@ -1,7 +1,6 @@
 :- module(grammar, [
     clue_spec//1,
     adj//1,
-    fun//1,
     operator//1,
     ord//1,
     out//1,
@@ -56,6 +55,9 @@ clue_spec(clue(Ordinal1, Ordinal2, Func, Howmany)) -->
     function(Func),
     numeric_string(Howmany),
     !.
+
+
+
 % eg. The fourth is three more than the first
 clue_spec(clue(Ordinal1, Ordinal2, Func, Howmany)) -->
     position(Ordinal1),
@@ -170,21 +172,13 @@ ord(third) --> ['third'].
 ord(fourth) --> ['fourth'].
 ord(fourth) --> ['last'].
 
-gt --> ['more', 'than'].
-gt --> ['is', 'greater', 'than'].
-gt --> ['greater', 'than'].
-gt --> ['exceeds'].
 
-lt --> ['is', 'less', 'than'].
 
 function(differ_by) --> ['differ', 'by'].
 function(add_up_to) --> ['total'].
 function(greater_than) --> gt.
 function(less_than) --> ['less', 'than'].
-fun(Fun) -->
-    [Fun], { member(Fun, ['differ_by', 'add_up_to', 'greater_than',
-                            'less_than', 'add_up_to_less_than',
-                            'exceeds_by_more_than']) }.
+
 
 operator(less_than) --> ['less', 'than'].
 operator(greater_than) --> ['greater', 'than'].
@@ -217,4 +211,18 @@ superfluous_waffle --> [].
 by --> ['by'].
 more --> ['more'].
 than --> ['than'].
+
+/*
+The duplication around these is running rife. Let's try defining some "atomic"
+operators and see if we can use them throughout
+*/
+
+gt --> ['more', 'than'].
+gt --> ['is', 'greater', 'than'].
+gt --> ['greater', 'than'].
+gt --> ['exceeds'].
+
+lt --> ['is', 'less', 'than'].
+
+lte --> ['no', 'more', 'than'].
 

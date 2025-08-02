@@ -224,7 +224,7 @@ normalise_numbers('nine', '9').
 normalise_numbers(Atom, Atom).
 
 
-% Wrappers for DCG predicates in grammar.pl -----------------------------------
+% Wrappers etc for DCG predicates in grammar.pl -------------------------------
 
 
 safe_digit_val(Num) :-
@@ -234,7 +234,9 @@ adjective_val(Adj) :-
     phrase(adj(Adj), [_]).
 
 fun_val(Func) :-
-    phrase(fun(Func), [_]).
+    member(Func, ['differ_by', 'add_up_to', 'greater_than',
+                            'less_than', 'add_up_to_less_than',
+                            'exceeds_by_more_than']).
 
 outcome_val(Outcome) :-
     phrase(out(Outcome), [_]).
