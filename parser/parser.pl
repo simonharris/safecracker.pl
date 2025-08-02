@@ -163,6 +163,8 @@ adjective_constraint(even, Var, is_even(Var)).
 adjective_constraint(prime, Var, is_prime(Var, 1)).
 
 function_constraint(differ_by, Var1, Var2, Howmany, abs(Var1 - Var2) #= Howmany).
+function_constraint(differ_by_more_than, Var1, Var2, Howmany, abs(Var1 - Var2) #> Howmany).
+function_constraint(differ_by_no_more_than, Var1, Var2, Howmany, abs(Var1 - Var2) #=< Howmany).
 function_constraint(add_up_to, Var1, Var2, Howmany, (Var1 + Var2) #= Howmany).
 function_constraint(less_than, Var1, Var2, Howmany, (Var2 - Var1) #= Howmany).
 function_constraint(greater_than, Var1, Var2, Howmany, (Var1 - Var2) #= Howmany).
@@ -234,9 +236,18 @@ adjective_val(Adj) :-
     phrase(adj(Adj), [_]).
 
 fun_val(Func) :-
-    member(Func, ['differ_by', 'add_up_to', 'greater_than',
-                            'less_than', 'add_up_to_less_than',
-                            'exceeds_by_more_than']).
+    member(Func,
+        [
+            'differ_by',
+            'differ_by_more_than',
+            'differ_by_no_more_than',
+            'add_up_to',
+            'greater_than',
+            'less_than',
+            'add_up_to_less_than',
+            'exceeds_by_more_than'
+        ]
+    ).
 
 outcome_val(Outcome) :-
     phrase(out(Outcome), [_]).

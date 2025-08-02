@@ -24,15 +24,20 @@ test(difference1) :-
     parse_clue(Sentence, Clue),
     assertion(Clue = clue(third, fourth, differ_by, '2')).
 
-test(difference2) :-
-    Sentence = [the, first, and, third, differ, by, '3'],
-    parse_clue(Sentence, Clue),
-    assertion(Clue = clue(first, third, differ_by, '3')).
-
 test(difference3) :-
     Sentence = [the, first, and, last, digits, differ, by, '3'],
     parse_clue(Sentence, Clue),
     assertion(Clue = clue(first, fourth, differ_by, '3')).
+
+test(difference_qualified) :-
+    Sentence = [the, first, and, second, differ, by, more, than, '4'],
+    parse_clue(Sentence, Clue),
+    assertion(Clue = clue(first, second, differ_by_more_than, '4')).
+
+test(difference_qualified2) :-
+    Sentence = [the, first, and, second, differ, by, no, more, than, '4'],
+    parse_clue(Sentence, Clue),
+    assertion(Clue = clue(first, second, differ_by_no_more_than, '4')).
 
 test(add_up_to) :-
     Sentence = [the, second, and, third, digits, total, '11'],

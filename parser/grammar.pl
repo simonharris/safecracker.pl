@@ -45,9 +45,11 @@ clue_spec(clue(sum, lt, Ordinal2,  Ordinal3, Ordinal1)) -->
     gt,
     sum_clause(Ordinal2, Ordinal3),
     !.
+
 % eg. The third and fourth differ by two
 % eg. The first and third total 13
 % eg. The first and last digits differ by three
+% eg. The first and second differ by (no) more than four
 clue_spec(clue(Ordinal1, Ordinal2, Func, Howmany)) -->
     position(Ordinal1),
     and,
@@ -55,8 +57,6 @@ clue_spec(clue(Ordinal1, Ordinal2, Func, Howmany)) -->
     function(Func),
     numeric_string(Howmany),
     !.
-
-
 
 % eg. The fourth is three more than the first
 clue_spec(clue(Ordinal1, Ordinal2, Func, Howmany)) -->
@@ -172,13 +172,14 @@ ord(third) --> ['third'].
 ord(fourth) --> ['fourth'].
 ord(fourth) --> ['last'].
 
-
-
+function(differ_by_more_than) --> ['differ', 'by', 'more', 'than'].
+function(differ_by_no_more_than) --> ['differ', 'by', 'no', 'more', 'than'].
 function(differ_by) --> ['differ', 'by'].
 function(add_up_to) --> ['total'].
 function(greater_than) --> gt.
 function(less_than) --> ['less', 'than'].
 
+qualifier(more_than) --> ['more', 'than'].
 
 operator(less_than) --> ['less', 'than'].
 operator(greater_than) --> ['greater', 'than'].
