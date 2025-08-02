@@ -27,7 +27,7 @@ parse_text(Text, Vars, Constraint) :-
 
 
 parse_clue(Sentence, Clue) :-
-    phrase(clue(Clue), Sentence).
+    phrase(clue_spec(Clue), Sentence).
 
 
 %% map clues to constraint types ----------------------------------------------
