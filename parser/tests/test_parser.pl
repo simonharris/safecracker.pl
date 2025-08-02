@@ -59,6 +59,7 @@ test(total_less_than_another_digit2) :-
      assertion(Clue = clue(sum, lt, first, second, third)).
 test(minus_less_than) :-
     Sentence = [the, second, minus, the, first, is, less, than, '3'],
+    Sentence = [the, second, minus, the, first, is, less, than, '3'],
     parse_clue(Sentence, Clue),
     assertion(Clue = clue(minus, lt, second, first, '3')).
 
@@ -102,6 +103,10 @@ test(twonary_outcome) :-
     Sentence = [the, sum, of, the, second, and, third, is, a, square],
     parse_clue(Sentence, Clue),
     assertion(Clue = clue(sum, second, third, square)).
+test(twonary_outcome2) :-
+    Sentence = [the, sum, of, the, first, and, fourth, is, square],
+    parse_clue(Sentence, Clue),
+    assertion(Clue = clue(sum, first, fourth, square)).
 
 test(sum_of_exceeds) :-
     Sentence = [the, sum, of, the, first, and, third, exceeds, 10],

@@ -78,11 +78,11 @@ clue(clue(Outcome, Howmany, Value)) -->
     safe_digit(Value),
     !.
 % eg. The sum of the second and third is a square
+% eg. The sum of the first and fourth is square
 clue(clue(sum, Ordinal1, Ordinal2, Adj)) -->
     sum_clause(Ordinal1, Ordinal2),
     be,
-    det,
-    adj(Adj),
+    adj_clause(Adj),
     !.
 % eg. The sum of the first and third exceeds 10
 % eg. The sum of the first and third is greater than 13
@@ -139,6 +139,9 @@ part --> [].
 
 d --> ['digit'].
 d --> ['digits'].
+
+adj_clause(Adj) --> det, adj(Adj).
+adj_clause(Adj) --> adj(Adj).
 
 adj(not_prime) --> [not, prime]. % we need to discuss negation
 adj(Adj) --> [Adj], { member(Adj, ['prime', 'not_prime', 'odd', 'even', 'square']) }.
