@@ -131,6 +131,10 @@ test(either_odd) :-
     Sentence = [either, the, second, or, the, third, is, odd, but, not, both],
     parse_clue(Sentence, Clue),
     assertion(Clue = clue(either, second, third, odd)).
+test(either_odd2) :-
+    Sentence = [exactly, one, of, the, second, and, third, is, odd],
+    parse_clue(Sentence, Clue),
+    assertion(Clue = clue(either, second, third, odd)).
 
 test(exceeds_more_than) :-
     Sentence = [the, second, exceeds, the, first, by, more, than, '2'],

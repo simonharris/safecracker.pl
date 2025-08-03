@@ -107,10 +107,11 @@ clue_spec(clue(sum, lt, Ordinal1, Ordinal2, Ordinal3)) -->
     position(Ordinal3),
     !.
 % eg. Either the second or the third is odd, but not both
+% eg. Exactly one of the second and third is odd
 clue_spec(clue(either, Ordinal1, Ordinal2, Adj)) -->
-    either,
+    either_clause,
     position(Ordinal1),
-    or,
+    conj,
     position(Ordinal2),
     be,
     adj_clause(Adj),
@@ -160,6 +161,9 @@ det --> ['a'].
 and --> ['and'].
 or --> ['or'].
 
+conj --> and.
+conj --> or.
+
 be --> ['is'].
 be --> ['are'].
 
@@ -201,7 +205,8 @@ minus_clause(Ordinal1, Ordinal2) -->
     minus,
     position(Ordinal2).
 
-either --> ['either'].
+either_clause --> ['exactly', 'one', 'of'].
+either_clause --> ['either'].
 
 safe_digit(D) --> [C], { member(C, ['1','2','3','4','5','6','7','8','9']), atom_number(C, D) }.
 
