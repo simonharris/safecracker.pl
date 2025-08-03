@@ -53,7 +53,7 @@ clue_constraint(clue(Position1, Relation, Position2), Vars, Constraint) :-
 clue_constraint(clue(Position, Adj), Vars, Constraint) :-
     var_for_position(Position, Vars, Var),
     adjective_val(Adj),
-    adjective_constraint(Adj, Var, Constraint).
+    adjective_constraint(Adj, Vars, Var, Constraint).
 
 /*
 
@@ -158,9 +158,10 @@ relation_constraint(greater_than, A, B, A #> B).
 relation_constraint(divisible_by, A, B, divides_by(A, B)).
 relation_constraint(twice, A, B, A #= B*2).
 
-adjective_constraint(odd, Var, is_odd(Var)).
-adjective_constraint(even, Var, is_even(Var)).
-adjective_constraint(prime, Var, is_prime(Var, 1)).
+adjective_constraint(odd, _, Var1, is_odd(Var1)).
+adjective_constraint(even, _, Var1, is_even(Var1)).
+adjective_constraint(prime, _, Var1, is_prime(Var1, 1)).
+adjective_constraint(greatest, Vars, Var1, (max_list(Vars, Biggest), Biggest #= Var1)).
 
 function_constraint(differ_by, Var1, Var2, Howmany, abs(Var1 - Var2) #= Howmany).
 function_constraint(differ_by_more_than, Var1, Var2, Howmany, abs(Var1 - Var2) #> Howmany).

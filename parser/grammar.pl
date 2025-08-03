@@ -26,10 +26,11 @@ clue_spec(clue(Ordinal1, Operator, Ordinal2)) -->
     position(Ordinal2),
     !.
 % eg. The second digit is odd
+% eg. The third digit is the greatest
 clue_spec(clue(Ordinal, Adj)) -->
     position(Ordinal),
     be,
-    adj(Adj),
+    adj_clause(Adj),
     !.
 % eg. The first and second total the third
 clue_spec(clue(Ordinal1, Ordinal2, Func, Ordinal3)) -->
@@ -71,7 +72,7 @@ clue_spec(clue(Ordinal1, Ordinal2, Func, Howmany)) -->
 clue_spec(clue(Adj, Howmany)) -->
     quant(Howmany),
     be,
-    adj(Adj),
+    adj_clause(Adj),
     !.
 % eg. Exactly one of the digits is one
 clue_spec(clue(Outcome, Howmany, Value)) -->
@@ -112,7 +113,7 @@ clue_spec(clue(either, Ordinal1, Ordinal2, Adj)) -->
     or,
     position(Ordinal2),
     be,
-    adj(Adj),
+    adj_clause(Adj),
     superfluous_waffle,
     !.
 % eg. The second exceeds the first by more than two
@@ -146,7 +147,7 @@ adj_clause(Adj) --> det, adj(Adj).
 adj_clause(Adj) --> adj(Adj).
 
 adj(not_prime) --> [not, prime]. % we need to discuss negation
-adj(Adj) --> [Adj], { member(Adj, ['prime', 'not_prime', 'odd', 'even', 'square']) }.
+adj(Adj) --> [Adj], { member(Adj, ['prime', 'not_prime', 'odd', 'even', 'square', 'greatest']) }.
 
 position(Ordinal) --> det, ord(Ordinal), d.
 position(Ordinal) --> det, ord(Ordinal).

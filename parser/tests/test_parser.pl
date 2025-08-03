@@ -14,10 +14,14 @@ test(clue_02) :-
     parse_clue(Sentence, Clue),
     assertion(Clue = clue(first, greater_than, 5)).
 
-test(adjectives) :-
+test(adjective) :-
     Sentence = [the, fourth, digit, is, odd],
     parse_clue(Sentence, Clue),
     assertion(Clue = clue(fourth, odd)).
+test(adjective_greatest) :-
+    Sentence = [the, third, digit, is, the, greatest],
+    parse_clue(Sentence, Clue),
+    assertion(Clue = clue(third, greatest)).
 
 test(difference1) :-
     Sentence = [the, third, and, fourth, differ, by, '2'],
