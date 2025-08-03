@@ -205,7 +205,7 @@ minus_clause(Ordinal1, Ordinal2) -->
     minus,
     position(Ordinal2).
 
-either_clause --> ['exactly', 'one', 'of'].
+either_clause --> qmod, ['one', 'of'].
 either_clause --> ['either'].
 
 safe_digit(D) --> [C], { member(C, ['1','2','3','4','5','6','7','8','9']), atom_number(C, D) }.
