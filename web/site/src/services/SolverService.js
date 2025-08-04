@@ -1,6 +1,7 @@
 import axios from 'axios';
 
 
+//const API_HOST = 'http://192.168.1.73:80'
 const API_HOST = 'https://safe-api.pointbeing.net'
 
 
