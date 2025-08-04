@@ -59,6 +59,14 @@ clue_spec(clue(Ordinal1, Ordinal2, Func, Howmany)) -->
     numeric_string(Howmany),
     !.
 
+% Kind of a special case atm
+% eg. The first two digits differ by four
+clue_spec(clue(first, second, Func, Howmany)) -->
+    first_two,
+    function(Func),
+    numeric_string(Howmany),
+    !.
+
 % eg. The fourth is three more than the first
 clue_spec(clue(Ordinal1, Ordinal2, Func, Howmany)) -->
     position(Ordinal1),
@@ -169,13 +177,15 @@ be --> ['are'].
 
 outcome(divisible_by) --> be, [ 'divisible', 'by'].
 outcome(equal) --> be.
-out(Out) --> [Out], { member(Out, ['divisible_by', 'equal']) }.
+out(Out) --> [Out], { member(Out, [divisible_by, equal]) }. % nb
 
 ord(first) --> ['first'].
 ord(second) --> ['second'].
 ord(third) --> ['third'].
 ord(fourth) --> ['fourth'].
 ord(fourth) --> ['last'].
+
+first_two --> ['the', 'first', 'two', 'digits'].
 
 function(differ_by_more_than) --> ['differ', 'by', 'more', 'than'].
 function(differ_by_no_more_than) --> ['differ', 'by', 'no', 'more', 'than'].
@@ -188,7 +198,7 @@ qualifier(more_than) --> ['more', 'than'].
 
 operator(less_than) --> ['less', 'than'].
 operator(greater_than) --> ['greater', 'than'].
-operator(divisible_by) --> ['divisible', 'by']. % ugh, duplication
+operator(divisible_by) --> ['divisible', 'by'].
 operator(twice) --> ['twice'].
 
 sumof --> ['the', 'sum', 'of'].
