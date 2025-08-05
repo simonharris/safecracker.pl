@@ -3,3 +3,4 @@
 .venv
 __pycache__/
 web/api/static/uploads/*.jpg
+web/api2/static/uploads/*.jpg
