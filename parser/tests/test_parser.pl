@@ -80,6 +80,10 @@ test(qualified_difference) :-
     Sentence = [the, fourth, is, '3', more, than, the, first],
     parse_clue(Sentence, Clue),
     assertion(Clue = clue(fourth, first, greater_than, '3')).
+test(qualified_difference) :-
+    Sentence = [the, second, is, '3', greater, than, the, fourth],
+    parse_clue(Sentence, Clue),
+    assertion(Clue = clue(second, fourth, greater_than, '3')).
 
 test(quantified_adjective1) :-
     Sentence = [exactly, '1', digit, is, square],

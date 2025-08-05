@@ -10,6 +10,6 @@ solution_20250803(A, B, C, D) :-
     apply_clue('The first and third differ by four', Vs),
     apply_clue('The sum of the second and fourth is divisible by five', Vs),
     apply_clue('Exactly one of the third and fourth is odd', Vs),
-    % apply_clue('The second is three greater than the fourth', Vs),
+    apply_clue('The second is three greater than the first', Vs),
 
     label(Vs).

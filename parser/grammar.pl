@@ -68,6 +68,7 @@ clue_spec(clue(first, second, Func, Howmany)) -->
     !.
 
 % eg. The fourth is three more than the first
+% eg. The second is three greater than the first
 clue_spec(clue(Ordinal1, Ordinal2, Func, Howmany)) -->
     position(Ordinal1),
     be,

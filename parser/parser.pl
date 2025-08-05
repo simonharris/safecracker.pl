@@ -85,7 +85,7 @@ clue_constraint(clue(sum, gt, Position1, Position2, HowmanyStr), Vars, Constrain
     sum_rel_constraint(gt, Var1, Var2, Howmany, Constraint),
     !.
 % eg. The sum of the second and fourth is divisible by five'
-% nb. Could probably generalise with the above
+% nb. TODO: Could probably generalise with the above
 clue_constraint(clue(sum, db, Position1, Position2, HowmanyStr), Vars, Constraint) :-
     var_for_position(Position1, Vars, Var1),
     var_for_position(Position2, Vars, Var2),
