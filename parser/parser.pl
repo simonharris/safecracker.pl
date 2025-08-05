@@ -10,6 +10,7 @@
 
 apply_clue(Text, Vs) :-
     parse_text(Text, Vs, Constraint),
+    % writeln(Constraint),
     call(Constraint).
 
 
@@ -82,6 +83,14 @@ clue_constraint(clue(sum, gt, Position1, Position2, HowmanyStr), Vars, Constrain
     var_for_position(Position2, Vars, Var2),
     atom_number(HowmanyStr, Howmany),
     sum_rel_constraint(gt, Var1, Var2, Howmany, Constraint),
+    !.
+% eg. The sum of the second and fourth is divisible by five'
+% nb. Could probably generalise with the above
+clue_constraint(clue(sum, db, Position1, Position2, HowmanyStr), Vars, Constraint) :-
+    var_for_position(Position1, Vars, Var1),
+    var_for_position(Position2, Vars, Var2),
+    atom_number(HowmanyStr, Howmany),
+    sum_rel_constraint(db, Var1, Var2, Howmany, Constraint),
     !.
 % eg. The second minus the first is less than three
 clue_constraint(clue(minus, lt, Position1, Position2, HowmanyStr), Vars, Constraint) :-
@@ -188,6 +197,7 @@ boutcome_constraint(sum, Var1, Var2, square, is_square(Var1 + Var2)).
 sum_rel_constraint(gt, Var1, Var2, Rhs, (Var1 + Var2) #> Rhs).
 sum_rel_constraint(lt, Var1, Var2, Rhs, (Var1 + Var2) #< Rhs).
 sum_rel_constraint(eq, Var1, Var2, Rhs, (Var1 + Var2) #= Rhs).
+sum_rel_constraint(db, Var1, Var2, Rhs, divides_by((Var1 + Var2), Rhs)).
 
 minus_rel_constraint(gt, Var1, Var2, Rhs, (Var1 - Var2) #> Rhs).
 minus_rel_constraint(lt, Var1, Var2, Rhs, (Var1 - Var2) #< Rhs).
@@ -204,6 +214,7 @@ strip_commas(String, Stripped) :-
     exclude(=(','), Chars, StrippedChars),
     atomics_to_string(StrippedChars, Stripped).
 
+% nb safe_cracker/divides_by/2
 divisible_by(Divisor, X, B) :- (X mod Divisor #= 0) #<==> B.
 
 position_index(first, 1).

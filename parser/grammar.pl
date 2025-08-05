@@ -102,6 +102,12 @@ clue_spec(clue(sum, gt, Ordinal1, Ordinal2, Howmany)) -->
     gt,
     numeric_string(Howmany),
     !.
+% eg. The sum of the second and fourth is divisible by five'
+clue_spec(clue(sum, db, Ordinal1, Ordinal2, Howmany)) -->
+    sum_clause(Ordinal1, Ordinal2),
+    db,
+    numeric_string(Howmany),
+    !.
 % eg. The second minus the first is less than three
 clue_spec(clue(minus, lt, Ordinal1, Ordinal2, Howmany)) -->
     minus_clause(Ordinal1, Ordinal2),
@@ -243,3 +249,4 @@ lt --> ['is', 'less', 'than'].
 
 lte --> ['no', 'more', 'than'].
 
+db --> ['is', 'divisible', 'by'].
