@@ -9,3 +9,13 @@ There are three subsystems:
  - [Site](web/site): a responsive, interactive front-end JavaScript web app built with Vue.js
 
 Disclaimer: I only buy that awful paper for the puzzles.
+
+## Dependencies
+
+### [plunit_assert](https://github.com/simonharris/plunit_assert)
+
+ `plunit_assert` is a unit testing library for Prolog. It can currently be installed using:
+
+```
+?- pack_install(plunit_assert, [url('https://packages.pointbeing.net/plunit_assert/plunit_assert-0.1.0.tgz')]).
+```
