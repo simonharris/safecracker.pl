@@ -1,5 +1,7 @@
-:- begin_tests(safe_cracker).
 :- use_module('../safe_cracker').
+
+
+:- begin_tests(safe_cracker).
 
 test(xor) :-
     assertion(xor(1, 0)),
@@ -7,11 +9,13 @@ test(xor) :-
     assertion(\+ xor(1, 1)),
     assertion(\+ xor(0, 0)).
 
-% test(is_prime) :-
-%     assertion(is_prime(17)),
-%     assertion(\+ is_prime(6)),
-%     assertion(is_prime(2)),
-%     assertion(\+ is_prime(1)).
+test(is_prime) :-
+    assertion(is_prime(17)),
+    assertion(\+ is_prime(6)),
+    assertion(is_prime(2)),
+    assertion(is_prime(2 + 1)),
+    assertion(\+ is_prime(1)),
+    !.
 
 test(is_square) :-
     assertion(is_square(1)),

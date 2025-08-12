@@ -3,7 +3,7 @@
     divides_by/2,
     is_odd/1,
     is_even/1,
-    % is_prime/1,
+    is_prime/1,
     is_prime/2,
     is_square/1,
     occurrenceof/3,
@@ -45,29 +45,33 @@ xor(X, Y) :-
 % https://stackoverflow.com/questions/39591888/clpfd-constraint-is-a-prime-number
 
 % ...so we'll stick with this until it comes back to bite us
-is_prime(N, 1) :- N in {2, 3, 5, 7}.
-is_prime(N, 0) :- N in {1, 4, 6, 8, 9}.
+%is_prime(N) :- N in {2, 3, 5, 7, 11, 13, 17, 19}.
 
-% This looks cleaner but leads to 0 solutions. Intriguingly the two-line
-% version leaves choice points for the 1 cases, whereas this does not
-% is_prime(N, P) :- (member(N, [2, 3, 5, 7]) -> P = 1 ; P = 0).
+is_prime(Expression) :-
+    (   integer(Expression)
+    ->  N = Expression
+    ;   number(Expression)
+    ->  N is round(Expression)
+    ;   N is Expression          % evaluate arithmetic term
+    ),
+    N > 1,
+    Limit is floor(sqrt(N)),      % <-- evaluate here
+    \+ ( between(2, Limit, D), N mod D =:= 0 ).
 
+is_prime(N, 1) :- is_prime(N).
+is_prime(N, 0) :- \+ is_prime(N).
 
 is_square(N) :-
     N #= _^2.
 
-
 is_odd(N) :-
     N mod 2 #= 1.
-
 
 is_even(N) :-
     N mod 2 #= 0.
 
-
 divides_by(X, Y) :-
     X mod Y =:= 0.
-
 
 occurrenceof([], _, 0). % empty list, count of anything is 0. Base case.
 
