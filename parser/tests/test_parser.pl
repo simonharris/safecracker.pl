@@ -81,9 +81,9 @@ test(qualified_difference) :-
     parse_clue(Sentence, Clue),
     assertion(Clue = clue(fourth, first, greater_than, '3')).
 test(qualified_difference) :-
-    Sentence = [the, second, is, '3', greater, than, the, fourth],
+    Sentence = [the, second, is, '3', greater, than, the, first],
     parse_clue(Sentence, Clue),
-    assertion(Clue = clue(second, fourth, greater_than, '3')).
+    assertion(Clue = clue(second, first, greater_than, '3')).
 
 test(quantified_adjective1) :-
     Sentence = [exactly, '1', digit, is, square],
@@ -115,14 +115,22 @@ test(quantified_outcome2) :-
     parse_clue(Sentence, Clue),
     assertion(Clue = clue(divisible_by, '2', 3)).
 
-test(twonary_outcome) :-
+test(twonary_outcome_square) :-
     Sentence = [the, sum, of, the, second, and, third, is, a, square],
     parse_clue(Sentence, Clue),
     assertion(Clue = clue(sum, second, third, square)).
-test(twonary_outcome2) :-
+test(twonary_outcome_square2) :-
     Sentence = [the, sum, of, the, first, and, fourth, is, square],
     parse_clue(Sentence, Clue),
     assertion(Clue = clue(sum, first, fourth, square)).
+test(twonary_outcome_prime) :-
+    Sentence = [the, sum, of, the, first, and, fourth, is, prime],
+    parse_clue(Sentence, Clue),
+    assertion(Clue = clue(sum, first, fourth, prime)).
+test(twonary_outcome_prime_twodigits) :-
+    Sentence = [the, sum, of, the, second, and, third, is, a, two, digit, prime],
+    parse_clue(Sentence, Clue),
+    assertion(Clue = clue(sum, second, third, two_digit_prime)).
 
 test(sum_of_exceeds) :-
     Sentence = [the, sum, of, the, first, and, third, exceeds, 10],
@@ -132,6 +140,10 @@ test(sum_of_gt) :-
     Sentence = [the, sum, of, the, first, and, third, is, greater, than, 13],
     parse_clue(Sentence, Clue),
     assertion(Clue = clue(sum, gt, first, third, 13)).
+test(sum_of_lt) :-
+    Sentence = [the, sum, of, the, first, and, second, is, less, than, 7],
+    parse_clue(Sentence, Clue),
+    assertion(Clue = clue(sum, less_than, first, second, 7)).
 test(sum_of_divisible) :-
     Sentence = [the, sum, of, the, second, and, fourth, is, divisible, by, 5],
     parse_clue(Sentence, Clue),

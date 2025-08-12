@@ -77,6 +77,12 @@ clue_constraint(clue(sum, Position1, Position2, square), Vars, Constraint) :-
     var_for_position(Position2, Vars, Var2),
     boutcome_constraint(sum, Var1, Var2, square, Constraint),
     !.
+% eg. The sum of the second and third is a two digit prime. nb duplication with above
+clue_constraint(clue(sum, Position1, Position2, two_digit_prime), Vars, Constraint) :-
+    var_for_position(Position1, Vars, Var1),
+    var_for_position(Position2, Vars, Var2),
+    boutcome_constraint(sum, Var1, Var2, two_digit_prime, Constraint),
+    !.
 % eg. The sum of the first and third exceeds 10
 clue_constraint(clue(sum, gt, Position1, Position2, HowmanyStr), Vars, Constraint) :-
     var_for_position(Position1, Vars, Var1),
@@ -84,7 +90,14 @@ clue_constraint(clue(sum, gt, Position1, Position2, HowmanyStr), Vars, Constrain
     atom_number(HowmanyStr, Howmany),
     sum_rel_constraint(gt, Var1, Var2, Howmany, Constraint),
     !.
-% eg. The sum of the second and fourth is divisible by five'
+% eg. The sum of the first and second is less than seven - TODO: horrific duplication with the above
+clue_constraint(clue(sum, less_than, Position1, Position2, HowmanyStr), Vars, Constraint) :-
+    var_for_position(Position1, Vars, Var1),
+    var_for_position(Position2, Vars, Var2),
+    atom_number(HowmanyStr, Howmany),
+    sum_rel_constraint(lt, Var1, Var2, Howmany, Constraint),
+    !.
+% eg. The sum of the second and fourth is divisible by five
 % nb. TODO: Could probably generalise with the above
 clue_constraint(clue(sum, db, Position1, Position2, HowmanyStr), Vars, Constraint) :-
     var_for_position(Position1, Vars, Var1),
@@ -192,6 +205,8 @@ qoutcome_constraint(divisible_by, Vars, Howmany, Divisor,
                     sum(Bs, #=, Howmany))).
 
 boutcome_constraint(sum, Var1, Var2, square, is_square(Var1 + Var2)).
+boutcome_constraint(sum, Var1, Var2, prime, is_prime(Var1 + Var2)).
+boutcome_constraint(sum, Var1, Var2, two_digit_prime, (is_prime(Var1 + Var2), ((Var1+Var2) #>= 10))).
 
 % Rhs can be a column variable or a number literal
 sum_rel_constraint(gt, Var1, Var2, Rhs, (Var1 + Var2) #> Rhs).

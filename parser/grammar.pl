@@ -91,17 +91,27 @@ clue_spec(clue(Outcome, Howmany, Value)) -->
     !.
 % eg. The sum of the second and third is a square
 % eg. The sum of the first and fourth is square
+% eg. The sum of the first and fourth is prime
+% eg. The sum of the second and third is a two digit prime
 clue_spec(clue(sum, Ordinal1, Ordinal2, Adj)) -->
     sum_clause(Ordinal1, Ordinal2),
     be,
     adj_clause(Adj),
+    % { writeln(Adj) },
+    !.
+% eg. The sum of the first and second is less than the third
+clue_spec(clue(sum, lt, Ordinal1, Ordinal2, Ordinal3)) -->
+    sum_clause(Ordinal1, Ordinal2),
+    lt,
+    position(Ordinal3),
     !.
 % eg. The sum of the first and third exceeds 10
 % eg. The sum of the first and third is greater than 13
-clue_spec(clue(sum, gt, Ordinal1, Ordinal2, Howmany)) -->
+% eg. The sum of the first and second is less than seven
+clue_spec(clue(sum, Operator, Ordinal1, Ordinal2, Howmany)) -->
     sum_clause(Ordinal1, Ordinal2),
-    gt,
-    numeric_string(Howmany),
+    operator(Operator),
+    numeric_string(Howmany), % serious TODO here
     !.
 % eg. The sum of the second and fourth is divisible by five'
 clue_spec(clue(sum, db, Ordinal1, Ordinal2, Howmany)) -->
@@ -114,12 +124,6 @@ clue_spec(clue(minus, lt, Ordinal1, Ordinal2, Howmany)) -->
     minus_clause(Ordinal1, Ordinal2),
     lt,
     numeric_string(Howmany),
-    !.
-% eg. The sum of the first and second is less than the third
-clue_spec(clue(sum, lt, Ordinal1, Ordinal2, Ordinal3)) -->
-    sum_clause(Ordinal1, Ordinal2),
-    lt,
-    position(Ordinal3),
     !.
 % eg. Either the second or the third is odd, but not both
 % eg. Exactly one of the second and third is odd
@@ -163,7 +167,8 @@ adj_clause(Adj) --> det, adj(Adj).
 adj_clause(Adj) --> adj(Adj).
 
 adj(not_prime) --> [not, prime]. % we need to discuss negation
-adj(Adj) --> [Adj], { member(Adj, ['prime', 'not_prime', 'odd', 'even', 'square', 'greatest']) }.
+adj(two_digit_prime) --> [two, digit, prime]. % we need to discuss counting digits
+adj(Adj) --> [Adj], { member(Adj, ['prime', 'not_prime', 'two_digit_prime', 'odd', 'even', 'square', 'greatest']) }.
 
 position(Ordinal) --> det, ord(Ordinal), d.
 position(Ordinal) --> det, ord(Ordinal).
@@ -199,14 +204,17 @@ function(differ_by_no_more_than) --> ['differ', 'by', 'no', 'more', 'than'].
 function(differ_by) --> ['differ', 'by'].
 function(add_up_to) --> ['total'].
 function(greater_than) --> gt.
-function(less_than) --> ['less', 'than'].
+function(less_than) --> ['less', 'than']. % nb
 
-qualifier(more_than) --> ['more', 'than'].
+qualifier(more_than) --> ['more', 'than']. % nb
 
 operator(less_than) --> ['less', 'than'].
+operator(less_than) --> lt.
 operator(greater_than) --> ['greater', 'than'].
 operator(divisible_by) --> ['divisible', 'by'].
 operator(twice) --> ['twice'].
+operator(gt) --> gt.
+
 
 sumof --> ['the', 'sum', 'of'].
 minus --> ['minus'].
