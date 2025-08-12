@@ -167,8 +167,8 @@ adj_clause(Adj) --> det, adj(Adj).
 adj_clause(Adj) --> adj(Adj).
 
 adj(not_prime) --> [not, prime]. % we need to discuss negation
-adj(two_digit_prime) --> [two, digit, prime]. % we need to discuss counting digits
-adj(Adj) --> [Adj], { member(Adj, ['prime', 'not_prime', 'two_digit_prime', 'odd', 'even', 'square', 'greatest']) }.
+adj(two_digit_prime) --> ['two-digit', 'prime']. % we need to discuss counting digits
+adj(Adj) --> [Adj], { member(Adj, [prime, not_prime, two_digit_prime, odd, even, square, greatest]) }.
 
 position(Ordinal) --> det, ord(Ordinal), d.
 position(Ordinal) --> det, ord(Ordinal).

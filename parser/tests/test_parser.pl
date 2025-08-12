@@ -128,7 +128,7 @@ test(twonary_outcome_prime) :-
     parse_clue(Sentence, Clue),
     assertion(Clue = clue(sum, first, fourth, prime)).
 test(twonary_outcome_prime_twodigits) :-
-    Sentence = [the, sum, of, the, second, and, third, is, a, two, digit, prime],
+    Sentence = [the, sum, of, the, second, and, third, is, a, 'two-digit', prime],
     parse_clue(Sentence, Clue),
     assertion(Clue = clue(sum, second, third, two_digit_prime)).
 
