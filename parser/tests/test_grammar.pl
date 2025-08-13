@@ -3,35 +3,38 @@
 
 :- begin_tests(grammar).
 
-test(digit) :-
-    assertion(phrase(position(_), ['the', 'first'])),
-    assertion(phrase(position(_), ['the', 'second', 'digit'])),
-    assertion(\+ phrase(position(_), [])),
-    assertion(\+ phrase(position(_), ['9'])),
-    assertion(\+ phrase(position(_), ['the'])).
-
+% atomic ordinals
 test(ord) :-
-    assertion(phrase(ord(_), ['first'])),
-    assertion(phrase(ord(_), ['fourth'])),
-    assertion(\+ phrase(ord(_), [])),
-    assertion(\+ phrase(ord(_), ['9'])),
-    assertion(\+ phrase(ord(_), ['telescope'])).
+    assert_output(phrase(ord(PosA), ['first']), [PosA], [first]),
+    assert_output(phrase(ord(PosB), ['fourth']), [PosB], [fourth]),
+    assert_false(phrase(ord(_), [])),
+    assert_false(phrase(ord(_), ['9'])),
+    assert_false(phrase(ord(_), ['telescope'])).
+
+% ordinal clauses (see ord/1)
+test(digit) :-
+    assert_output(phrase(position(PosA), ['the', 'first']), [PosA], [first]),
+    assert_output(phrase(position(PosB), ['the', 'second', 'digit']), [PosB], [second]),
+    assert_output(phrase(position(PosC), ['third']), [PosC], [third]),
+    assert_false(phrase(position(_), [])),
+    assert_false(phrase(position(_), ['9'])),
+    assert_false(phrase(position(_), ['the'])).
 
 test(operator) :-
-    assertion(phrase(operator(_), ['greater', 'than'])),
+    assert_output(phrase(operator(Op), ['greater', 'than']), [Op], [greater_than]),
     %assertion(phrase(operator(_), ['equal', 'to'])),
-    assertion(\+ phrase(operator(_), [])),
-    assertion(\+ phrase(operator(_), ['9'])),
-    assertion(\+ phrase(operator(_), ['telescope'])).
+    assert_false(phrase(operator(_), [])),
+    assert_false(phrase(operator(_), ['9'])),
+    assert_false(phrase(operator(_), ['telescope'])).
 
+% the domain is 1..9
 test(safe_digit) :-
-    assertion(phrase(safe_digit(_), ['1'])),
-    assertion(phrase(safe_digit(_), ['9'])),
-    assertion(\+ phrase(safe_digit(_), [])),
-    assertion(\+ phrase(safe_digit(_), ['123', '456'])),
-    assertion(\+ phrase(safe_digit(_), ['99'])),
-    assertion(\+ phrase(safe_digit(_), ['Hello', 'World'])).
-
-
+    assert_output(phrase(safe_digit(DigA), ['1']), [DigA], [1]),
+    assert_output(phrase(safe_digit(DigB), ['9']), [DigB], [9]),
+    assert_false(phrase(safe_digit(_), [])),
+    assert_false(phrase(safe_digit(_), ['0'])),
+    assert_false(phrase(safe_digit(_), ['123', '456'])),
+    assert_false(phrase(safe_digit(_), ['99'])),
+    assert_false(phrase(safe_digit(_), ['Hello', 'World'])).
 
 :- end_tests(grammar).
