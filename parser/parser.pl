@@ -2,19 +2,19 @@
     apply_clue/2,
     % for testing
     normalise_numbers/2,
-    parse_clue/2
+    atoms_clue/2
 ]).
 :- use_module(library(clpfd)).
 :- use_module('grammar').
 
 
 apply_clue(Text, Vs) :-
-    parse_text(Text, Vs, Constraint),
+    text_constraint(Text, Vs, Constraint),
     % writeln(Constraint),
     call(Constraint).
 
 
-parse_text(Text, Vars, Constraint) :-
+text_constraint(Text, Vars, Constraint) :-
     % pre-processing
     strip_commas(Text, CleanText),
     split_string(CleanText, " ", "", TextList),
@@ -22,12 +22,12 @@ parse_text(Text, Vars, Constraint) :-
     maplist(downcase_atom, Atoms, AtomsLower),
     maplist(normalise_numbers, AtomsLower, AtomsWithnumbers),
     % turn the text into a clue object
-    parse_clue(AtomsWithnumbers, Clue),
+    atoms_clue(AtomsWithnumbers, Clue),
     % turn the clue into a constraint object
     clue_constraint(Clue, Vars, Constraint).
 
 
-parse_clue(Sentence, Clue) :-
+atoms_clue(Sentence, Clue) :-
     phrase(clue_spec(Clue), Sentence).
 
 
