@@ -73,19 +73,13 @@ is_even(N) :-
 divides_by(X, Y) :-
     X mod Y =:= 0.
 
-occurrenceof([], _, 0). % empty list, count of anything is 0. Base case.
-
-% The first item in the list is the same as what you want to count so
-% add 1 to the recursive count.
-occurrenceof([H|T], H, NewCount) :-
-    occurrenceof(T, H, OldCount),
-    NewCount is OldCount + 1.
-
-% The first item in the list is different so keep old count
-occurrenceof([H|T], H2, Count) :-
-    dif(H, H2),
-    occurrenceof(T, H2, Count).
-
+occurrenceof([], _, 0).
+occurrenceof([H|T], X, N) :-
+    occurrenceof(T, X, N0),
+    (   H = X
+    ->  N is N0 + 1
+    ;   N = N0
+    ).
 
 solution_count(Predicate, Count) :-
     Goal =.. [Predicate, A, B, C, D],
