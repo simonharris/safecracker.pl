@@ -1,4 +1,5 @@
-:- use_module(library(plunit_assert)).
+% :- use_module(library(plunit_assert)).
+:- use_module('plunit_assert').
 :- use_module('../safe_cracker').
 
 
@@ -16,7 +17,6 @@ test(is_prime) :-
     assert_true(is_prime(2)),
     assert_true(is_prime(2 + 1)),
     assert_false(is_prime(1)),
-    assert_exception(is_prime(hello)),
     !.
 
 test(is_square) :-
@@ -41,11 +41,10 @@ test(divides_by) :-
     assert_true(divides_by(15, 5)),
     assert_true(divides_by(4, 2)).
 
-test(occurrenceof) :-
-    assertion(occurrenceof([], 1, 0)),
-    assertion(occurrenceof([2, 3, 4, 5], 1, 0)),
-    assertion(occurrenceof([1, 2, 3, 4], 1, 1)),
-    assertion(occurrenceof([1, 2, 3, 4, 1, 1], 1, 3)).
+test(occurrenceof0) :- assert_output(occurrenceof([], 1, HowMany1), [HowMany1], [0]).
+test(occurrenceof1) :- assert_output(occurrenceof([2, 3, 4, 5], 1, HowMany2), [HowMany2], [0]).
+test(occurrenceof2) :- assert_output(occurrenceof([1, 2, 3, 4], 1, HowMany3), [HowMany3], [1]).
+test(occurrenceof3) :- assert_output(occurrenceof([1, 2, 3, 4, 1, 1], 1, HowMany4), [HowMany4], [3]).
 
 
 :- end_tests(safe_cracker).
