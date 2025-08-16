@@ -1,4 +1,5 @@
 :- use_module(library(clpfd)).
+:- use_module(library(plunit_assert)).
 :- ensure_loaded('../parser').
 
 :- begin_tests(parser).

@@ -1,5 +1,5 @@
 :- ensure_loaded('../grammar').
-
+:- use_module(library(plunit_assert)).
 
 :- begin_tests(grammar).
 
