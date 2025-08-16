@@ -1,3 +1,4 @@
+:- use_module(library(plunit_assert)). 
 :- ensure_loaded('../solutions/safe20250413').
 :- ensure_loaded('../solutions/safe20250504').
 :- ensure_loaded('../solutions/safe20250511').
