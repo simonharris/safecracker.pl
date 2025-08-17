@@ -1,4 +1,5 @@
-:- use_module(library(plunit_assert)). 
+:- use_module(library(plunit_assert)).
+%:- use_module(plunit_assert).
 :- ensure_loaded('../solutions/safe20250413').
 :- ensure_loaded('../solutions/safe20250504').
 :- ensure_loaded('../solutions/safe20250511').
@@ -12,6 +13,7 @@
 :- ensure_loaded('../solutions/safe20250720').
 :- ensure_loaded('../solutions/safe20250803').
 :- ensure_loaded('../solutions/safe20250810').
+:- ensure_loaded('../solutions/safe20250817').
 
 
 :- begin_tests(safe_cracker_solutions).
@@ -67,5 +69,9 @@ test(solution_20250803) :-
 test(solution_20250810) :-
     once(solution_20250810(A, B, C, D)),
     assertion((A = 3, B = 2, C = 9, D = 5)).
+
+test(solution_20250817) :-
+    once(solution_20250817(A, B, C, D)),
+    assertion((A = 8, B = 7, C = 9, D = 3)).
 
 :- end_tests(safe_cracker_solutions).

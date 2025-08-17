@@ -1,5 +1,6 @@
 :- use_module(library(clpfd)).
 :- use_module(library(plunit_assert)).
+%:- use_module(plunit_assert).
 :- ensure_loaded('../parser').
 
 :- begin_tests(parser).
@@ -23,6 +24,10 @@ test(adjective_greatest) :-
     Sentence = [the, third, digit, is, the, greatest],
     atoms_clue(Sentence, Clue),
     assert_equals(Clue, clue(third, greatest)).
+test(adjective_square) :-
+    Sentence = [the, third, digit, is, square],
+    atoms_clue(Sentence, Clue),
+    assert_equals(Clue, clue(third, square)).
 
 test(difference1) :-
     Sentence = [the, third, and, fourth, differ, by, '2'],
@@ -177,5 +182,20 @@ test(normalise_numbers) :-
     normalise_numbers('six', '6'),
     normalise_numbers('nine', '9'),
     !.
+
+% -----------------------------------------------------------------------------
+
+
+test(clue_constraint_odd) :-
+    Clue = clue(third, odd),
+    once(clue_constraint(Clue, [_, _, C, _], Constraint)),
+    assert_equals(Constraint, is_odd(C)).
+
+test(clue_constraint_square) :-
+    Clue = clue(third, square),
+    Vs = [_, _, C, _],
+    once(clue_constraint(Clue, Vs, Constraint)),
+    assert_equals(Constraint, is_square(C)).
+
 
 :- end_tests(parser).

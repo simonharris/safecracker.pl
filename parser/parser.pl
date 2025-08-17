@@ -1,6 +1,7 @@
 :- module(parser, [
     apply_clue/2,
-    % for testing
+    % for testing,
+    clue_constraint/3,
     normalise_numbers/2,
     atoms_clue/2
 ]).
@@ -51,6 +52,7 @@ clue_constraint(clue(Position1, Relation, Position2), Vars, Constraint) :-
     var_for_position(Position2, Vars, Var2),
     relation_constraint(Relation, Var1, Var2, Constraint).
 % eg. The second digit is odd
+% eg. The third digit is square
 clue_constraint(clue(Position, Adj), Vars, Constraint) :-
     var_for_position(Position, Vars, Var),
     adjective_val(Adj),
@@ -182,7 +184,8 @@ relation_constraint(twice, A, B, A #= B*2).
 
 adjective_constraint(odd, _, Var1, is_odd(Var1)).
 adjective_constraint(even, _, Var1, is_even(Var1)).
-adjective_constraint(prime, _, Var1, is_prime(Var1, 1)).
+adjective_constraint(prime, _, Var1, is_prime(Var1, 1)). % why did we use is_prime/2 here?
+adjective_constraint(square, _, Var1, is_square(Var1)).
 adjective_constraint(greatest, Vars, Var1, (max_list(Vars, Biggest), Biggest #= Var1)).
 
 function_constraint(differ_by, Var1, Var2, Howmany, abs(Var1 - Var2) #= Howmany).

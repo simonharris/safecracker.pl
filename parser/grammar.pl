@@ -113,7 +113,7 @@ clue_spec(clue(sum, Operator, Ordinal1, Ordinal2, Howmany)) -->
     operator(Operator),
     numeric_string(Howmany), % serious TODO here
     !.
-% eg. The sum of the second and fourth is divisible by five'
+% eg. The sum of the second and fourth is divisible by five
 clue_spec(clue(sum, db, Ordinal1, Ordinal2, Howmany)) -->
     sum_clause(Ordinal1, Ordinal2),
     db,

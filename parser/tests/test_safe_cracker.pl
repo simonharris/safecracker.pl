@@ -1,5 +1,5 @@
-% :- use_module(library(plunit_assert)).
 :- use_module(library(plunit_assert)).
+%:- use_module(plunit_assert).
 :- use_module('../safe_cracker').
 
 
