@@ -1,18 +1,38 @@
 :- use_module(library(clpfd)).
-:- use_module(library(plunit_assert)).
-%:- use_module(plunit_assert).
+%:- use_module(library(plunit_assert)).
+:- use_module(plunit_assert).
 :- ensure_loaded('../parser').
+
+
+:- begin_tests(preprocessing).
+
+test(text_preprocessing0) :-
+    Sentence = 'Exactly one of the third and fourth is odd',
+    Expected = [exactly, 1, of, the, third, and, fourth, is, odd],
+    assert_output(text_preprocessed(Sentence, Parsed), [Parsed], [Expected]).
+
+test(text_preprocessing1) :-
+    Sentence = 'The sum of the second and fourth is divisible by five',
+    Expected = [the, sum, of, the, second, and, fourth, is, divisible, by, 5],
+    assert_output(text_preprocessed(Sentence, Parsed), [Parsed], [Expected]).
+
+test(text_preprocessing2) :-
+    Sentence = 'The first and third total 13',
+    Expected = [the, first, and, third, total, 13],
+    assert_output(text_preprocessed(Sentence, Parsed), [Parsed], [Expected]).
+
+:- end_tests(preprocessing).
+
 
 :- begin_tests(parser).
 
-
 test(clue_01) :-
-    Sentence = [the, second, digit, is, less, than, '7'],
+    Sentence = [the, second, digit, is, less, than, 7],
     atoms_clue(Sentence, Clue),
     assert_equals(Clue, clue(second, less_than, 7)).
 
 test(clue_02) :-
-    Sentence = [the, first, digit, is, greater, than, '5'],
+    Sentence = [the, first, digit, is, greater, than, 5],
     atoms_clue(Sentence, Clue),
     assert_equals(Clue, clue(first, greater_than, 5)).
 
@@ -30,32 +50,35 @@ test(adjective_square) :-
     assert_equals(Clue, clue(third, square)).
 
 test(difference1) :-
-    Sentence = [the, third, and, fourth, differ, by, '2'],
+    Sentence = [the, third, and, fourth, differ, by, 2],
     atoms_clue(Sentence, Clue),
-    assert_equals(Clue, clue(third, fourth, differ_by, '2')).
+    assert_equals(Clue, clue(third, fourth, differ_by, 2)).
 test(difference3) :-
-    Sentence = [the, first, and, last, digits, differ, by, '3'],
+    Sentence = [the, first, and, last, digits, differ, by, 3],
     atoms_clue(Sentence, Clue),
-    assert_equals(Clue, clue(first, fourth, differ_by, '3')).
+    assert_equals(Clue, clue(first, fourth, differ_by, 3)).
 test(difference_first_two) :-
-    Sentence = [the, first, two, digits, differ, by, '4'],
+    Sentence = [the, first, two, digits, differ, by, 4],
     atoms_clue(Sentence, Clue),
-    assert_equals(Clue, clue(first, second, differ_by, '4')).
+    assert_equals(Clue, clue(first, second, differ_by, 4)).
 
 test(difference_qualified) :-
-    Sentence = [the, first, and, second, differ, by, more, than, '4'],
+    Sentence = [the, first, and, second, differ, by, more, than, 4],
     atoms_clue(Sentence, Clue),
-    assert_equals(Clue, clue(first, second, differ_by_more_than, '4')).
-
+    assert_equals(Clue, clue(first, second, differ_by_more_than, 4)).
 test(difference_qualified2) :-
-    Sentence = [the, first, and, second, differ, by, no, more, than, '4'],
+    Sentence = [the, first, and, second, differ, by, no, more, than, 4],
     atoms_clue(Sentence, Clue),
-    assert_equals(Clue, clue(first, second, differ_by_no_more_than, '4')).
+    assert_equals(Clue, clue(first, second, differ_by_no_more_than, 4)).
 
 test(add_up_to) :-
-    Sentence = [the, second, and, third, digits, total, '11'],
+    Sentence = [the, second, and, third, digits, total, 11],
     atoms_clue(Sentence, Clue),
-    assert_equals(Clue, clue(second, third, add_up_to, '11')).
+    assert_equals(Clue, clue(second, third, add_up_to, 11)).
+test(add_up_to_2) :-
+    Sentence = [the, first, and, third, total, 13],
+    atoms_clue(Sentence, Clue),
+    assert_equals(Clue, clue(first, third, add_up_to, 13)).
 
 test(twice) :-
     Sentence = [the, second, is, twice, the, fourth],
@@ -76,50 +99,45 @@ test(total_less_than_another_digit2) :-
      atoms_clue(Sentence, Clue),
      assert_equals(Clue, clue(sum, lt, first, second, third)).
 test(minus_less_than) :-
-    Sentence = [the, second, minus, the, first, is, less, than, '3'],
-    Sentence = [the, second, minus, the, first, is, less, than, '3'],
+    Sentence = [the, second, minus, the, first, is, less, than, 3],
     atoms_clue(Sentence, Clue),
-    assert_equals(Clue, clue(minus, lt, second, first, '3')).
-
+    assert_equals(Clue, clue(minus, lt, second, first, 3)).
 
 test(qualified_difference) :-
-    Sentence = [the, fourth, is, '3', more, than, the, first],
+    Sentence = [the, fourth, is, 3, more, than, the, first],
     atoms_clue(Sentence, Clue),
-    assert_equals(Clue, clue(fourth, first, greater_than, '3')).
+    assert_equals(Clue, clue(fourth, first, greater_than, 3)).
 test(qualified_difference) :-
-    Sentence = [the, second, is, '3', greater, than, the, first],
+    Sentence = [the, second, is, 3, greater, than, the, first],
     atoms_clue(Sentence, Clue),
-    assert_equals(Clue, clue(second, first, greater_than, '3')).
+    assert_equals(Clue, clue(second, first, greater_than, 3)).
 
 test(quantified_adjective1) :-
-    Sentence = [exactly, '1', digit, is, square],
+    Sentence = [exactly, 1, digit, is, square],
     atoms_clue(Sentence, Clue),
-    assert_equals(Clue, clue(square, '1')).
-
+    assert_equals(Clue, clue(square, 1)).
 test(quantified_adjective2) :-
-    Sentence = [only, '1', digit, is, odd],
+    Sentence = [only, 1, digit, is, odd],
     atoms_clue(Sentence, Clue),
-    assert_equals(Clue, clue(odd, '1')).
-
+    assert_equals(Clue, clue(odd, 1)).
 test(quantified_adjective3) :-
-    Sentence = [exactly, '3', digits, are, even],
+    Sentence = [exactly, 3, digits, are, even],
     atoms_clue(Sentence, Clue),
-    assert_equals(Clue, clue(even, '3')).
-
+    assert_equals(Clue, clue(even, 3)).
 test(quantified_adjective4) :-
-    Sentence = [exactly, '2', digits, are, not, prime],
+    Sentence = [exactly, 2, digits, are, not, prime],
     atoms_clue(Sentence, Clue),
-    assert_equals(Clue, clue(not_prime, '2')).
+    assert_equals(Clue, clue(not_prime, 2)).
 
 test(quantified_outcome1) :-
-    Sentence = [exactly, '1', of, the, digits, is, '3'],
+    Sentence = [exactly, 1, of, the, digits, is, 3],
     atoms_clue(Sentence, Clue),
-    assert_equals(Clue, clue(equal, '1', 3)).
+    assert_equals(Clue, clue(equal, 1, 3)).
 
 test(quantified_outcome2) :-
-    Sentence = [exactly, '2', digits, are, divisible, by, '3'],
+    Sentence = [exactly, 2, digits, are, divisible, by, 3],
     atoms_clue(Sentence, Clue),
-    assert_equals(Clue, clue(divisible_by, '2', 3)).
+    assert_equals(Clue, clue(divisible_by, 2, 3)).
 
 test(twonary_outcome_square) :-
     Sentence = [the, sum, of, the, second, and, third, is, a, square],
@@ -165,31 +183,45 @@ test(either_odd2) :-
     assert_equals(Clue, clue(either, second, third, odd)).
 
 test(exceeds_more_than) :-
-    Sentence = [the, second, exceeds, the, first, by, more, than, '2'],
+    Sentence = [the, second, exceeds, the, first, by, more, than, 2],
     atoms_clue(Sentence, Clue),
-    assert_equals(Clue, clue(second, first, exceeds_by_more_than, '2')).
+    assert_equals(Clue, clue(second, first, exceeds_by_more_than, 2)).
 
 test(this_one_fails) :-
-    Sentence = [the, first, digit, is, divisible, by, '3'],
+    Sentence = [the, first, digit, is, divisible, by, 3],
     atoms_clue(Sentence, Clue),
     assert_equals(Clue, clue(first, divisible_by, 3)).
 
-
 test(normalise_numbers) :-
     normalise_numbers('hello', 'hello'),
-    normalise_numbers('13', '13'),
-    normalise_numbers('one', '1'),
-    normalise_numbers('six', '6'),
-    normalise_numbers('nine', '9'),
+    normalise_numbers('one', 1),
+    normalise_numbers('six', 6),
+    normalise_numbers('nine', 9),
     !.
+
+:- end_tests(parser).
 
 % -----------------------------------------------------------------------------
 
+:- begin_tests(constraint_factories).
+
+% These are sparse: prior to plunit_assert is was very difficult to test these
+
+% eg. 'The fourth is three more than the first' - function constraint
+test(clue_constraint_gt) :-
+    Clue = clue(fourth, first, greater_than, 3),
+    once(clue_constraint(Clue, [A, _, _, D], Constraint)),
+    assert_equals(Constraint, (D - A) #= 3).
 
 test(clue_constraint_odd) :-
     Clue = clue(third, odd),
     once(clue_constraint(Clue, [_, _, C, _], Constraint)),
     assert_equals(Constraint, is_odd(C)).
+
+test(clue_constraint_total) :-
+    Clue = clue(first, third, add_up_to, 13),
+    once(clue_constraint(Clue, [A, _, C, _], Constraint)),
+    assert_equals(Constraint, (A + C) #= 13).
 
 test(clue_constraint_square) :-
     Clue = clue(third, square),
@@ -197,5 +229,4 @@ test(clue_constraint_square) :-
     once(clue_constraint(Clue, Vs, Constraint)),
     assert_equals(Constraint, is_square(C)).
 
-
-:- end_tests(parser).
+:- end_tests(constraint_factories).

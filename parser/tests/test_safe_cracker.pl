@@ -1,5 +1,5 @@
-:- use_module(library(plunit_assert)).
-%:- use_module(plunit_assert).
+%:- use_module(library(plunit_assert)).
+:- use_module(plunit_assert).
 :- use_module('../safe_cracker').
 
 
@@ -46,6 +46,4 @@ test(occurrenceof1) :- assert_output(occurrenceof([2, 3, 4, 5], 1, HowMany2), [H
 test(occurrenceof2) :- assert_output(occurrenceof([1, 2, 3, 4], 1, HowMany3), [HowMany3], [1]).
 test(occurrenceof3) :- assert_output(occurrenceof([1, 2, 3, 4, 1, 1], 1, HowMany4), [HowMany4], [3]).
 
-
 :- end_tests(safe_cracker).
-

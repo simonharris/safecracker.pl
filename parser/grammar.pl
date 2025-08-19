@@ -7,6 +7,7 @@
     position//1,
     safe_digit//1
 ]).
+:- use_module(library(dcg/basics)).
 
 % TODO: there's a lot of duplication of "greater than" in here
 
@@ -15,7 +16,7 @@ clue_spec(clue(Ordinal, Operator, Number)) -->
     position(Ordinal),
     be,
     operator(Operator),
-    safe_digit(Number), % TODO: this probably works by coincidence
+    numeric(Number),
     !.
 % eg. The third digit is less than the second
 % eg. The second is twice the fourth
@@ -56,7 +57,7 @@ clue_spec(clue(Ordinal1, Ordinal2, Func, Howmany)) -->
     and,
     position(Ordinal2),
     function(Func),
-    numeric_string(Howmany),
+    numeric(Howmany),
     !.
 
 % Kind of a special case atm
@@ -64,7 +65,7 @@ clue_spec(clue(Ordinal1, Ordinal2, Func, Howmany)) -->
 clue_spec(clue(first, second, Func, Howmany)) -->
     first_two,
     function(Func),
-    numeric_string(Howmany),
+    numeric(Howmany),
     !.
 
 % eg. The fourth is three more than the first
@@ -72,7 +73,7 @@ clue_spec(clue(first, second, Func, Howmany)) -->
 clue_spec(clue(Ordinal1, Ordinal2, Func, Howmany)) -->
     position(Ordinal1),
     be,
-    numeric_string(Howmany),
+    numeric(Howmany),
     function(Func),
     position(Ordinal2),
     !.
@@ -111,19 +112,19 @@ clue_spec(clue(sum, lt, Ordinal1, Ordinal2, Ordinal3)) -->
 clue_spec(clue(sum, Operator, Ordinal1, Ordinal2, Howmany)) -->
     sum_clause(Ordinal1, Ordinal2),
     operator(Operator),
-    numeric_string(Howmany), % serious TODO here
+    numeric(Howmany), % serious TODO here
     !.
 % eg. The sum of the second and fourth is divisible by five
 clue_spec(clue(sum, db, Ordinal1, Ordinal2, Howmany)) -->
     sum_clause(Ordinal1, Ordinal2),
     db,
-    numeric_string(Howmany),
+    numeric(Howmany),
     !.
 % eg. The second minus the first is less than three
 clue_spec(clue(minus, lt, Ordinal1, Ordinal2, Howmany)) -->
     minus_clause(Ordinal1, Ordinal2),
     lt,
-    numeric_string(Howmany),
+    numeric(Howmany),
     !.
 % eg. Either the second or the third is odd, but not both
 % eg. Exactly one of the second and third is odd
@@ -144,12 +145,12 @@ clue_spec(clue(Ordinal1, Ordinal2, exceeds_by_more_than, Howmany)) -->
     by,
     more,
     than,
-    numeric_string(Howmany),
+    numeric(Howmany),
     !.
 
 quant(Howmany) -->
     qmod,
-    numeric_string(Howmany),
+    numeric(Howmany),
     part,
     d.
 
@@ -233,9 +234,8 @@ minus_clause(Ordinal1, Ordinal2) -->
 either_clause --> qmod, ['one', 'of'].
 either_clause --> ['either'].
 
-safe_digit(D) --> [C], { member(C, ['1','2','3','4','5','6','7','8','9']), atom_number(C, D) }.
-
-numeric_string(Num) --> [Num]. % yeah, you try doing better
+safe_digit(D) --> [D], { integer(D), between(1, 9, D) }.
+numeric(D) --> [D], { integer(D) }.
 
 superfluous_waffle --> ['but', 'not', 'both'].
 superfluous_waffle --> [].

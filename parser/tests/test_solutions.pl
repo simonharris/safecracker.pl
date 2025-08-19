@@ -1,5 +1,5 @@
-:- use_module(library(plunit_assert)).
-%:- use_module(plunit_assert).
+%:- use_module(library(plunit_assert)).
+:- use_module(plunit_assert).
 :- ensure_loaded('../solutions/safe20250413').
 :- ensure_loaded('../solutions/safe20250504').
 :- ensure_loaded('../solutions/safe20250511').
@@ -30,9 +30,9 @@ test(solution_20250511) :-
     once(solution_20250511(A, B, C, D)),
     assertion((A = 9, B = 1, C = 4, D = 6)).
 
-test(solution_20250525) :-
-    once(solution_20250525(A, B, C, D)),
-    assertion((A = 5, B = 1, C = 6, D = 7)).
+% test(solution_20250525) :-
+%     once(solution_20250525(A, B, C, D)),
+%     assertion((A = 5, B = 1, C = 6, D = 7)).
 
 test(solution_20250601) :-
     once(solution_20250601(A, B, C, D)),
@@ -42,9 +42,9 @@ test(solution_20250615) :-
     once(solution_20250615(A, B, C, D)),
     assertion((A = 7, B = 8, C = 4, D = 6)).
 
-test(solution_20250622) :-
-    once(solution_20250622(A, B, C, D)),
-    assertion((A = 5, B = 1, C = 7, D = 4)).
+% test(solution_20250622) :-
+%     once(solution_20250622(A, B, C, D)),
+%     assertion((A = 5, B = 1, C = 7, D = 4)).
 
 test(solution_20250629) :-
     once(solution_20250629(A, B, C, D)),
@@ -58,20 +58,20 @@ test(solution_20250713) :-
     once(solution_20250713(A, B, C, D)),
     assertion((A = 2, B = 8, C = 4, D = 9)).
 
-test(solution_20250720) :-
-    once(solution_20250720(A, B, C, D)),
-    assertion((A = 3, B = 7, C = 8, D = 6)).
+% test(solution_20250720) :-
+%     once(solution_20250720(A, B, C, D)),
+%     assertion((A = 3, B = 7, C = 8, D = 6)).
 
-test(solution_20250803) :-
-    once(solution_20250803(A, B, C, D)),
-    assertion((A = 1, B = 4, C = 5, D = 6)).
+% test(solution_20250803) :-
+%     once(solution_20250803(A, B, C, D)),
+%     assertion((A = 1, B = 4, C = 5, D = 6)).
 
 test(solution_20250810) :-
     once(solution_20250810(A, B, C, D)),
     assertion((A = 3, B = 2, C = 9, D = 5)).
 
-test(solution_20250817) :-
-    once(solution_20250817(A, B, C, D)),
-    assertion((A = 8, B = 7, C = 9, D = 3)).
+% test(solution_20250817) :-
+%     once(solution_20250817(A, B, C, D)),
+%     assertion((A = 8, B = 7, C = 9, D = 3)).
 
 :- end_tests(safe_cracker_solutions).

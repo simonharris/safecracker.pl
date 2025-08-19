@@ -14,17 +14,17 @@ solution_20250511(A, B, C, D) :-
     % A + C #= 13,
     apply_clue('The first and third total 13', Vs),
 
-    % 3. The third and fourth differ by two
-    % abs(C - D) #= 2,
+    % % 3. The third and fourth differ by two
+    % % abs(C - D) #= 2,
     apply_clue('The third and fourth differ by two', Vs),
 
-    % 4. The first is greater than the fourth
-    % A #> D,
+    % % 4. The first is greater than the fourth
+    % % A #> D,
     apply_clue('The first is greater than the fourth', Vs),
 
-    % 5. Exactly two digits are divisible by three
-    % maplist(divides_by_3, Vs, Threes),
-    % sum(Threes, #=, 2),
+    % % 5. Exactly two digits are divisible by three
+    % % maplist(divides_by_3, Vs, Threes),
+    % % sum(Threes, #=, 2),
     apply_clue('Exactly two digits are divisible by three', Vs),
 
     label(Vs).

@@ -1,6 +1,6 @@
 :- ensure_loaded('../grammar').
-:- use_module(library(plunit_assert)).
-%:- use_module(plunit_assert).
+%:- use_module(library(plunit_assert)).
+:- use_module(plunit_assert).
 
 :- begin_tests(grammar).
 
@@ -30,12 +30,21 @@ test(operator) :-
 
 % the domain is 1..9
 test(safe_digit) :-
-    assert_output(phrase(safe_digit(DigA), ['1']), [DigA], [1]),
-    assert_output(phrase(safe_digit(DigB), ['9']), [DigB], [9]),
+    assert_output(phrase(safe_digit(DigA), [1]), [DigA], [1]),
+    assert_output(phrase(safe_digit(DigB), [9]), [DigB], [9]),
     assert_false(phrase(safe_digit(_), [])),
     assert_false(phrase(safe_digit(_), ['0'])),
     assert_false(phrase(safe_digit(_), ['123', '456'])),
     assert_false(phrase(safe_digit(_), ['99'])),
     assert_false(phrase(safe_digit(_), ['Hello', 'World'])).
+
+% test(numeric_string) :-
+%     assert_true(numeric_string)
+
+test(position_fourth) :-
+    assert_output(phrase(position(Ordinal), ['fourth'], []), [Ordinal], [fourth]),
+    assert_output(phrase(position(Ordinal), ['the', 'fourth'], []), [Ordinal], [fourth]),
+    assert_output(phrase(position(Ordinal), ['the', 'last', 'digit'], []), [Ordinal], [fourth]),
+    !.
 
 :- end_tests(grammar).

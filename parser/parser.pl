@@ -1,33 +1,36 @@
 :- module(parser, [
     apply_clue/2,
     % for testing,
+    atoms_clue/2,
     clue_constraint/3,
     normalise_numbers/2,
-    atoms_clue/2
+    text_preprocessed/2
+
 ]).
 :- use_module(library(clpfd)).
 :- use_module('grammar').
 
 
 apply_clue(Text, Vs) :-
-    text_constraint(Text, Vs, Constraint),
-    % writeln(Constraint),
+    text_preprocessed(Text, Atoms),
+    atoms_constraint_(Atoms, Constraint, Vs),
     call(Constraint).
 
-
-text_constraint(Text, Vars, Constraint) :-
-    % pre-processing
+text_preprocessed(Text, Processed) :-
     strip_commas(Text, CleanText),
     split_string(CleanText, " ", "", TextList),
     maplist(atom_string, Atoms, TextList),
     maplist(downcase_atom, Atoms, AtomsLower),
-    maplist(normalise_numbers, AtomsLower, AtomsWithnumbers),
+    maplist(normalise_numbers, AtomsLower, Processed),
+    !.
+
+atoms_constraint_(ClueAtoms, Constraint, Vars) :-
     % turn the text into a clue object
-    atoms_clue(AtomsWithnumbers, Clue),
+    atoms_clue(ClueAtoms, Clue),
     % turn the clue into a constraint object
     clue_constraint(Clue, Vars, Constraint).
 
-
+% actually call the grammar
 atoms_clue(Sentence, Clue) :-
     phrase(clue_spec(Clue), Sentence).
 
@@ -66,11 +69,10 @@ two digits --------------------------------------------------------------------
 
 % eg. The third and fourth differ by two
 % eg. The first and third total 13
-clue_constraint(clue(Position1, Position2, Func, HowmanyStr), Vars, Constraint) :-
+clue_constraint(clue(Position1, Position2, Func, Howmany), Vars, Constraint) :-
     var_for_position(Position1, Vars, Var1),
     var_for_position(Position2, Vars, Var2),
     fun_val(Func),
-    atom_number(HowmanyStr, Howmany),
     function_constraint(Func, Var1, Var2, Howmany, Constraint),
     !.
 % eg. The sum of the second and third is a square
@@ -86,32 +88,28 @@ clue_constraint(clue(sum, Position1, Position2, two_digit_prime), Vars, Constrai
     boutcome_constraint(sum, Var1, Var2, two_digit_prime, Constraint),
     !.
 % eg. The sum of the first and third exceeds 10
-clue_constraint(clue(sum, gt, Position1, Position2, HowmanyStr), Vars, Constraint) :-
+clue_constraint(clue(sum, gt, Position1, Position2, Howmany), Vars, Constraint) :-
     var_for_position(Position1, Vars, Var1),
     var_for_position(Position2, Vars, Var2),
-    atom_number(HowmanyStr, Howmany),
     sum_rel_constraint(gt, Var1, Var2, Howmany, Constraint),
     !.
 % eg. The sum of the first and second is less than seven - TODO: horrific duplication with the above
-clue_constraint(clue(sum, less_than, Position1, Position2, HowmanyStr), Vars, Constraint) :-
+clue_constraint(clue(sum, less_than, Position1, Position2, Howmany), Vars, Constraint) :-
     var_for_position(Position1, Vars, Var1),
     var_for_position(Position2, Vars, Var2),
-    atom_number(HowmanyStr, Howmany),
     sum_rel_constraint(lt, Var1, Var2, Howmany, Constraint),
     !.
 % eg. The sum of the second and fourth is divisible by five
 % nb. TODO: Could probably generalise with the above
-clue_constraint(clue(sum, db, Position1, Position2, HowmanyStr), Vars, Constraint) :-
+clue_constraint(clue(sum, db, Position1, Position2, Howmany), Vars, Constraint) :-
     var_for_position(Position1, Vars, Var1),
     var_for_position(Position2, Vars, Var2),
-    atom_number(HowmanyStr, Howmany),
     sum_rel_constraint(db, Var1, Var2, Howmany, Constraint),
     !.
 % eg. The second minus the first is less than three
-clue_constraint(clue(minus, lt, Position1, Position2, HowmanyStr), Vars, Constraint) :-
+clue_constraint(clue(minus, lt, Position1, Position2, Howmany), Vars, Constraint) :-
     var_for_position(Position1, Vars, Var1),
     var_for_position(Position2, Vars, Var2),
-    atom_number(HowmanyStr, Howmany),
     minus_rel_constraint(lt, Var1, Var2, Howmany, Constraint),
     !.
 
@@ -147,16 +145,14 @@ exactly how many digits -------------------------------------------------------
 
 % eg. Only one digit is odd
 % eg. Exactly two digits are not prime
-clue_constraint(clue(Adj, HowmanyStr), Vars, Constraint) :-
+clue_constraint(clue(Adj, Howmany), Vars, Constraint) :-
     adjective_val(Adj),
-    atom_number(HowmanyStr, Howmany),
     qadj_constraint(Adj, Vars, Howmany, Constraint),
     !.
 % eg. Exactly one of the digits is one
 % eg. Exactly two digits are divisible by three
-clue_constraint(clue(Outcome, HowmanyStr, Value), Vars, Constraint) :-
+clue_constraint(clue(Outcome, Howmany, Value), Vars, Constraint) :-
     outcome_val(Outcome),
-    atom_number(HowmanyStr, Howmany),
     qoutcome_constraint(Outcome, Vars, Howmany, Value, Constraint),
     !.
 
@@ -244,15 +240,24 @@ var_for_position(Position, Vars, Var) :-
     position_index(Position, Index),
     nth1(Index, Vars, Var).
 
-normalise_numbers('one', '1').
-normalise_numbers('two', '2').
-normalise_numbers('three', '3').
-normalise_numbers('four', '4').
-normalise_numbers('five', '5').
-normalise_numbers('six', '6').
-normalise_numbers('seven', '7').
-normalise_numbers('eight', '8').
-normalise_numbers('nine', '9').
+normalise_numbers('one', 1).
+normalise_numbers('two', 2).
+normalise_numbers('three', 3).
+normalise_numbers('four', 4).
+normalise_numbers('five', 5).
+normalise_numbers('six', 6).
+normalise_numbers('seven', 7).
+normalise_numbers('eight', 8).
+normalise_numbers('nine',  9).
+normalise_numbers('11', 11).
+normalise_numbers('12', 12).
+normalise_numbers('13', 13).
+normalise_numbers('14', 14).
+normalise_numbers('15', 15).
+normalise_numbers('16', 16).
+normalise_numbers('17', 17).
+normalise_numbers('18', 18).
+normalise_numbers('19', 19).
 normalise_numbers(Atom, Atom).
 
 
