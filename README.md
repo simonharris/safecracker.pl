@@ -17,5 +17,5 @@ Disclaimer: I only buy that awful paper for the puzzles.
  `plunit_assert` is a unit testing library for Prolog. It can currently be installed using:
 
 ```
-?- pack_install(plunit_assert, [url('https://packages.pointbeing.net/plunit_assert/plunit_assert-0.1.0.tgz')]).
+?- pack_install(plunit_assert).
 ```
