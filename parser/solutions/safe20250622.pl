@@ -1,5 +1,5 @@
 :- use_module('../safe_cracker').
-:- use_module('parser/parser').
+:- use_module('../parser').
 
 
 solution_20250622(A, B, C, D) :-

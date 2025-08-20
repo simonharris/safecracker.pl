@@ -13,7 +13,9 @@
 
 apply_clue(Text, Vs) :-
     text_preprocessed(Text, Atoms),
+    % writeln(Atoms),
     atoms_constraint_(Atoms, Constraint, Vs),
+    % writeln(Constraint),
     call(Constraint).
 
 text_preprocessed(Text, Processed) :-
@@ -67,6 +69,14 @@ two digits --------------------------------------------------------------------
 
 */
 
+% eg. The first and second total the third
+clue_constraint(clue(Position1, Position2, Func, Position3), Vars, Constraint) :-
+    var_for_position(Position1, Vars, Var1),
+    var_for_position(Position2, Vars, Var2),
+    fun_val(Func),
+    var_for_position(Position3, Vars, Var3),
+    sum_rel_constraint(eq, Var1, Var2, Var3, Constraint),
+    !.
 % eg. The third and fourth differ by two
 % eg. The first and third total 13
 clue_constraint(clue(Position1, Position2, Func, Howmany), Vars, Constraint) :-
@@ -75,6 +85,7 @@ clue_constraint(clue(Position1, Position2, Func, Howmany), Vars, Constraint) :-
     fun_val(Func),
     function_constraint(Func, Var1, Var2, Howmany, Constraint),
     !.
+
 % eg. The sum of the second and third is a square
 clue_constraint(clue(sum, Position1, Position2, square), Vars, Constraint) :-
     var_for_position(Position1, Vars, Var1),
@@ -126,15 +137,6 @@ clue_constraint(clue(sum, lt, Position1, Position2, Position3), Vars, Constraint
     var_for_position(Position2, Vars, Var2),
     var_for_position(Position3, Vars, Var3),
     sum_rel_constraint(lt, Var1, Var2, Var3, Constraint),
-    !.
-
-% eg. The first and second total the third % TODO: should be a sum_rel?
-clue_constraint(clue(Position1, Position2, Func, Position3), Vars, Constraint) :-
-    var_for_position(Position1, Vars, Var1),
-    var_for_position(Position2, Vars, Var2),
-    fun_val(Func),
-    var_for_position(Position3, Vars, Var3),
-    function_constraint(Func, Var1, Var2, Var3, Constraint),
     !.
 
 /*
@@ -240,6 +242,8 @@ var_for_position(Position, Vars, Var) :-
     position_index(Position, Index),
     nth1(Index, Vars, Var).
 
+normalise_numbers(Atom, Number) :-
+    atom_number(Atom, Number).
 normalise_numbers('one', 1).
 normalise_numbers('two', 2).
 normalise_numbers('three', 3).
@@ -249,15 +253,6 @@ normalise_numbers('six', 6).
 normalise_numbers('seven', 7).
 normalise_numbers('eight', 8).
 normalise_numbers('nine',  9).
-normalise_numbers('11', 11).
-normalise_numbers('12', 12).
-normalise_numbers('13', 13).
-normalise_numbers('14', 14).
-normalise_numbers('15', 15).
-normalise_numbers('16', 16).
-normalise_numbers('17', 17).
-normalise_numbers('18', 18).
-normalise_numbers('19', 19).
 normalise_numbers(Atom, Atom).
 
 

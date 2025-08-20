@@ -1,6 +1,6 @@
 :- use_module(library(clpfd)).
-%:- use_module(library(plunit_assert)).
-:- use_module(plunit_assert).
+:- use_module(library(plunit_assert)).
+%:- use_module(plunit_assert).
 :- ensure_loaded('../parser').
 
 
@@ -19,6 +19,16 @@ test(text_preprocessing1) :-
 test(text_preprocessing2) :-
     Sentence = 'The first and third total 13',
     Expected = [the, first, and, third, total, 13],
+    assert_output(text_preprocessed(Sentence, Parsed), [Parsed], [Expected]).
+
+test(text_preprocessing3) :-
+    Sentence = 'The first and second total the third',
+    Expected = [the, first, and, second, total, the, third],
+    assert_output(text_preprocessed(Sentence, Parsed), [Parsed], [Expected]).
+
+test(text_preprocessing4) :-
+    Sentence = 'The first two digits differ by four',
+    Expected = [the, first, 2, digits, differ, by, 4],
     assert_output(text_preprocessed(Sentence, Parsed), [Parsed], [Expected]).
 
 :- end_tests(preprocessing).
@@ -58,8 +68,9 @@ test(difference3) :-
     atoms_clue(Sentence, Clue),
     assert_equals(Clue, clue(first, fourth, differ_by, 3)).
 test(difference_first_two) :-
-    Sentence = [the, first, two, digits, differ, by, 4],
+    Sentence = [the, first, 2, digits, differ, by, 4],
     atoms_clue(Sentence, Clue),
+    assert_type(Clue, clue),
     assert_equals(Clue, clue(first, second, differ_by, 4)).
 
 test(difference_qualified) :-
@@ -178,9 +189,13 @@ test(either_odd) :-
     atoms_clue(Sentence, Clue),
     assert_equals(Clue, clue(either, second, third, odd)).
 test(either_odd2) :-
-    Sentence = [exactly, one, of, the, second, and, third, is, odd],
+    Sentence = [exactly, 1, of, the, second, and, third, is, odd],
     atoms_clue(Sentence, Clue),
     assert_equals(Clue, clue(either, second, third, odd)).
+test(either_odd2) :-
+    Sentence = [exactly, 1, of, the, third, and, fourth, is, odd],
+    atoms_clue(Sentence, Clue),
+    assert_equals(Clue, clue(either, third, fourth, odd)).
 
 test(exceeds_more_than) :-
     Sentence = [the, second, exceeds, the, first, by, more, than, 2],
@@ -201,7 +216,6 @@ test(normalise_numbers) :-
 
 :- end_tests(parser).
 
-% -----------------------------------------------------------------------------
 
 :- begin_tests(constraint_factories).
 
@@ -218,15 +232,32 @@ test(clue_constraint_odd) :-
     once(clue_constraint(Clue, [_, _, C, _], Constraint)),
     assert_equals(Constraint, is_odd(C)).
 
-test(clue_constraint_total) :-
+test(clue_constraint_total_number) :-
     Clue = clue(first, third, add_up_to, 13),
     once(clue_constraint(Clue, [A, _, C, _], Constraint)),
     assert_equals(Constraint, (A + C) #= 13).
+
+test(clue_constraint_total_other) :-
+    Clue = clue(first, second, add_up_to, third),
+    once(clue_constraint(Clue, [A, B, C, _], Constraint)),
+    assert_equals(Constraint, (A + B) #= C).
 
 test(clue_constraint_square) :-
     Clue = clue(third, square),
     Vs = [_, _, C, _],
     once(clue_constraint(Clue, Vs, Constraint)),
     assert_equals(Constraint, is_square(C)).
+
+test(clue_constraint_one_odd) :-
+    Clue = clue(either, second, third, odd),
+    Vs = [_, B, C, _],
+    once(clue_constraint(Clue, Vs, Constraint)),
+    assert_equals(Constraint, xor((B mod 2) #=1, (C mod 2) #= 1)).
+
+test(clue_constraint_one_odd) :-
+    Clue = clue(first, second, differ_by, 4),
+    Vs = [A, B, _, _],
+    once(clue_constraint(Clue, Vs, Constraint)),
+    assert_equals(Constraint, abs(A-B) #= 4).
 
 :- end_tests(constraint_factories).

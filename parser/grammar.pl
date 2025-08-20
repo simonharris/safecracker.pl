@@ -198,7 +198,7 @@ ord(third) --> ['third'].
 ord(fourth) --> ['fourth'].
 ord(fourth) --> ['last'].
 
-first_two --> ['the', 'first', 'two', 'digits'].
+first_two --> ['the', 'first', 2, 'digits'].
 
 function(differ_by_more_than) --> ['differ', 'by', 'more', 'than'].
 function(differ_by_no_more_than) --> ['differ', 'by', 'no', 'more', 'than'].
@@ -231,7 +231,7 @@ minus_clause(Ordinal1, Ordinal2) -->
     minus,
     position(Ordinal2).
 
-either_clause --> qmod, ['one', 'of'].
+either_clause --> qmod, [1, 'of'].
 either_clause --> ['either'].
 
 safe_digit(D) --> [D], { integer(D), between(1, 9, D) }.

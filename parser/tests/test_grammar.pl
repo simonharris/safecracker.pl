@@ -1,6 +1,6 @@
 :- ensure_loaded('../grammar').
-%:- use_module(library(plunit_assert)).
-:- use_module(plunit_assert).
+:- use_module(library(plunit_assert)).
+%:- use_module(plunit_assert).
 
 :- begin_tests(grammar).
 
@@ -23,7 +23,6 @@ test(digit) :-
 
 test(operator) :-
     assert_output(phrase(operator(Op), ['greater', 'than']), [Op], [greater_than]),
-    %assertion(phrase(operator(_), ['equal', 'to'])),
     assert_false(phrase(operator(_), [])),
     assert_false(phrase(operator(_), ['9'])),
     assert_false(phrase(operator(_), ['telescope'])).
@@ -37,9 +36,6 @@ test(safe_digit) :-
     assert_false(phrase(safe_digit(_), ['123', '456'])),
     assert_false(phrase(safe_digit(_), ['99'])),
     assert_false(phrase(safe_digit(_), ['Hello', 'World'])).
-
-% test(numeric_string) :-
-%     assert_true(numeric_string)
 
 test(position_fourth) :-
     assert_output(phrase(position(Ordinal), ['fourth'], []), [Ordinal], [fourth]),
