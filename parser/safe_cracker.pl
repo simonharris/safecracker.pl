@@ -18,34 +18,8 @@ common_constraints(Vs) :-
     all_distinct(Vs),
     labeling([], Vs).
 
-
 xor(X, Y) :-
     X #/\ #\Y #\/ #\X #/\ Y.
-
-% Recursive is_prime/1 implementation....
-
-% check_divisors(N, D) :-
-%     D > floor(sqrt(N)).
-% check_divisors(N, D) :-
-%     D =< floor(sqrt(N)),
-%     \+ divides_by(N, D),
-%     check_divisors(N, D+1).
-
-
-% is_prime(1) :- !, false.
-% is_prime(2) :- !.
-% is_prime(N) :-
-%     N > 2,
-%     check_divisors(N, 2).
-% is_prime(N, 1) :- is_prime(N).
-% is_prime(N, 0) :- \+ is_prime(N).
-
-
-% ...which won't work with CLP(FD) without a fair bit of work:
-% https://stackoverflow.com/questions/39591888/clpfd-constraint-is-a-prime-number
-
-% ...so we'll stick with this until it comes back to bite us
-%is_prime(N) :- N in {2, 3, 5, 7, 11, 13, 17, 19}.
 
 is_prime(Expression) :-
     (   integer(Expression)
@@ -58,6 +32,7 @@ is_prime(Expression) :-
     Limit is floor(sqrt(N)),      % <-- evaluate here
     \+ ( between(2, Limit, D), N mod D =:= 0 ).
 
+% for use in things like maplist/3
 is_prime(N, 1) :- is_prime(N).
 is_prime(N, 0) :- \+ is_prime(N).
 
