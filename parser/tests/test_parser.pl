@@ -31,6 +31,11 @@ test(text_preprocessing4) :-
     Expected = [the, first, 2, digits, differ, by, 4],
     assert_output(text_preprocessed(Sentence, Parsed), [Parsed], [Expected]).
 
+test(text_preprocessing4) :-
+    Sentence = 'The fourth is greater than the sum of the second and third',
+    Expected = [the, fourth, is, greater, than, the, sum, of, the, second, and, third],
+    assert_output(text_preprocessed(Sentence, Parsed), [Parsed], [Expected]).
+
 :- end_tests(preprocessing).
 
 
@@ -104,15 +109,15 @@ test(total_another_digit) :-
 test(total_less_than_another_digit) :-
     Sentence = [the, fourth, is, greater, than, the, sum, of, the, second, and, third],
     atoms_clue(Sentence, Clue),
-    assert_equals(Clue, clue(sum, lt, second, third, fourth)).
+    assert_equals(Clue, clue(sum, less_than, second, third, fourth)).
 test(total_less_than_another_digit2) :-
      Sentence = [the, sum, of, the, first, and, second, is, less, than, the, third],
      atoms_clue(Sentence, Clue),
-     assert_equals(Clue, clue(sum, lt, first, second, third)).
+     assert_equals(Clue, clue(sum, less_than, first, second, third)).
 test(minus_less_than) :-
     Sentence = [the, second, minus, the, first, is, less, than, 3],
     atoms_clue(Sentence, Clue),
-    assert_equals(Clue, clue(minus, lt, second, first, 3)).
+    assert_equals(Clue, clue(minus, less_than, second, first, 3)).
 
 test(qualified_difference) :-
     Sentence = [the, fourth, is, 3, more, than, the, first],
@@ -170,11 +175,11 @@ test(twonary_outcome_prime_twodigits) :-
 test(sum_of_exceeds) :-
     Sentence = [the, sum, of, the, first, and, third, exceeds, 10],
     atoms_clue(Sentence, Clue),
-    assert_equals(Clue, clue(sum, gt, first, third, 10)).
+    assert_equals(Clue, clue(sum, greater_than, first, third, 10)).
 test(sum_of_gt) :-
     Sentence = [the, sum, of, the, first, and, third, is, greater, than, 13],
     atoms_clue(Sentence, Clue),
-    assert_equals(Clue, clue(sum, gt, first, third, 13)).
+    assert_equals(Clue, clue(sum, greater_than, first, third, 13)).
 test(sum_of_lt) :-
     Sentence = [the, sum, of, the, first, and, second, is, less, than, 7],
     atoms_clue(Sentence, Clue),
@@ -254,10 +259,17 @@ test(clue_constraint_one_odd) :-
     once(clue_constraint(Clue, Vs, Constraint)),
     assert_equals(Constraint, xor((B mod 2) #=1, (C mod 2) #= 1)).
 
-test(clue_constraint_one_odd) :-
+test(clue_constraint_differ_by) :-
     Clue = clue(first, second, differ_by, 4),
     Vs = [A, B, _, _],
     once(clue_constraint(Clue, Vs, Constraint)),
     assert_equals(Constraint, abs(A-B) #= 4).
+
+test(clue_constraint_sum_lt_col) :-
+    Clue = clue(sum, less_than, second, third, fourth),
+    Vs = [_, B, C, D],
+    once(clue_constraint(Clue, Vs, Constraint)),
+    writeln(Constraint),
+    assert_equals(Constraint, (B+C) #< D).
 
 :- end_tests(constraint_factories).

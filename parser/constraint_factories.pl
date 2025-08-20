@@ -9,6 +9,8 @@
     sum_rel_constraint/5,
     relation_constraint/4
 ]).
+:- use_module(library(clpfd)).
+
 
 adjective_constraint(odd, _, Var1, is_odd(Var1)).
 adjective_constraint(even, _, Var1, is_even(Var1)).
@@ -45,12 +47,12 @@ boutcome_constraint(sum, Var1, Var2, prime, is_prime(Var1 + Var2)).
 boutcome_constraint(sum, Var1, Var2, two_digit_prime, (is_prime(Var1 + Var2), ((Var1+Var2) #>= 10))).
 
 % Rhs can be a column variable or a number literal
-minus_rel_constraint(gt, Var1, Var2, Rhs, (Var1 - Var2) #> Rhs).
-minus_rel_constraint(lt, Var1, Var2, Rhs, (Var1 - Var2) #< Rhs).
+minus_rel_constraint(greater_than, Var1, Var2, Rhs, (Var1 - Var2) #> Rhs).
+minus_rel_constraint(less_than, Var1, Var2, Rhs, (Var1 - Var2) #< Rhs).
 minus_rel_constraint(eq, Var1, Var2, Rhs, (Var1 - Var2) #= Rhs).
 
-sum_rel_constraint(gt, Var1, Var2, Rhs, (Var1 + Var2) #> Rhs).
-sum_rel_constraint(lt, Var1, Var2, Rhs, (Var1 + Var2) #< Rhs).
+sum_rel_constraint(greater_than, Var1, Var2, Rhs, (Var1 + Var2) #> Rhs).
+sum_rel_constraint(less_than, Var1, Var2, Rhs, (Var1 + Var2) #< Rhs).
 sum_rel_constraint(eq, Var1, Var2, Rhs, (Var1 + Var2) #= Rhs).
 sum_rel_constraint(db, Var1, Var2, Rhs, divides_by((Var1 + Var2), Rhs)).
 

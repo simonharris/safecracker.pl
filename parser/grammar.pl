@@ -42,7 +42,7 @@ clue_spec(clue(Ordinal1, Ordinal2, Func, Ordinal3)) -->
     position(Ordinal3),
     !.
 % eg. The fourth is greater than the sum of the second and third
-clue_spec(clue(sum, lt, Ordinal2,  Ordinal3, Ordinal1)) -->
+clue_spec(clue(sum, less_than, Ordinal2,  Ordinal3, Ordinal1)) -->
     position(Ordinal1),
     gt,
     sum_clause(Ordinal2, Ordinal3),
@@ -101,7 +101,7 @@ clue_spec(clue(sum, Ordinal1, Ordinal2, Adj)) -->
     % { writeln(Adj) },
     !.
 % eg. The sum of the first and second is less than the third
-clue_spec(clue(sum, lt, Ordinal1, Ordinal2, Ordinal3)) -->
+clue_spec(clue(sum, less_than, Ordinal1, Ordinal2, Ordinal3)) -->
     sum_clause(Ordinal1, Ordinal2),
     lt,
     position(Ordinal3),
@@ -121,7 +121,7 @@ clue_spec(clue(sum, db, Ordinal1, Ordinal2, Howmany)) -->
     numeric(Howmany),
     !.
 % eg. The second minus the first is less than three
-clue_spec(clue(minus, lt, Ordinal1, Ordinal2, Howmany)) -->
+clue_spec(clue(minus, less_than, Ordinal1, Ordinal2, Howmany)) -->
     minus_clause(Ordinal1, Ordinal2),
     lt,
     numeric(Howmany),
@@ -205,16 +205,15 @@ function(differ_by_no_more_than) --> ['differ', 'by', 'no', 'more', 'than'].
 function(differ_by) --> ['differ', 'by'].
 function(add_up_to) --> ['total'].
 function(greater_than) --> gt.
-function(less_than) --> ['less', 'than']. % nb
+function(less_than) --> lt.
 
-qualifier(more_than) --> ['more', 'than']. % nb
+qualifier(more_than) --> ['more', 'than']. % nb ?
 
-operator(less_than) --> ['less', 'than'].
+operator(greater_than) --> gt.
 operator(less_than) --> lt.
-operator(greater_than) --> ['greater', 'than'].
+
 operator(divisible_by) --> ['divisible', 'by'].
 operator(twice) --> ['twice'].
-operator(gt) --> gt.
 
 
 sumof --> ['the', 'sum', 'of'].
@@ -245,7 +244,7 @@ more --> ['more'].
 than --> ['than'].
 
 /*
-The duplication around these is running rife. Let's try defining some "atomic"
+The duplication around these was running rife. Let's try defining some "atomic"
 operators and see if we can use them throughout
 */
 
@@ -254,6 +253,7 @@ gt --> ['is', 'greater', 'than'].
 gt --> ['greater', 'than'].
 gt --> ['exceeds'].
 
+lt --> ['less', 'than'].
 lt --> ['is', 'less', 'than'].
 
 lte --> ['no', 'more', 'than'].

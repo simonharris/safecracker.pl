@@ -99,16 +99,23 @@ clue_constraint(clue(sum, Position1, Position2, two_digit_prime), Vars, Constrai
     boutcome_constraint(sum, Var1, Var2, two_digit_prime, Constraint),
     !.
 % eg. The sum of the first and third exceeds 10
-clue_constraint(clue(sum, gt, Position1, Position2, Howmany), Vars, Constraint) :-
+clue_constraint(clue(sum, greater_than, Position1, Position2, Howmany), Vars, Constraint) :-
     var_for_position(Position1, Vars, Var1),
     var_for_position(Position2, Vars, Var2),
-    sum_rel_constraint(gt, Var1, Var2, Howmany, Constraint),
+    sum_rel_constraint(greater_than, Var1, Var2, Howmany, Constraint),
     !.
-% eg. The sum of the first and second is less than seven - TODO: horrific duplication with the above
+% eg. The sum of the first and second is less than the fourth
+clue_constraint(clue(sum, less_than, Position1, Position2, Position3), Vars, Constraint) :-
+    var_for_position(Position1, Vars, Var1),
+    var_for_position(Position2, Vars, Var2),
+    var_for_position(Position3, Vars, Var3),
+    sum_rel_constraint(less_than, Var1, Var2, Var3, Constraint),
+    !.
+% eg. The sum of the first and second is less than seven
 clue_constraint(clue(sum, less_than, Position1, Position2, Howmany), Vars, Constraint) :-
     var_for_position(Position1, Vars, Var1),
     var_for_position(Position2, Vars, Var2),
-    sum_rel_constraint(lt, Var1, Var2, Howmany, Constraint),
+    sum_rel_constraint(less_than, Var1, Var2, Howmany, Constraint),
     !.
 % eg. The sum of the second and fourth is divisible by five
 % nb. TODO: Could probably generalise with the above
@@ -116,12 +123,6 @@ clue_constraint(clue(sum, db, Position1, Position2, Howmany), Vars, Constraint) 
     var_for_position(Position1, Vars, Var1),
     var_for_position(Position2, Vars, Var2),
     sum_rel_constraint(db, Var1, Var2, Howmany, Constraint),
-    !.
-% eg. The second minus the first is less than three
-clue_constraint(clue(minus, lt, Position1, Position2, Howmany), Vars, Constraint) :-
-    var_for_position(Position1, Vars, Var1),
-    var_for_position(Position2, Vars, Var2),
-    minus_rel_constraint(lt, Var1, Var2, Howmany, Constraint),
     !.
 
 /*
@@ -131,13 +132,19 @@ three digits
 */
 
 % eg. The fourth is greater than the sum of the second and third
-% TODO: generalise with the one above (see #10)
-clue_constraint(clue(sum, lt, Position1, Position2, Position3), Vars, Constraint) :-
+clue_constraint(clue(sum, less_than, Position1, Position2, Position3), Vars, Constraint) :-
     var_for_position(Position1, Vars, Var1),
     var_for_position(Position2, Vars, Var2),
     var_for_position(Position3, Vars, Var3),
-    sum_rel_constraint(lt, Var1, Var2, Var3, Constraint),
+    sum_rel_constraint(less_than, Var1, Var2, Var3, Constraint),
     !.
+% eg. The second minus the first is less than three
+clue_constraint(clue(minus, less_than, Position1, Position2, Howmany), Vars, Constraint) :-
+    var_for_position(Position1, Vars, Var1),
+    var_for_position(Position2, Vars, Var2),
+    minus_rel_constraint(less_than, Var1, Var2, Howmany, Constraint),
+    !.
+
 
 /*
 
