@@ -222,7 +222,7 @@ test(normalise_numbers) :-
 :- end_tests(parser).
 
 
-:- begin_tests(constraint_factories).
+:- begin_tests(clue_constraint).
 
 % These are sparse: prior to plunit_assert is was very difficult to test these
 
@@ -272,4 +272,4 @@ test(clue_constraint_sum_lt_col) :-
     writeln(Constraint),
     assert_equals(Constraint, (B+C) #< D).
 
-:- end_tests(constraint_factories).
+:- end_tests(clue_constraint).
