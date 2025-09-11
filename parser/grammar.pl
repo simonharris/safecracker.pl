@@ -200,6 +200,7 @@ ord(fourth) --> ['last'].
 
 first_two --> ['the', 'first', 2, 'digits'].
 
+function(differ_by_less_than) --> ['differ', 'by', 'less', 'than'].
 function(differ_by_more_than) --> ['differ', 'by', 'more', 'than'].
 function(differ_by_no_more_than) --> ['differ', 'by', 'no', 'more', 'than'].
 function(differ_by) --> ['differ', 'by'].

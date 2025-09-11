@@ -231,6 +231,7 @@ fun_val(Func) :-
     member(Func,
         [
             'differ_by',
+            'differ_by_less_than',
             'differ_by_more_than',
             'differ_by_no_more_than',
             'add_up_to',

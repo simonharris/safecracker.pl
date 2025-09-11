@@ -19,6 +19,7 @@ adjective_constraint(square, _, Var1, is_square(Var1)).
 adjective_constraint(greatest, Vars, Var1, (max_list(Vars, Biggest), Biggest #= Var1)).
 
 function_constraint(differ_by, Var1, Var2, Howmany, abs(Var1 - Var2) #= Howmany).
+function_constraint(differ_by_less_than, Var1, Var2, Howmany, abs(Var1 - Var2) #< Howmany).
 function_constraint(differ_by_more_than, Var1, Var2, Howmany, abs(Var1 - Var2) #> Howmany).
 function_constraint(differ_by_no_more_than, Var1, Var2, Howmany, abs(Var1 - Var2) #=< Howmany).
 function_constraint(add_up_to, Var1, Var2, Howmany, (Var1 + Var2) #= Howmany).
