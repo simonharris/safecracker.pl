@@ -124,6 +124,11 @@ clue_constraint(clue(sum, db, Position1, Position2, Howmany), Vars, Constraint) 
     var_for_position(Position2, Vars, Var2),
     sum_rel_constraint(db, Var1, Var2, Howmany, Constraint),
     !.
+clue_constraint(clue(sum, equals, Position1, Position2, Howmany), Vars, Constraint) :-
+    var_for_position(Position1, Vars, Var1),
+    var_for_position(Position2, Vars, Var2),
+    sum_rel_constraint(eq, Var1, Var2, Howmany, Constraint),
+    !.
 
 /*
 

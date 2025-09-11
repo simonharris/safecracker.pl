@@ -31,9 +31,14 @@ test(text_preprocessing4) :-
     Expected = [the, first, 2, digits, differ, by, 4],
     assert_output(text_preprocessed(Sentence, Parsed), [Parsed], [Expected]).
 
-test(text_preprocessing4) :-
+test(text_preprocessing5) :-
     Sentence = 'The fourth is greater than the sum of the second and third',
     Expected = [the, fourth, is, greater, than, the, sum, of, the, second, and, third],
+    assert_output(text_preprocessed(Sentence, Parsed), [Parsed], [Expected]).
+
+test(text_preprocessing6) :-
+    Sentence = 'The sum of the first and second is 12',
+    Expected = [the, sum, of, the, first, and, second, is, 12],
     assert_output(text_preprocessed(Sentence, Parsed), [Parsed], [Expected]).
 
 :- end_tests(preprocessing).
@@ -188,6 +193,10 @@ test(sum_of_divisible) :-
     Sentence = [the, sum, of, the, second, and, fourth, is, divisible, by, 5],
     atoms_clue(Sentence, Clue),
     assert_equals(Clue, clue(sum, db, second, fourth, 5)).
+test(sum_of_equals) :-
+    Sentence = [the, sum, of, the, first, and, second, is, 12],
+    atoms_clue(Sentence, Clue),
+    assert_equals(Clue, clue(sum, equals, first, second, 12)).
 
 test(either_odd) :-
     Sentence = [either, the, second, or, the, third, is, odd, but, not, both],
