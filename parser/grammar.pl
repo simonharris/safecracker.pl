@@ -9,7 +9,6 @@
 ]).
 :- use_module(library(dcg/basics)).
 
-% TODO: there's a lot of duplication of "greater than" in here
 
 % eg. The third digit is less than five
 clue_spec(clue(Ordinal, Operator, Number)) -->
@@ -109,10 +108,11 @@ clue_spec(clue(sum, less_than, Ordinal1, Ordinal2, Ordinal3)) -->
 % eg. The sum of the first and third exceeds 10
 % eg. The sum of the first and third is greater than 13
 % eg. The sum of the first and second is less than seven
+% eg. The sum of the first and second is 12
 clue_spec(clue(sum, Operator, Ordinal1, Ordinal2, Howmany)) -->
     sum_clause(Ordinal1, Ordinal2),
     operator(Operator),
-    numeric(Howmany), % serious TODO here
+    numeric(Howmany),
     !.
 % eg. The sum of the second and fourth is divisible by five
 clue_spec(clue(sum, db, Ordinal1, Ordinal2, Howmany)) -->
@@ -211,10 +211,9 @@ qualifier(more_than) --> ['more', 'than']. % nb ?
 
 operator(greater_than) --> gt.
 operator(less_than) --> lt.
-
 operator(divisible_by) --> ['divisible', 'by'].
 operator(twice) --> ['twice'].
-
+operator(equals) --> be.
 
 sumof --> ['the', 'sum', 'of'].
 minus --> ['minus'].
